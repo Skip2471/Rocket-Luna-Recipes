@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocket & Luna Recipes</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff3f8;
+    color: #102a72;
+  }
+  header {
+    background: linear-gradient(135deg, #1428c8, #ff7ab8);
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+  }
+  h1 { margin: 0; font-size: 34px; }
+  .container { padding: 18px; max-width: 700px; margin: auto; }
+  .card {
+    background: white;
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+  }
+  select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: 2px solid #d7d7f5;
+    font-size: 18px;
+    margin-top: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+  }
+  th { background: #f1f3ff; }
+  .note {
+    background: #fff8d9;
+    border-left: 6px solid #ffcc00;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 15px;
+  }
+  .steps li { margin-bottom: 10px; }
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Rocket & Luna Recipes</h1>
+  <p>Slow cooker meals, amounts, and instructions</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <label for="recipe">Choose Recipe</label>
+    <select id="recipe" onchange="updateRecipe()">
+      <option value="chicken">Chicken Thighs</option>
+      <option value="turkey">Ground Turkey</option>
+      <option value="beef">Lean Ground Beef 93/7</option>
+      <option value="chickenEggs">Chicken Thighs + Scrambled Eggs</option>
+    </select>
+
+    <label for="weight">Choose Meat Amount</label>
+    <select id="weight" onchange="updateRecipe()">
+      <option value="1">1 pound</option>
+      <option value="1.5">1.5 pounds</option>
+      <option value="2">2 pounds</option>
+      <option value="2.5">2.5 pounds</option>
+      <option value="3">3 pounds</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2 id="recipeTitle"></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ingredient</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="amounts"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Slow Cooker Instructions</h2>
+    <ol class="steps" id="steps"></ol>
+  </div>
+
+  <div class="card note">
+    <strong>Important:</strong> This app is for tracking your recipes. For daily long-term feeding, confirm the calcium supplement and multivitamin dose with your vet or the product label.
+  </div>
+
+</div>
+
+<script>
+const recipes = {
+  chicken: {
+    title: "Chicken Thighs Recipe",
+    meat: "Boneless, skinless chicken thighs",
+    eggs: false,
+    steps: [
+      "Trim extra fat from the chicken thighs.",
+      "Place chicken thighs in the slow cooker.",
+      "Add water.",
+      "Cook on LOW for 4–6 hours, until fully cooked and easy to shred.",
+      "Shred the chicken very well.",
+      "Stir in cooked white rice and frozen vegetables.",
+      "Let everything cool completely.",
+      "Add calcium supplement and multivitamin only after the food has cooled.",
+      "Store in the refrigerator for 3–4 days or freeze extra portions."
+    ]
+  },
+  turkey: {
+    title: "Ground Turkey Recipe",
+    meat: "Ground turkey",
+    eggs: false,
+    steps: [
+      "Place ground turkey in the slow cooker.",
+      "Break it up with a spoon.",
+      "Add water.",
+      "Cook on LOW for 3–4 hours, stirring halfway if possible.",
+      "Make sure turkey is fully cooked with no pink remaining.",
+      "Stir in cooked white rice and frozen vegetables.",
+      "Let everything cool completely.",
+      "Add calcium supplement and multivitamin only after the food has cooled.",
+      "Store in the refrigerator for 3–4 days or freeze extra portions."
+    ]
+  },
+  beef: {
+    title: "Lean Ground Beef 93/7 Recipe",
+    meat: "Lean ground beef 93/7",
+    eggs: false,
+    steps: [
+      "Place lean ground beef in the slow cooker.",
+      "Break it up with a spoon.",
+      "Add water.",
+      "Cook on LOW for 3–4 hours, stirring halfway if possible.",
+      "Make sure beef is fully cooked with no pink remaining.",
+      "Drain extra grease if needed.",
+      "Stir in cooked white rice and frozen vegetables.",
+      "Let everything cool completely.",
+      "Add calcium supplement and multivitamin only after the food has cooled.",
+      "Store in the refrigerator for 3–4 days or freeze extra portions."
+    ]
+  },
+  chickenEggs: {
+    title: "Chicken Thighs + Scrambled Eggs Recipe",
+    meat: "Boneless, skinless chicken thighs",
+    eggs: true,
+    steps: [
+      "Trim extra fat from the chicken thighs.",
+      "Place chicken thighs in the slow cooker.",
+      "Add water.",
+      "Cook on LOW for 4–6 hours, until fully cooked and easy to shred.",
+      "Shred the chicken very well.",
+      "Scramble the eggs separately with no butter, oil, salt, or seasoning.",
+      "Stir in cooked white rice, frozen vegetables, and scrambled eggs.",
+      "Let everything cool completely.",
+      "Add calcium supplement and multivitamin only after the food has cooled.",
+      "Store in the refrigerator for 3–4 days or freeze extra portions."
+    ]
+  }
+};
+
+function niceNumber(num) {
+  return Number.isInteger(num) ? num : num.toFixed(1);
+}
+
+function updateRecipe() {
+  const recipeKey = document.getElementById("recipe").value;
+  const pounds = parseFloat(document.getElementById("weight").value);
+  const recipe = recipes[recipeKey];
+
+  const rice = pounds * 1;
+  const veggies = pounds * 0.75;
+  const water = pounds * 0.75;
+  const calciumMg = pounds * 1000;
+  const eggs = Math.round(pounds * 1);
+
+  document.getElementById("recipeTitle").textContent = recipe.title + " — " + pounds + " lb";
+
+  let rows = `
+    <tr><td>${recipe.meat}</td><td>${pounds} lb</td></tr>
+    <tr><td>Cooked white rice</td><td>${niceNumber(rice)} cup${rice > 1 ? "s" : ""}</td></tr>
+    <tr><td>Frozen vegetables</td><td>${niceNumber(veggies)} cup${veggies > 1 ? "s" : ""}</td></tr>
+    <tr><td>Water</td><td>${niceNumber(water)} cup${water > 1 ? "s" : ""}</td></tr>
+    <tr><td>Calcium supplement</td><td>Follow label/vet dose. Tracking estimate: about ${calciumMg.toLocaleString()} mg elemental calcium for this batch.</td></tr>
+    <tr><td>Dog multivitamin</td><td>Follow product label for Rocket & Luna’s size and daily serving.</td></tr>
+  `;
+
+  if (recipe.eggs) {
+    rows += `<tr><td>Scrambled eggs</td><td>${eggs} egg${eggs > 1 ? "s" : ""}</td></tr>`;
+  }
+
+  document.getElementById("amounts").innerHTML = rows;
+
+  document.getElementById("steps").innerHTML = recipe.steps
+    .map(step => `<li>${step}</li>`)
+    .join("");
+}
+
+updateRecipe();
+</script>
+
+</body>
+</html>
