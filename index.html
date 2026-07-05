@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.4</title>
+  <title>Rocket & Luna Headquarters v2.5.5</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -486,7 +486,44 @@
       .nav-card{min-height:110px}
       .bottom-nav button{font-size:13px;min-width:66px;padding:10px 8px}
     }
-  </style>
+  
+    .health-form{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin:12px 0;
+    }
+    .health-form select,
+    .health-form input,
+    .health-form textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      font-size:17px;
+      background:white;
+      color:var(--ink);
+      -webkit-user-select:text;
+      user-select:text;
+      pointer-events:auto;
+    }
+    .health-entry{
+      border-bottom:1px solid var(--line);
+      padding:12px 0;
+      line-height:1.4;
+    }
+    .health-entry:last-child{border-bottom:0}
+    .health-entry b{font-size:17px}
+    .health-entry span{
+      display:block;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      margin-top:2px;
+    }
+    .danger-btn{background:#ef4444!important}
+
+</style>
 </head>
 
 <body>
@@ -503,7 +540,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.4 adds the Meal Prep Planner.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.5 adds the Health Center.</p>
       </div>
     </header>
 
@@ -511,7 +548,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.4</div>
+          <div class="version">v2.5.5</div>
         </div>
 
         <div class="card wide">
@@ -641,7 +678,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.4 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.5 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -674,7 +711,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.4 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            Version 2.5.5 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
             and frozen enrichment treats.
           </p>
 
@@ -706,7 +743,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.5.4 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.5.5 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -726,6 +763,58 @@
             </select>
           </div>
           <div id="plannerOutput"></div>
+        </div>
+      </section>
+
+
+      <section id="healthPage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>❤️ Health Center</h2>
+          <p class="recipe-meta">
+            Version 2.5.5 adds a working Health Center for weight, vet visits, grooming,
+            medications, insurance notes, food reactions, and general care notes.
+          </p>
+
+          <div class="health-form">
+            <select id="healthPet">
+              <option value="Rocket">Rocket</option>
+              <option value="Luna">Luna</option>
+              <option value="Both">Both</option>
+            </select>
+
+            <select id="healthType">
+              <option value="Weight">Weight</option>
+              <option value="Vet Visit">Vet Visit</option>
+              <option value="Medication">Medication</option>
+              <option value="Grooming">Grooming</option>
+              <option value="Insurance">Insurance</option>
+              <option value="Food Reaction">Food Reaction</option>
+              <option value="General Note">General Note</option>
+            </select>
+
+            <input id="healthDate" type="date">
+            <input id="healthValue" type="text" placeholder="Example: 11.0 lb, Petco grooming, vaccine...">
+            <textarea id="healthNote" rows="4" placeholder="Write the note here..."></textarea>
+
+            <button type="button" onclick="saveHealthEntry()">Save Health Note</button>
+          </div>
+
+          <div class="blue-tip">
+            💙 Daddy's Tip:<br>
+            Keep health notes simple. A short note is better than no note.
+            Example: “Luna 10.9 lb, eating well, no stomach issues.”
+          </div>
+
+          <div class="step-card">
+            <h3>Saved Health Notes</h3>
+            <div id="healthList"></div>
+          </div>
+
+          <div class="recipe-actions">
+            <button type="button" class="danger-btn" onclick="clearHealthEntries()">Clear Health Notes</button>
+          </div>
         </div>
       </section>
 
@@ -752,11 +841,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.4.",
+        text: "Treat Kitchen is now active in Version 2.5.5.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.5.4",
+        title: "📅 Meal Prep Planner — Coming in v2.5.5",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1354,12 +1443,73 @@
     }
 
 
+
+    function getHealthEntries(){
+      try{
+        return JSON.parse(localStorage.getItem("rocketLunaHealthEntries") || "[]");
+      }catch(e){
+        return [];
+      }
+    }
+
+    function setHealthEntries(entries){
+      localStorage.setItem("rocketLunaHealthEntries", JSON.stringify(entries));
+    }
+
+    function saveHealthEntry(){
+      const pet = document.getElementById("healthPet").value;
+      const type = document.getElementById("healthType").value;
+      const date = document.getElementById("healthDate").value || new Date().toISOString().slice(0,10);
+      const value = document.getElementById("healthValue").value.trim();
+      const note = document.getElementById("healthNote").value.trim();
+
+      if(!value && !note){
+        alert("Add a short value or note first.");
+        return;
+      }
+
+      const entries = getHealthEntries();
+      entries.unshift({pet,type,date,value,note});
+      setHealthEntries(entries);
+
+      document.getElementById("healthValue").value = "";
+      document.getElementById("healthNote").value = "";
+      renderHealthEntries();
+    }
+
+    function renderHealthEntries(){
+      const list = document.getElementById("healthList");
+      if(!list) return;
+
+      const entries = getHealthEntries();
+      if(entries.length === 0){
+        list.innerHTML = "<p class='recipe-meta'>No health notes saved yet.</p>";
+        return;
+      }
+
+      list.innerHTML = entries.map(entry =>
+        '<div class="health-entry">' +
+          '<b>' + entry.pet + ' — ' + entry.type + '</b>' +
+          '<span>' + entry.date + (entry.value ? ' • ' + entry.value : '') + '</span>' +
+          (entry.note ? '<div>' + entry.note + '</div>' : '') +
+        '</div>'
+      ).join("");
+    }
+
+    function clearHealthEntries(){
+      if(confirm("Clear all saved health notes from this phone?")){
+        localStorage.removeItem("rocketLunaHealthEntries");
+        renderHealthEntries();
+      }
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
       document.getElementById("mealsPage").classList.remove("active");
       document.getElementById("treatsPage").classList.remove("active");
       document.getElementById("plannerPage").classList.remove("active");
+      document.getElementById("healthPage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
@@ -1372,6 +1522,9 @@
       } else if(name === "planner"){
         document.getElementById("plannerPage").classList.add("active");
         renderPlanner();
+      } else if(name === "health"){
+        document.getElementById("healthPage").classList.add("active");
+        renderHealthEntries();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -1388,6 +1541,7 @@
       document.getElementById("mealsPage").classList.remove("active");
       document.getElementById("treatsPage").classList.remove("active");
       document.getElementById("plannerPage").classList.remove("active");
+      document.getElementById("healthPage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
