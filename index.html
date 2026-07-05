@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.1</title>
+  <title>Rocket & Luna Headquarters v2.5.2</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -320,6 +320,109 @@
       font-size:14px;
     }
 
+
+    .meal-controls{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .meal-controls select,
+    .meal-controls input{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      font-size:17px;
+      background:white;
+      color:var(--ink);
+    }
+    .tabs{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding:2px 0 12px;
+      margin-bottom:8px;
+    }
+    .tab{
+      flex:0 0 auto;
+      border:1px solid var(--line);
+      background:white;
+      color:#344054;
+      font-weight:900;
+      border-radius:999px;
+      padding:11px 16px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .tab.active{
+      color:white;
+      background:linear-gradient(135deg,var(--blue),var(--pink));
+      border-color:transparent;
+    }
+    .recipe-card h2{
+      font-size:28px;
+      margin:0 0 6px;
+    }
+    .recipe-meta{
+      color:var(--muted);
+      font-weight:800;
+      margin-bottom:14px;
+      line-height:1.35;
+    }
+    .step-card{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:22px;
+      padding:15px;
+      margin:12px 0;
+      box-shadow:0 5px 16px rgba(31,41,85,.06);
+    }
+    .step-card h3{
+      margin:0 0 9px;
+      font-size:20px;
+    }
+    .step-card li{
+      margin:8px 0;
+      line-height:1.38;
+    }
+    .blue-tip{
+      background:#eef6ff;
+      border:1px solid #cfe4ff;
+      color:#1e3a8a;
+      border-radius:22px;
+      padding:14px;
+      font-weight:800;
+      line-height:1.38;
+      margin:12px 0;
+    }
+    .pink-tip{
+      background:#fff0f8;
+      border:1px solid #ffd0ea;
+      color:#8a2d62;
+      border-radius:22px;
+      padding:14px;
+      font-weight:800;
+      line-height:1.38;
+      margin:12px 0;
+    }
+    .recipe-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:12px 0;
+    }
+    .recipe-actions button{
+      border:0;
+      border-radius:18px;
+      padding:12px 14px;
+      color:white;
+      background:linear-gradient(135deg,var(--blue),var(--pink));
+      font-weight:900;
+      flex:1;
+      min-width:140px;
+    }
+
     .placeholder{
       display:none;
     }
@@ -379,7 +482,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.1 starts the real app layout.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.2 adds the full beginner-friendly Meals section.</p>
       </div>
     </header>
 
@@ -387,7 +490,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.1</div>
+          <div class="version">v2.5.2</div>
         </div>
 
         <div class="card wide">
@@ -511,6 +614,39 @@
         </div>
       </section>
 
+      <section id="mealsPage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>🍽️ Meals</h2>
+          <p class="recipe-meta">
+            Version 2.5.2 adds the real Meals section with Beginner Mode directions.
+            Protein, rice, and vegetables are cooked separately so there is less guessing.
+          </p>
+
+          <div class="meal-controls">
+            <input id="mealSearch" type="text" placeholder="Search meals..." oninput="filterMealTabs()">
+            <select id="mealWeight" onchange="renderMeal()">
+              <option value="1">1 lb protein</option>
+              <option value="1.5">1.5 lb protein</option>
+              <option value="2">2 lb protein</option>
+              <option value="2.5">2.5 lb protein</option>
+              <option value="3">3 lb protein</option>
+            </select>
+          </div>
+
+          <div class="tabs" id="mealTabs">
+            <button class="tab active" data-keywords="chicken slow cooker" onclick="chooseMeal('chicken', this)">Chicken</button>
+            <button class="tab" data-keywords="turkey ground turkey slow cooker" onclick="chooseMeal('turkey', this)">Turkey</button>
+            <button class="tab" data-keywords="beef lean ground beef 93/7 slow cooker" onclick="chooseMeal('beef', this)">Beef</button>
+            <button class="tab" data-keywords="chicken egg scrambled eggs" onclick="chooseMeal('egg', this)">Chicken + Egg</button>
+            <button class="tab" data-keywords="salmon fish baked" onclick="chooseMeal('salmon', this)">Salmon</button>
+          </div>
+
+          <div id="mealOutput"></div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -532,115 +668,329 @@
 
   <script>
     const pages = {
-      meals: {
-        title: "🍽️ Meals — Coming in v2.5.2",
-        text: "This next section will contain the full beginner-friendly meal recipes.",
-        items: [
-          "Chicken slow cooker meal",
-          "Ground turkey slow cooker meal",
-          "Lean beef slow cooker meal",
-          "Chicken + scrambled egg meal",
-          "Salmon meal",
-          "Cook protein separately",
-          "Cook rice separately",
-          "Cook vegetables separately",
-          "Cool before adding supplements",
-          "Portion into Mason jars"
-        ]
-      },
       treats: {
         title: "🍪 Treat Kitchen — Coming in v2.5.3",
         text: "This section will contain homemade puzzle treats and training treats.",
-        items: [
-          "Chicken puzzle treats",
-          "Turkey puzzle treats",
-          "Beef jackpot treats",
-          "Salmon treats",
-          "Frozen puzzle cubes",
-          "Storage and freezer directions"
-        ]
+        items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
         title: "📅 Meal Prep Planner — Coming in v2.5.4",
         text: "This section will calculate food, jars, and shopping needs.",
-        items: [
-          "1 week, 2 week, and 1 month planning",
-          "Meat amount",
-          "Rice amount",
-          "Vegetable amount",
-          "Mason jar estimate",
-          "Freezer plan"
-        ]
+        items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
       shopping: {
         title: "🛒 Shopping List",
         text: "This will become a checklist for meal prep and treats.",
-        items: [
-          "Proteins",
-          "Rice",
-          "Frozen vegetables",
-          "Eggs",
-          "Pumpkin",
-          "Supplements",
-          "Mason jars"
-        ]
+        items: ["Proteins","Rice","Frozen vegetables","Eggs","Pumpkin","Supplements","Mason jars"]
       },
       freezer: {
         title: "🧊 Freezer Inventory",
         text: "This will help track what meals and treats are already frozen.",
-        items: [
-          "Meal type",
-          "Number of jars",
-          "Date frozen",
-          "Use first reminders"
-        ]
+        items: ["Meal type","Number of jars","Date frozen","Use first reminders"]
       },
       health: {
         title: "❤️ Health Records",
         text: "This will hold important care notes for Rocket and Luna.",
-        items: [
-          "Weight tracker",
-          "Vet visits",
-          "Grooming",
-          "Medications",
-          "Insurance notes"
-        ]
+        items: ["Weight tracker","Vet visits","Grooming","Medications","Insurance notes"]
       },
       life: {
         title: "📖 Life Book",
         text: "This will become Rocket and Luna's memory book.",
-        items: [
-          "Milestones",
-          "Funny moments",
-          "Favorite memories",
-          "Holiday notes",
-          "Special photos later"
-        ]
+        items: ["Milestones","Funny moments","Favorite memories","Holiday notes","Special photos later"]
       },
       favorites: {
         title: "⭐ Favorites",
         text: "This will give quick access to the things you use most.",
-        items: [
-          "Favorite meals",
-          "Favorite treats",
-          "Favorite memories",
-          "Favorite care routines"
-        ]
+        items: ["Favorite meals","Favorite treats","Favorite memories","Favorite care routines"]
       }
     };
 
+    const meals = {
+      chicken: {
+        title: "🐔 Chicken Slow Cooker Meal",
+        subtitle: "Beginner-friendly chicken meal for Rocket & Luna.",
+        proteinName: "chicken",
+        temp: "165°F",
+        ingredients: w => [
+          `${w} lb boneless, skinless chicken thighs or chicken breast`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          `${round(w * 0.5)} cup water for cooking the chicken`,
+          "Calcium supplement: follow your product label",
+          "Canine multivitamin: follow your product label"
+        ],
+        tools: ["Slow cooker", "Rice cooker or saucepan", "Microwave-safe bowl or steamer", "Large mixing bowl", "Large spoon", "Food thermometer", "Wide-mouth Mason jars"],
+        proteinSteps: w => [
+          "Place the raw chicken into the slow cooker.",
+          `Pour ${round(w * 0.5)} cup water over the chicken.`,
+          "Put the lid on the slow cooker.",
+          "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+          "The chicken is done when it reaches 165°F and is not pink inside.",
+          "Let it cool for 10–15 minutes.",
+          "Shred or chop the chicken into small pieces."
+        ],
+        tip: "💙 Daddy's Tip: Cook one extra pound of chicken and save it for puzzle treats later in the week."
+      },
+      turkey: {
+        title: "🦃 Ground Turkey Slow Cooker Meal",
+        subtitle: "Beginner-friendly lean turkey meal.",
+        proteinName: "ground turkey",
+        temp: "165°F",
+        ingredients: w => [
+          `${w} lb 93% lean ground turkey`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          `${round(w * 0.5)} cup water for cooking the turkey`,
+          "Calcium supplement: follow your product label",
+          "Canine multivitamin: follow your product label"
+        ],
+        tools: ["Slow cooker", "Rice cooker or saucepan", "Microwave-safe bowl or steamer", "Large mixing bowl", "Large spoon", "Food thermometer", "Wide-mouth Mason jars"],
+        proteinSteps: w => [
+          "Place the raw ground turkey into the slow cooker.",
+          `Pour ${round(w * 0.5)} cup water over the turkey.`,
+          "Put the lid on the slow cooker.",
+          "Cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+          "About halfway through, carefully open the lid and break the turkey apart with a spoon.",
+          "The turkey is done when it reaches 165°F and is no longer pink.",
+          "Drain extra liquid before mixing."
+        ],
+        tip: "💙 Daddy's Tip: Stir the turkey once or twice while cooking so it does not stay in one big block."
+      },
+      beef: {
+        title: "🥩 Lean Ground Beef Slow Cooker Meal",
+        subtitle: "Beginner-friendly 93/7 beef rotation meal.",
+        proteinName: "lean ground beef",
+        temp: "160°F",
+        ingredients: w => [
+          `${w} lb 93/7 lean ground beef`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          `${round(w * 0.25)}–${round(w * 0.5)} cup water for cooking the beef`,
+          "Calcium supplement: follow your product label",
+          "Canine multivitamin: follow your product label"
+        ],
+        tools: ["Slow cooker", "Rice cooker or saucepan", "Microwave-safe bowl or steamer", "Large mixing bowl", "Large spoon", "Food thermometer", "Wide-mouth Mason jars"],
+        proteinSteps: w => [
+          "Place the raw 93/7 lean ground beef into the slow cooker.",
+          `Add ${round(w * 0.25)}–${round(w * 0.5)} cup water.`,
+          "Put the lid on the slow cooker.",
+          "Cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+          "Break the beef apart with a spoon while it cooks.",
+          "The beef is done when it reaches 160°F and is no longer pink.",
+          "Drain the beef very well before mixing."
+        ],
+        tip: "💙 Daddy's Tip: Draining the beef well keeps the meal lighter and easier on their stomachs."
+      },
+      egg: {
+        title: "🍳 Chicken + Scrambled Egg Meal",
+        subtitle: "Chicken meal with plain scrambled egg added.",
+        proteinName: "chicken and egg",
+        temp: "165°F for chicken",
+        ingredients: w => [
+          `${w} lb chicken`,
+          `${Math.max(1, Math.round(w))} plain scrambled egg(s)`,
+          `${round(w * 1.1)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "Calcium supplement: follow your product label",
+          "Canine multivitamin: follow your product label"
+        ],
+        tools: ["Slow cooker", "Small pan for egg", "Rice cooker or saucepan", "Microwave-safe bowl or steamer", "Large mixing bowl", "Large spoon", "Food thermometer", "Wide-mouth Mason jars"],
+        proteinSteps: w => [
+          "Place the raw chicken into the slow cooker.",
+          `Pour ${round(w * 0.5)} cup water over the chicken.`,
+          "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+          "The chicken is done when it reaches 165°F and is not pink inside.",
+          "Let the chicken cool, then shred or chop it.",
+          "Cook the egg separately in a small pan with no butter, oil, salt, garlic, onion, or seasoning.",
+          "Stir the egg until fully cooked, then let it cool."
+        ],
+        tip: "💙 Daddy's Tip: Keep the egg completely plain. No butter, oil, salt, garlic, onion, or seasoning."
+      },
+      salmon: {
+        title: "🐟 Salmon Meal",
+        subtitle: "Beginner-friendly fish rotation meal.",
+        proteinName: "salmon",
+        temp: "145°F",
+        ingredients: w => [
+          `${w} lb salmon, cooked and carefully checked for bones`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "Calcium supplement: follow your product label",
+          "Canine multivitamin: follow your product label"
+        ],
+        tools: ["Baking tray", "Parchment paper", "Rice cooker or saucepan", "Microwave-safe bowl or steamer", "Large mixing bowl", "Fork", "Food thermometer", "Wide-mouth Mason jars"],
+        proteinSteps: w => [
+          "Place salmon on a parchment-lined baking tray.",
+          "Bake at 375°F for 12–18 minutes, depending on thickness.",
+          "The salmon is done when it reaches 145°F and flakes easily with a fork.",
+          "Let the salmon cool completely.",
+          "Check very carefully for bones before mixing.",
+          "Flake the salmon into small pieces."
+        ],
+        tip: "💙 Daddy's Tip: Because of your vision concerns, use boneless salmon portions and still check slowly with your fingers before mixing."
+      }
+    };
+
+    let currentMeal = "chicken";
+
+    function round(num){
+      return Math.round(num * 100) / 100;
+    }
+
+    function list(items, ordered=false){
+      const tag = ordered ? "ol" : "ul";
+      return `<${tag}>${items.map(item => `<li>${item}</li>`).join("")}</${tag}>`;
+    }
+
+    function renderMeal(){
+      const weight = parseFloat(document.getElementById("mealWeight").value);
+      const meal = meals[currentMeal];
+
+      const riceSteps = [
+        "Cook plain white rice separately in a rice cooker or saucepan.",
+        "Follow the rice package directions.",
+        "Do not add salt, butter, oil, garlic, onion, or seasoning.",
+        "When finished, fluff the rice with a fork.",
+        "Let the rice cool slightly before mixing."
+      ];
+
+      const vegSteps = [
+        "Use plain frozen vegetables with no sauce or seasoning.",
+        "Microwave or steam until tender.",
+        "Drain any extra water.",
+        "Let the vegetables cool slightly."
+      ];
+
+      const mixSteps = [
+        `Add the cooked ${meal.proteinName}, cooked rice, and cooked vegetables to a large bowl.`,
+        "Stir slowly until everything is evenly mixed.",
+        "The food should look moist and mixed, not watery.",
+        "If it feels hot to your hand, wait longer before adding supplements."
+      ];
+
+      const supplementSteps = [
+        "Let the food cool until it is warm or room temperature.",
+        "Add calcium supplement according to your product label.",
+        "Add canine multivitamin according to your product label.",
+        "Mix again so the supplements are spread evenly."
+      ];
+
+      const storeSteps = [
+        "Spoon the food into wide-mouth Mason jars.",
+        "Leave a little space at the top if freezing.",
+        "Refrigerate what Rocket and Luna will eat in the next 3–4 days.",
+        "Freeze the rest.",
+        "Thaw frozen jars in the refrigerator before using."
+      ];
+
+      document.getElementById("mealOutput").innerHTML = `
+        <div class="recipe-card">
+          <h2>${meal.title}</h2>
+          <div class="recipe-meta">${meal.subtitle}<br><b>Selected amount:</b> ${weight} lb protein</div>
+
+          <div class="recipe-actions">
+            <button onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
+            <button onclick="alert('Favorites will be added in a later version.')">⭐ Favorite</button>
+          </div>
+
+          <div class="step-card">
+            <h3>What You Need</h3>
+            ${list(meal.ingredients(weight))}
+          </div>
+
+          <div class="step-card">
+            <h3>Kitchen Tools</h3>
+            ${list(meal.tools)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 1 — Cook the Protein Separately</h3>
+            ${list(meal.proteinSteps(weight), true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 2 — Cook the Rice Separately</h3>
+            ${list(riceSteps, true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 3 — Cook the Vegetables Separately</h3>
+            ${list(vegSteps, true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 4 — Mix Everything Together</h3>
+            ${list(mixSteps, true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 5 — Cool Before Adding Supplements</h3>
+            ${list(supplementSteps, true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 6 — Portion and Store</h3>
+            ${list(storeSteps, true)}
+          </div>
+
+          <div class="blue-tip">
+            💙 Why cook separately?<br>
+            Cooking the protein, rice, and vegetables separately gives you better control,
+            keeps the rice from getting mushy, and makes it easier to measure each ingredient correctly.
+          </div>
+
+          <div class="pink-tip">
+            🩷 What it should look like:<br>
+            The finished food should look evenly mixed, soft, moist, and easy to spoon into Mason jars.
+            It should not look soupy, greasy, or dry.
+          </div>
+
+          <div class="blue-tip">${meal.tip}</div>
+
+          <p class="recipe-meta">
+            Safety reminder: Homemade dog diets should be reviewed by your veterinarian or a veterinary nutritionist,
+            especially when used as Rocket and Luna's main long-term diet.
+          </p>
+        </div>
+      `;
+    }
+
+    function chooseMeal(key, button){
+      currentMeal = key;
+      document.querySelectorAll("#mealTabs .tab").forEach(tab => tab.classList.remove("active"));
+      button.classList.add("active");
+      renderMeal();
+    }
+
+    function filterMealTabs(){
+      const q = document.getElementById("mealSearch").value.toLowerCase();
+      document.querySelectorAll("#mealTabs .tab").forEach(tab=>{
+        tab.style.display = tab.dataset.keywords.includes(q) ? "" : "none";
+      });
+    }
+
     function showPage(name){
-      const data = pages[name];
       document.getElementById("home").classList.add("hidden");
-      document.getElementById("page").classList.add("active");
-      document.getElementById("pageTitle").textContent = data.title;
-      document.getElementById("pageText").textContent = data.text;
-      document.getElementById("pageList").innerHTML = data.items.map(item => "<li>" + item + "</li>").join("");
+      document.getElementById("page").classList.remove("active");
+      document.getElementById("mealsPage").classList.remove("active");
+
+      if(name === "meals"){
+        document.getElementById("mealsPage").classList.add("active");
+        renderMeal();
+      } else {
+        const data = pages[name];
+        document.getElementById("page").classList.add("active");
+        document.getElementById("pageTitle").textContent = data.title;
+        document.getElementById("pageText").textContent = data.text;
+        document.getElementById("pageList").innerHTML = data.items.map(item => "<li>" + item + "</li>").join("");
+      }
+
       window.scrollTo({top:0,behavior:"smooth"});
     }
 
     function showHome(){
       document.getElementById("page").classList.remove("active");
+      document.getElementById("mealsPage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
@@ -648,6 +998,9 @@
     document.querySelectorAll(".check").forEach(item=>{
       item.addEventListener("click",()=>item.classList.toggle("done"));
     });
+
+    renderMeal();
   </script>
+
 </body>
 </html>
