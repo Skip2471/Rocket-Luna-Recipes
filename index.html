@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.2</title>
+  <title>Rocket & Luna Headquarters v2.5.3</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -406,6 +406,19 @@
       line-height:1.38;
       margin:12px 0;
     }
+
+    .treat-category{
+      display:inline-block;
+      margin:0 8px 8px 0;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fff0f8;
+      border:1px solid #ffd0ea;
+      color:#8a2d62;
+      font-weight:900;
+      font-size:13px;
+    }
+
     .recipe-actions{
       display:flex;
       gap:10px;
@@ -482,7 +495,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.2 adds the full beginner-friendly Meals section.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.3 adds the Treat Kitchen section.</p>
       </div>
     </header>
 
@@ -490,7 +503,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.2</div>
+          <div class="version">v2.5.3</div>
         </div>
 
         <div class="card wide">
@@ -620,7 +633,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.2 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.3 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -647,6 +660,39 @@
         </div>
       </section>
 
+      <section id="treatsPage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>🍪 Treat Kitchen</h2>
+          <p class="recipe-meta">
+            Version 2.5.3 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            and frozen enrichment treats.
+          </p>
+
+          <div class="meal-controls">
+            <input id="treatSearch" type="text" placeholder="Search treats..." oninput="filterTreatTabs()">
+            <select id="treatWeight" onchange="renderTreat()">
+              <option value="1">1 lb protein</option>
+              <option value="1.5">1.5 lb protein</option>
+              <option value="2">2 lb protein</option>
+              <option value="2.5">2.5 lb protein</option>
+              <option value="3">3 lb protein</option>
+            </select>
+          </div>
+
+          <div class="tabs" id="treatTabs">
+            <button class="tab active" data-keywords="chicken puzzle baked training" onclick="chooseTreat('chickenTreat', this)">Chicken Puzzle</button>
+            <button class="tab" data-keywords="turkey puzzle baked training" onclick="chooseTreat('turkeyTreat', this)">Turkey Puzzle</button>
+            <button class="tab" data-keywords="beef jackpot training high value" onclick="chooseTreat('beefTreat', this)">Beef Jackpot</button>
+            <button class="tab" data-keywords="salmon fish puzzle smelly high value" onclick="chooseTreat('salmonTreat', this)">Salmon</button>
+            <button class="tab" data-keywords="frozen cubes pumpkin yogurt summer lick mat" onclick="chooseTreat('frozenCubes', this)">Frozen Cubes</button>
+          </div>
+
+          <div id="treatOutput"></div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -669,8 +715,8 @@
   <script>
     const pages = {
       treats: {
-        title: "🍪 Treat Kitchen — Coming in v2.5.3",
-        text: "This section will contain homemade puzzle treats and training treats.",
+        title: "🍪 Treat Kitchen",
+        text: "Treat Kitchen is now active in Version 2.5.3.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
@@ -960,6 +1006,7 @@
       document.querySelectorAll("#mealTabs .tab").forEach(tab => tab.classList.remove("active"));
       button.classList.add("active");
       renderMeal();
+    renderTreat();
     }
 
     function filterMealTabs(){
@@ -969,14 +1016,257 @@
       });
     }
 
+
+    const treats = {
+      chickenTreat: {
+        title: "🐔 Chicken Puzzle Treats",
+        subtitle: "Everyday puzzle treats for the Flower Tower, Poker Box, and training.",
+        category: ["Puzzle", "Baked", "Everyday"],
+        ingredients: w => [
+          `${w} lb cooked plain chicken`,
+          `${Math.max(1, Math.round(w))} egg(s)`,
+          "Optional: calcium supplement only if these replace part of a meal",
+          "Optional: canine multivitamin only if recommended by your vet"
+        ],
+        tools: ["Slow cooker", "Food processor", "Mixing bowl", "Baking tray", "Parchment paper", "Measuring spoon", "Freezer bag or Mason jar"],
+        cookSteps: w => [
+          "Place raw chicken in the slow cooker.",
+          `Add ${round(w * 0.5)} cup water.`,
+          "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+          "Chicken is done when it reaches 165°F and is no longer pink.",
+          "Drain extra liquid and let chicken cool."
+        ],
+        makeSteps: [
+          "Put cooked chicken and egg into a food processor.",
+          "Blend until it forms a thick paste.",
+          "Use clean hands or a spoon to roll tiny pea-sized balls.",
+          "Place the balls on a parchment-lined baking tray.",
+          "Bake at 250°F for 45–60 minutes, until firm.",
+          "Let treats cool completely before storing."
+        ],
+        look: "Tiny, firm, bite-sized pieces. They should not be wet or sticky.",
+        use: "Use 4–8 tiny pieces per puzzle session for each dog, depending on how many other treats they get that day.",
+        tip: "💙 Daddy's Tip: Make them pencil-eraser sized so Rocket and Luna can get several rewards without too many calories."
+      },
+
+      turkeyTreat: {
+        title: "🦃 Turkey Puzzle Treats",
+        subtitle: "Mild baked puzzle bites for regular enrichment days.",
+        category: ["Puzzle", "Baked", "Mild"],
+        ingredients: w => [
+          `${w} lb cooked 93% lean ground turkey`,
+          `${Math.max(1, Math.round(w))} egg(s)`,
+          "Optional: calcium supplement only if these replace part of a meal"
+        ],
+        tools: ["Slow cooker or skillet", "Food processor", "Mixing bowl", "Baking tray", "Parchment paper", "Freezer bag or Mason jar"],
+        cookSteps: w => [
+          "Cook ground turkey in the slow cooker with a splash of water, or brown it in a skillet.",
+          "Break the turkey apart while it cooks.",
+          "Turkey is done when it reaches 165°F and is no longer pink.",
+          "Drain extra liquid.",
+          "Let turkey cool before blending."
+        ],
+        makeSteps: [
+          "Put cooked turkey and egg into a food processor.",
+          "Blend until it forms a thick mixture.",
+          "Roll into tiny balls.",
+          "Place on parchment paper.",
+          "Bake at 250°F for 45–60 minutes.",
+          "Cool completely before storing."
+        ],
+        look: "Small, soft-firm bites that hold together when picked up.",
+        use: "Good for normal puzzle days or light training.",
+        tip: "💙 Daddy's Tip: Turkey treats are a good everyday choice because they are mild and easy to digest."
+      },
+
+      beefTreat: {
+        title: "🥩 Beef Jackpot Treats",
+        subtitle: "High-value treats for new puzzles, recall, or Luna's walk practice.",
+        category: ["Training", "Jackpot", "High Value"],
+        ingredients: w => [
+          `${w} lb cooked 93/7 lean ground beef`,
+          `${Math.max(1, Math.round(w))} egg(s)`,
+          "Optional: calcium supplement only if these replace part of a meal"
+        ],
+        tools: ["Slow cooker or skillet", "Food processor", "Mixing bowl", "Baking tray", "Parchment paper", "Paper towels", "Freezer bag or Mason jar"],
+        cookSteps: w => [
+          "Cook 93/7 ground beef in a skillet or slow cooker.",
+          "Break it apart as it cooks.",
+          "Beef is done when it reaches 160°F and is no longer pink.",
+          "Drain very well.",
+          "Let beef cool completely before blending."
+        ],
+        makeSteps: [
+          "Add cooked beef and egg to a food processor.",
+          "Blend into a thick paste.",
+          "Roll into very small balls.",
+          "Place on a parchment-lined tray.",
+          "Bake at 250°F for about 60 minutes.",
+          "Cool completely before storing."
+        ],
+        look: "Firm, small bites. They should not feel greasy.",
+        use: "Use sparingly as jackpot rewards because beef smells exciting and may be richer.",
+        tip: "💙 Daddy's Tip: Use beef for Luna's walk practice or when Rocket and Luna are learning a new puzzle."
+      },
+
+      salmonTreat: {
+        title: "🐟 Salmon Puzzle Treats",
+        subtitle: "Smelly, exciting treats that work well when you need extra motivation.",
+        category: ["Puzzle", "High Value", "Fish"],
+        ingredients: w => [
+          `${w} lb cooked salmon, checked carefully for bones`,
+          `${Math.max(1, Math.round(w))} egg(s)`
+        ],
+        tools: ["Baking tray", "Parchment paper", "Fork", "Mixing bowl", "Baking tray for treats", "Freezer bag or Mason jar"],
+        cookSteps: w => [
+          "Place salmon on a parchment-lined baking tray.",
+          "Bake at 375°F for 12–18 minutes, depending on thickness.",
+          "Salmon is done when it reaches 145°F and flakes easily.",
+          "Let salmon cool completely.",
+          "Check every piece carefully for bones."
+        ],
+        makeSteps: [
+          "Flake salmon into tiny pieces.",
+          "Mix with egg until it holds together.",
+          "Form tiny bites.",
+          "Bake at 250°F for 45–60 minutes.",
+          "Cool completely.",
+          "Freeze extras."
+        ],
+        look: "Small fish bites that hold together but may be slightly softer than chicken treats.",
+        use: "Use a few pieces in puzzle toys when you want Rocket and Luna extra interested.",
+        tip: "💙 Daddy's Tip: Salmon has a strong smell, so a little goes a long way."
+      },
+
+      frozenCubes: {
+        title: "🧊 Frozen Puzzle Cubes",
+        subtitle: "Cold enrichment treats for hot days, lick mats, or slow feeders.",
+        category: ["Frozen", "Summer", "Enrichment"],
+        ingredients: w => [
+          "1 cup cooked plain protein: chicken, turkey, beef, or salmon",
+          "¼ cup plain pumpkin",
+          "¼ cup plain Greek yogurt if Rocket and Luna tolerate it",
+          "Splash of water"
+        ],
+        tools: ["Blender or food processor", "Small spoon", "Mini silicone mold or ice cube tray", "Freezer bag"],
+        cookSteps: w => [
+          "Start with protein that is already fully cooked.",
+          "Make sure it is plain with no salt, butter, oil, garlic, onion, or seasoning.",
+          "Let the protein cool before blending."
+        ],
+        makeSteps: [
+          "Add cooked protein, pumpkin, yogurt if using, and a splash of water to a blender.",
+          "Blend until spoonable.",
+          "Spoon into mini silicone molds.",
+          "Freeze until solid.",
+          "Pop cubes out and store in a freezer bag."
+        ],
+        look: "Small frozen cubes, not large ice blocks.",
+        use: "Use one small cube on a lick mat, slow feeder, or puzzle toy while supervised.",
+        tip: "💙 Daddy's Tip: These can get messy, so use them when you can supervise."
+      }
+    };
+
+    let currentTreat = "chickenTreat";
+
+    function renderTreat(){
+      const weight = parseFloat(document.getElementById("treatWeight").value);
+      const treat = treats[currentTreat];
+
+      const storageSteps = [
+        "Let treats cool completely before storing.",
+        "Keep a small amount in the refrigerator for 3–4 days.",
+        "Freeze the rest for later.",
+        "Thaw frozen treats in the refrigerator before using.",
+        "Use treats as part of Rocket and Luna's daily calories, not in addition to unlimited snacks."
+      ];
+
+      document.getElementById("treatOutput").innerHTML = `
+        <div class="recipe-card">
+          <h2>${treat.title}</h2>
+          <div class="recipe-meta">${treat.subtitle}<br><b>Selected amount:</b> ${weight} lb protein</div>
+
+          <div>
+            ${treat.category.map(c => `<span class="treat-category">${c}</span>`).join("")}
+          </div>
+
+          <div class="recipe-actions">
+            <button onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
+            <button onclick="alert('Treat favorites will be added in a later version.')">⭐ Favorite</button>
+          </div>
+
+          <div class="step-card">
+            <h3>What You Need</h3>
+            ${list(treat.ingredients(weight))}
+          </div>
+
+          <div class="step-card">
+            <h3>Kitchen Tools</h3>
+            ${list(treat.tools)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 1 — Cook the Main Ingredient First</h3>
+            ${list(treat.cookSteps(weight), true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 2 — Make the Treats</h3>
+            ${list(treat.makeSteps, true)}
+          </div>
+
+          <div class="step-card">
+            <h3>Step 3 — Store the Treats</h3>
+            ${list(storageSteps, true)}
+          </div>
+
+          <div class="pink-tip">
+            🩷 What it should look like:<br>
+            ${treat.look}
+          </div>
+
+          <div class="blue-tip">
+            💙 How to use:<br>
+            ${treat.use}
+          </div>
+
+          <div class="blue-tip">${treat.tip}</div>
+
+          <p class="recipe-meta">
+            Safety reminder: Treats should stay a small part of Rocket and Luna's daily food.
+            If a treat replaces part of a balanced meal, adjust the meal amount.
+          </p>
+        </div>
+      `;
+    }
+
+    function chooseTreat(key, button){
+      currentTreat = key;
+      document.querySelectorAll("#treatTabs .tab").forEach(tab => tab.classList.remove("active"));
+      button.classList.add("active");
+      renderTreat();
+    }
+
+    function filterTreatTabs(){
+      const q = document.getElementById("treatSearch").value.toLowerCase();
+      document.querySelectorAll("#treatTabs .tab").forEach(tab=>{
+        tab.style.display = tab.dataset.keywords.includes(q) ? "" : "none";
+      });
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
       document.getElementById("mealsPage").classList.remove("active");
+      document.getElementById("treatsPage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
         renderMeal();
+    renderTreat();
+      } else if(name === "treats"){
+        document.getElementById("treatsPage").classList.add("active");
+        renderTreat();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -991,6 +1281,7 @@
     function showHome(){
       document.getElementById("page").classList.remove("active");
       document.getElementById("mealsPage").classList.remove("active");
+      document.getElementById("treatsPage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
@@ -1000,6 +1291,7 @@
     });
 
     renderMeal();
+    renderTreat();
   </script>
 
 </body>
