@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.5</title>
+  <title>Rocket & Luna Headquarters v2.5.6</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -523,6 +523,43 @@
     }
     .danger-btn{background:#ef4444!important}
 
+
+    .life-form{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin:12px 0;
+    }
+    .life-form select,
+    .life-form input,
+    .life-form textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      font-size:17px;
+      background:white;
+      color:var(--ink);
+      -webkit-user-select:text;
+      user-select:text;
+      pointer-events:auto;
+    }
+    .memory-entry{
+      border-bottom:1px solid var(--line);
+      padding:13px 0;
+      line-height:1.4;
+    }
+    .memory-entry:last-child{border-bottom:0}
+    .memory-entry b{font-size:17px}
+    .memory-entry span{
+      display:block;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      margin-top:2px;
+      margin-bottom:5px;
+    }
+
 </style>
 </head>
 
@@ -540,7 +577,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.5 adds the Health Center.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.6 adds the Life Book.</p>
       </div>
     </header>
 
@@ -548,7 +585,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.5</div>
+          <div class="version">v2.5.6</div>
         </div>
 
         <div class="card wide">
@@ -678,7 +715,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.5 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.6 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -711,7 +748,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.5 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            Version 2.5.6 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
             and frozen enrichment treats.
           </p>
 
@@ -743,7 +780,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.5.5 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.5.6 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -773,7 +810,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.5.5 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.5.6 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -818,6 +855,55 @@
         </div>
       </section>
 
+
+      <section id="lifePage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>📖 Life Book</h2>
+          <p class="recipe-meta">
+            Version 2.5.6 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            funny moments, and sweet little stories.
+          </p>
+
+          <div class="life-form">
+            <select id="memoryPet">
+              <option value="Both">Both</option>
+              <option value="Rocket">Rocket</option>
+              <option value="Luna">Luna</option>
+            </select>
+
+            <select id="memoryType">
+              <option value="Memory">Memory</option>
+              <option value="Milestone">Milestone</option>
+              <option value="Funny Moment">Funny Moment</option>
+              <option value="Training Win">Training Win</option>
+              <option value="Meal Note">Meal Note</option>
+              <option value="Holiday">Holiday</option>
+            </select>
+
+            <input id="memoryDate" type="date">
+            <textarea id="memoryText" rows="5" placeholder="Example: Luna finished her puzzle toy today and Rocket waited patiently."></textarea>
+
+            <button type="button" onclick="saveMemory()">Save Memory</button>
+          </div>
+
+          <div class="pink-tip">
+            🩷 Memory idea:<br>
+            Save the little things too — a good walk, a funny look, a favorite treat, or a sweet bedtime moment.
+          </div>
+
+          <div class="step-card">
+            <h3>Saved Memories</h3>
+            <div id="memoryList"></div>
+          </div>
+
+          <div class="recipe-actions">
+            <button type="button" class="danger-btn" onclick="clearMemories()">Clear Memories</button>
+          </div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -841,11 +927,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.5.",
+        text: "Treat Kitchen is now active in Version 2.5.6.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.5.5",
+        title: "📅 Meal Prep Planner — Coming in v2.5.6",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1503,6 +1589,65 @@
       }
     }
 
+
+    function getMemories(){
+      try{
+        return JSON.parse(localStorage.getItem("rocketLunaMemories") || "[]");
+      }catch(e){
+        return [];
+      }
+    }
+
+    function setMemories(memories){
+      localStorage.setItem("rocketLunaMemories", JSON.stringify(memories));
+    }
+
+    function saveMemory(){
+      const pet = document.getElementById("memoryPet").value;
+      const type = document.getElementById("memoryType").value;
+      const date = document.getElementById("memoryDate").value || new Date().toISOString().slice(0,10);
+      const text = document.getElementById("memoryText").value.trim();
+
+      if(!text){
+        alert("Write a memory first.");
+        return;
+      }
+
+      const memories = getMemories();
+      memories.unshift({pet,type,date,text});
+      setMemories(memories);
+
+      document.getElementById("memoryText").value = "";
+      renderMemories();
+    }
+
+    function renderMemories(){
+      const list = document.getElementById("memoryList");
+      if(!list) return;
+
+      const memories = getMemories();
+
+      if(memories.length === 0){
+        list.innerHTML = "<p class='recipe-meta'>No memories saved yet.</p>";
+        return;
+      }
+
+      list.innerHTML = memories.map(memory =>
+        '<div class="memory-entry">' +
+          '<b>' + memory.pet + ' — ' + memory.type + '</b>' +
+          '<span>' + memory.date + '</span>' +
+          '<div>' + memory.text + '</div>' +
+        '</div>'
+      ).join("");
+    }
+
+    function clearMemories(){
+      if(confirm("Clear all saved Life Book memories from this phone?")){
+        localStorage.removeItem("rocketLunaMemories");
+        renderMemories();
+      }
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
@@ -1510,6 +1655,7 @@
       document.getElementById("treatsPage").classList.remove("active");
       document.getElementById("plannerPage").classList.remove("active");
       document.getElementById("healthPage").classList.remove("active");
+      document.getElementById("lifePage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
@@ -1525,6 +1671,9 @@
       } else if(name === "health"){
         document.getElementById("healthPage").classList.add("active");
         renderHealthEntries();
+      } else if(name === "life"){
+        document.getElementById("lifePage").classList.add("active");
+        renderMemories();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -1542,6 +1691,7 @@
       document.getElementById("treatsPage").classList.remove("active");
       document.getElementById("plannerPage").classList.remove("active");
       document.getElementById("healthPage").classList.remove("active");
+      document.getElementById("lifePage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
