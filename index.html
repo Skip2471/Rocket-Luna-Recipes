@@ -1,240 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<title>Rocket & Luna Recipes</title>
-
-<!-- iPhone Home Screen Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.PNG">
-
-<!-- Browser Icon -->
-<link rel="icon" type="image/PNG" sizes="512x512" href="apple-touch-icon.PNG">
-<link rel="icon" type="image/PNG" sizes="192x192" href="apple-touch-icon.PNG">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Recipes">
-
-<style>
-  
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #fff3f8;
-    color: #102a72;
-  }
-  header {
-    background: linear-gradient(135deg, #1428c8, #ff7ab8);
-    color: white;
-    text-align: center;
-    padding: 35px 20px;
-    border-bottom-left-radius: 35px;
-    border-bottom-right-radius: 35px;
-  }
-  h1 { margin: 0; font-size: 34px; }
-  .container { padding: 18px; max-width: 700px; margin: auto; }
-  .card {
-    background: white;
-    border-radius: 22px;
-    padding: 18px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  }
-  label {
-    font-weight: bold;
-    display: block;
-    margin-top: 12px;
-  }
-  select {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
-    border: 2px solid #d7d7f5;
-    font-size: 18px;
-    margin-top: 6px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 12px;
-  }
-  th, td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    text-align: left;
-  }
-  th { background: #f1f3ff; }
-  .note {
-    background: #fff8d9;
-    border-left: 6px solid #ffcc00;
-    padding: 12px;
-    border-radius: 12px;
-    font-size: 15px;
-  }
-  .steps li { margin-bottom: 10px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Rocket & Luna Recipes</title>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#2563eb" />
+  <style>
+    :root{
+      --blue:#2563eb; --pink:#ec4899; --bg:#f8fafc; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; --green:#16a34a; --orange:#f97316;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.45;padding-bottom:90px}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff;padding:22px 16px 18px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+    header h1{margin:0;font-size:30px;letter-spacing:.3px} header p{margin:6px 0 0;font-size:16px;opacity:.95}
+    main{max-width:760px;margin:0 auto;padding:16px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btn{border:0;border-radius:18px;padding:18px 12px;font-size:20px;font-weight:800;color:#fff;box-shadow:0 5px 12px rgba(0,0,0,.12);min-height:74px}.btn:active{transform:scale(.98)}
+    .blue{background:var(--blue)}.pink{background:var(--pink)}.green{background:var(--green)}.orange{background:var(--orange)}.dark{background:#374151}.purple{background:#7c3aed}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:14px 0;box-shadow:0 3px 10px rgba(0,0,0,.05)}
+    h2{font-size:28px;margin:6px 0 12px}.section-title{font-size:23px;margin:4px 0 10px;font-weight:900}.muted{color:var(--muted);font-size:16px}
+    select,input,textarea{width:100%;font-size:20px;padding:14px;border:2px solid var(--line);border-radius:14px;background:#fff;margin:8px 0 12px}textarea{min-height:90px}
+    .recipe-list button,.smallbtn{width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px;margin:8px 0;font-size:20px;font-weight:800;color:var(--text)}
+    .smallbtn{text-align:center;background:#eef2ff}.row{display:flex;gap:10px}.row>*{flex:1}.hidden{display:none}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#1e40af;font-weight:800;font-size:15px;margin:3px}
+    ul,ol{padding-left:24px}li{margin:7px 0}.footer-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px;display:flex;gap:8px;z-index:20}.footer-nav button{flex:1;border:0;border-radius:14px;padding:12px 6px;font-size:16px;font-weight:800;color:#fff;background:#4b5563}
+    .check{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.check input{width:24px;height:24px;margin:0}.check span{font-size:19px}.done{text-decoration:line-through;color:var(--muted)}
+    .note{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:12px;margin-top:10px}.danger{background:#fef2f2;border-color:#fecaca}.big{font-size:22px;font-weight:900}.recipePhoto{width:100%;max-height:260px;object-fit:cover;border-radius:16px;border:1px solid var(--line);display:none;margin-top:8px}
+  </style>
 </head>
-
 <body>
-<header>
-  <h1>Rocket & Luna Recipes</h1>
-  <p>Slow cooker meals, amounts, and instructions</p>
-</header>
+<header><h1>🐶 Rocket & Luna</h1><p>Meals • Treat Kitchen • Daily Care</p></header>
+<main>
+  <section id="home">
+    <div class="card"><h2>Good Morning, Daddy!</h2><p class="muted">Pick what you want to make or track today.</p></div>
+    <div class="grid">
+      <button class="btn blue" onclick="show('meals')">🍽️ Meals</button>
+      <button class="btn pink" onclick="show('treats')">🍪 Treat Kitchen</button>
+      <button class="btn green" onclick="show('planner')">📅 Meal Prep</button>
+      <button class="btn orange" onclick="show('shopping')">🛒 Shopping List</button>
+      <button class="btn purple" onclick="show('daily')">🐾 Daily Care</button>
+      <button class="btn dark" onclick="show('notes')">📝 Notes</button>
+    </div>
+  </section>
 
-<div class="container">
+  <section id="meals" class="hidden"><h2>🍽️ Meals</h2><div class="recipe-list" id="mealButtons"></div></section>
+  <section id="treats" class="hidden"><h2>🍪 Treat Kitchen</h2><div class="recipe-list" id="treatButtons"></div></section>
 
-  <div class="card">
-    <label for="recipe">Choose Recipe</label>
-    <select id="recipe" onchange="updateRecipe()">
-      <option value="chicken">Chicken Thighs</option>
-      <option value="turkey">Ground Turkey</option>
-      <option value="beef">Lean Ground Beef 93/7</option>
-      <option value="chickenEggs">Chicken Thighs + Scrambled Eggs</option>
-    </select>
+  <section id="recipe" class="hidden">
+    <div class="card">
+      <h2 id="recipeTitle"></h2><div id="recipeTags"></div>
+      <label class="big">Choose meat amount</label><select id="weightSelect" onchange="renderRecipe()"><option value="1">1 lb</option><option value="1.5">1.5 lb</option><option value="2">2 lb</option><option value="2.5">2.5 lb</option><option value="3">3 lb</option></select>
+      <div class="section-title">Ingredients</div><ul id="ingredients"></ul>
+      <div class="section-title">Instructions</div><ol id="instructions"></ol>
+      <div class="section-title">Storage</div><p id="storage"></p>
+      <div class="note"><b>Reminder:</b> Homemade diets and supplements should be checked with your vet, especially calcium and multivitamin amounts.</div>
+    </div>
+  </section>
 
-    <label for="weight">Choose Meat Amount</label>
-    <select id="weight" onchange="updateRecipe()">
-      <option value="1">1 pound</option>
-      <option value="1.5">1.5 pounds</option>
-      <option value="2">2 pounds</option>
-      <option value="2.5">2.5 pounds</option>
-      <option value="3">3 pounds</option>
-    </select>
-  </div>
+  <section id="planner" class="hidden">
+    <div class="card"><h2>📅 Meal Prep Planner</h2><label>Plan for</label><select id="weeks" onchange="planPrep()"><option value="1">1 week</option><option value="2">2 weeks</option><option value="4">1 month</option></select><label>Daily cooked food per dog</label><select id="cups" onchange="planPrep()"><option value="0.75">¾ cup each</option><option value="1" selected>1 cup each</option><option value="1.25">1¼ cups each</option><option value="1.5">1½ cups each</option></select><div id="prepOutput"></div></div>
+  </section>
 
-  <div class="card">
-    <h2 id="recipeTitle"></h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Ingredient</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody id="amounts"></tbody>
-    </table>
-  </div>
+  <section id="shopping" class="hidden"><div class="card"><h2>🛒 Shopping List</h2><div id="shopList"></div><button class="smallbtn" onclick="resetShopping()">Reset Checklist</button></div></section>
 
-  <div class="card">
-    <h2>Slow Cooker Instructions</h2>
-    <ol class="steps" id="steps"></ol>
-  </div>
+  <section id="daily" class="hidden"><div class="card"><h2>🐾 Daily Care Dashboard</h2><p class="muted">Tap each item as you finish it.</p><div id="dailyList"></div><button class="smallbtn" onclick="resetDaily()">Reset Today</button></div></section>
 
-  <div class="card note">
-    <strong>Important:</strong> This app is for tracking your recipes. For daily long-term feeding, confirm the calcium supplement and multivitamin dose with your vet or the product label.
-  </div>
-
-</div>
-
+  <section id="notes" class="hidden"><div class="card"><h2>📝 Notes</h2><label>Rocket notes</label><textarea id="rocketNotes" oninput="saveNotes()" placeholder="Rocket loved the beef treats..."></textarea><label>Luna notes</label><textarea id="lunaNotes" oninput="saveNotes()" placeholder="Luna finished the puzzle in 8 minutes..."></textarea></div></section>
+</main>
+<div class="footer-nav"><button onclick="show('home')">Home</button><button onclick="show('meals')">Meals</button><button onclick="show('treats')">Treats</button><button onclick="show('daily')">Care</button></div>
 <script>
-const recipes = {
-  chicken: {
-    title: "Chicken Thighs Recipe",
-    meat: "Boneless, skinless chicken thighs",
-    eggs: false,
-    steps: [
-      "Trim extra fat from the chicken thighs.",
-      "Place chicken thighs in the slow cooker.",
-      "Add water.",
-      "Cook on LOW for 4–6 hours, until fully cooked and easy to shred.",
-      "Shred the chicken very well.",
-      "Stir in cooked white rice and frozen vegetables.",
-      "Let everything cool completely.",
-      "Add calcium supplement and multivitamin only after the food has cooled.",
-      "Store in the refrigerator for 3–4 days or freeze extra portions."
-    ]
-  },
-  turkey: {
-    title: "Ground Turkey Recipe",
-    meat: "Ground turkey",
-    eggs: false,
-    steps: [
-      "Place ground turkey in the slow cooker.",
-      "Break it up with a spoon.",
-      "Add water.",
-      "Cook on LOW for 3–4 hours, stirring halfway if possible.",
-      "Make sure turkey is fully cooked with no pink remaining.",
-      "Stir in cooked white rice and frozen vegetables.",
-      "Let everything cool completely.",
-      "Add calcium supplement and multivitamin only after the food has cooled.",
-      "Store in the refrigerator for 3–4 days or freeze extra portions."
-    ]
-  },
-  beef: {
-    title: "Lean Ground Beef 93/7 Recipe",
-    meat: "Lean ground beef 93/7",
-    eggs: false,
-    steps: [
-      "Place lean ground beef in the slow cooker.",
-      "Break it up with a spoon.",
-      "Add water.",
-      "Cook on LOW for 3–4 hours, stirring halfway if possible.",
-      "Make sure beef is fully cooked with no pink remaining.",
-      "Drain extra grease if needed.",
-      "Stir in cooked white rice and frozen vegetables.",
-      "Let everything cool completely.",
-      "Add calcium supplement and multivitamin only after the food has cooled.",
-      "Store in the refrigerator for 3–4 days or freeze extra portions."
-    ]
-  },
-  chickenEggs: {
-    title: "Chicken Thighs + Scrambled Eggs Recipe",
-    meat: "Boneless, skinless chicken thighs",
-    eggs: true,
-    steps: [
-      "Trim extra fat from the chicken thighs.",
-      "Place chicken thighs in the slow cooker.",
-      "Add water.",
-      "Cook on LOW for 4–6 hours, until fully cooked and easy to shred.",
-      "Shred the chicken very well.",
-      "Scramble the eggs separately with no butter, oil, salt, or seasoning.",
-      "Stir in cooked white rice, frozen vegetables, and scrambled eggs.",
-      "Let everything cool completely.",
-      "Add calcium supplement and multivitamin only after the food has cooled.",
-      "Store in the refrigerator for 3–4 days or freeze extra portions."
-    ]
-  }
+const recipes={
+ meals:[
+  {name:'Chicken Thighs + Rice',tags:['Slow Cooker','Meal'],base:['1 lb boneless skinless chicken thighs','1 cup cooked white rice','1 cup frozen vegetables','1 to 1.5 cups water','Calcium supplement as directed','Canine multivitamin as directed'],steps:['Add chicken and water to slow cooker.','Cook on LOW 4–6 hours or until fully cooked.','Shred chicken very well.','Stir in cooked rice and vegetables.','Cool before adding supplements.','Portion into Mason jars or freezer containers.'],storage:'Refrigerate 3–4 days or freeze up to 2–3 months.'},
+  {name:'Ground Turkey + Rice',tags:['Slow Cooker','Meal'],base:['1 lb 93% lean ground turkey','1 cup cooked white rice','1 cup frozen vegetables','1 to 1.5 cups water','Calcium supplement as directed','Canine multivitamin as directed'],steps:['Add turkey and water to slow cooker.','Cook on LOW 3–5 hours, breaking meat apart halfway if possible.','Stir in rice and vegetables.','Cool completely before adding supplements.','Portion and store.'],storage:'Refrigerate 3–4 days or freeze up to 2–3 months.'},
+  {name:'Lean Beef 93/7 + Rice',tags:['Slow Cooker','Meal'],base:['1 lb 93/7 lean ground beef','1 cup cooked white rice','1 cup frozen vegetables','1 to 1.5 cups water','Calcium supplement as directed','Canine multivitamin as directed'],steps:['Add beef and water to slow cooker.','Cook on LOW 3–5 hours.','Break beef into small pieces and drain excess grease if needed.','Add rice and vegetables.','Cool before adding supplements.','Portion and freeze.'],storage:'Refrigerate 3–4 days or freeze up to 2–3 months.'},
+  {name:'Chicken + Scrambled Egg',tags:['Meal','Protein Boost'],base:['1 lb cooked chicken thighs','1 cup cooked white rice','1 cup frozen vegetables','1 scrambled egg','Calcium supplement as directed','Canine multivitamin as directed'],steps:['Cook chicken fully and shred.','Scramble egg plain with no butter, oil, salt, or seasoning.','Mix chicken, rice, vegetables, and egg.','Cool before adding supplements.','Portion for Rocket and Luna.'],storage:'Refrigerate 3–4 days or freeze up to 2–3 months.'},
+  {name:'Salmon + Rice',tags:['Meal','Omega-3'],base:['1 lb fully cooked boneless salmon','1 cup cooked white rice','1 cup frozen vegetables','Calcium supplement as directed','Canine multivitamin as directed'],steps:['Cook salmon fully with no seasoning.','Check very carefully for bones.','Flake salmon into tiny pieces.','Mix with rice and vegetables.','Cool before adding supplements.'],storage:'Refrigerate 2–3 days or freeze up to 2 months.'}
+ ],
+ treats:[
+  {name:'Chicken Puzzle Treats',tags:['Puzzle','Baked'],base:['1 lb cooked chicken','1 egg','Calcium supplement as directed','Optional multivitamin as directed'],steps:['Blend cooked chicken and egg into a thick paste.','Roll into pea-sized balls.','Place on parchment-lined tray.','Bake at 250°F for 45–60 minutes until firm.','Cool completely before storing.'],storage:'Refrigerate up to 5 days or freeze up to 3 months.'},
+  {name:'Turkey Puzzle Treats',tags:['Puzzle','Training'],base:['1 lb cooked 93% lean ground turkey','1 egg','Calcium supplement as directed','Optional multivitamin as directed'],steps:['Mix cooked turkey and egg until it holds together.','Roll into tiny pea-sized pieces.','Bake at 250°F for 45–60 minutes.','Cool completely.','Use in puzzle toys or training.'],storage:'Refrigerate up to 5 days or freeze up to 3 months.'},
+  {name:'Beef Puzzle Treats',tags:['Jackpot','Strong Smell'],base:['1 lb cooked 93/7 lean ground beef','1 egg','Calcium supplement as directed','Optional multivitamin as directed'],steps:['Drain cooked beef well.','Blend or mash with egg.','Roll very small pieces.','Bake at 250°F for about 60 minutes.','Cool and freeze in small bags.'],storage:'Refrigerate up to 5 days or freeze up to 3 months.'},
+  {name:'Salmon Puzzle Treats',tags:['Jackpot','Omega-3'],base:['1 lb cooked boneless salmon','1 egg'],steps:['Check salmon carefully for bones.','Mash salmon with egg.','Roll into very small pieces.','Bake at 250°F for 45–60 minutes.','Use only a few pieces per session because salmon is rich.'],storage:'Refrigerate 2–3 days or freeze up to 2 months.'},
+  {name:'Frozen Puzzle Cubes',tags:['Frozen','Summer'],base:['1 cup cooked chicken','1/4 cup plain pumpkin','1/4 cup plain Greek yogurt','Splash of water'],steps:['Blend all ingredients smooth.','Pour into mini silicone molds.','Freeze until solid.','Use one small cube in a puzzle, slow feeder, or lick mat.'],storage:'Freeze up to 2 months.'},
+  {name:'Pumpkin Training Bites',tags:['Training','Pumpkin'],base:['1 cup cooked turkey or chicken','1/4 cup plain pumpkin','1 egg'],steps:['Blend into thick mixture.','Spread thin on parchment.','Bake at 250°F for 45–60 minutes.','Cut into tiny squares.'],storage:'Refrigerate 4–5 days or freeze up to 3 months.'},
+  {name:'Peanut Butter Treats',tags:['Special Treat'],base:['1 cup oat flour','1/4 cup dog-safe peanut butter','1 egg','Water as needed'],steps:['Use peanut butter with no xylitol.','Mix into soft dough.','Roll thin and cut small.','Bake at 300°F for 20–25 minutes.'],storage:'Refrigerate 1 week or freeze up to 3 months.'}
+ ]
 };
-
-function niceNumber(num) {
-  return Number.isInteger(num) ? num : num.toFixed(1);
-}
-
-function updateRecipe() {
-  const recipeKey = document.getElementById("recipe").value;
-  const pounds = parseFloat(document.getElementById("weight").value);
-  const recipe = recipes[recipeKey];
-
-  const rice = pounds * 1;
-  const veggies = pounds * 0.75;
-  const water = pounds * 0.75;
-  const calciumMg = pounds * 1000;
-  const eggs = Math.round(pounds * 1);
-
-  document.getElementById("recipeTitle").textContent = recipe.title + " — " + pounds + " lb";
-
-  let rows = `
-    <tr><td>${recipe.meat}</td><td>${pounds} lb</td></tr>
-    <tr><td>Cooked white rice</td><td>${niceNumber(rice)} cup${rice > 1 ? "s" : ""}</td></tr>
-    <tr><td>Frozen vegetables</td><td>${niceNumber(veggies)} cup${veggies > 1 ? "s" : ""}</td></tr>
-    <tr><td>Water</td><td>${niceNumber(water)} cup${water > 1 ? "s" : ""}</td></tr>
-    <tr><td>Calcium supplement</td><td>Follow label/vet dose. Tracking estimate: about ${calciumMg.toLocaleString()} mg elemental calcium for this batch.</td></tr>
-    <tr><td>Dog multivitamin</td><td>Follow product label for Rocket & Luna’s size and daily serving.</td></tr>
-  `;
-
-  if (recipe.eggs) {
-    rows += `<tr><td>Scrambled eggs</td><td>${eggs} egg${eggs > 1 ? "s" : ""}</td></tr>`;
-  }
-
-  document.getElementById("amounts").innerHTML = rows;
-
-  document.getElementById("steps").innerHTML = recipe.steps
-    .map(step => `<li>${step}</li>`)
-    .join("");
-}
-
-updateRecipe();
+let currentType='meals',currentIndex=0;
+function show(id){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden'); if(id==='planner')planPrep(); if(id==='shopping')renderShopping(); if(id==='daily')renderDaily(); window.scrollTo(0,0)}
+function makeButtons(){['meals','treats'].forEach(type=>{const box=document.getElementById(type==='meals'?'mealButtons':'treatButtons');box.innerHTML='';recipes[type].forEach((r,i)=>{const b=document.createElement('button');b.innerHTML=r.name;b.onclick=()=>openRecipe(type,i);box.appendChild(b)})})}
+function openRecipe(type,i){currentType=type;currentIndex=i;document.getElementById('weightSelect').style.display=type==='treats'?'block':'block';show('recipe');renderRecipe()}
+function renderRecipe(){const r=recipes[currentType][currentIndex];const w=parseFloat(document.getElementById('weightSelect').value);document.getElementById('recipeTitle').textContent=r.name;document.getElementById('recipeTags').innerHTML=r.tags.map(t=>`<span class="pill">${t}</span>`).join('');document.getElementById('ingredients').innerHTML=r.base.map(item=>`<li>${scaleLine(item,w)}</li>`).join('');document.getElementById('instructions').innerHTML=r.steps.map(s=>`<li>${s}</li>`).join('');document.getElementById('storage').textContent=r.storage}
+function scaleLine(line,w){return line.replace(/^1 lb/,w+' lb').replace(/^1 cup/,w+' cup').replace(/^1\.5 cups/,1.5*w+' cups').replace(/^1 to 1\.5 cups/,(1*w)+' to '+(1.5*w)+' cups').replace(/^1 egg/,Math.max(1,Math.round(w))+' egg(s)').replace(/^1\/4 cup/,(0.25*w).toFixed(2)+' cup')}
+function planPrep(){const weeks=+document.getElementById('weeks').value,cups=+document.getElementById('cups').value;const totalCups=weeks*7*cups*2;const meat=(totalCups*.45/2).toFixed(1);const rice=(totalCups*.3).toFixed(1);const veg=(totalCups*.25).toFixed(1);const jars=Math.ceil(totalCups/2);document.getElementById('prepOutput').innerHTML=`<div class="note"><p><b>Total food:</b> about ${totalCups.toFixed(1)} cups</p><p><b>Meat:</b> about ${meat} lb</p><p><b>Cooked rice:</b> about ${rice} cups</p><p><b>Vegetables:</b> about ${veg} cups</p><p><b>Mason jars:</b> about ${jars} pint jars if each holds 2 cups</p></div>`}
+const shopping=['Chicken thighs','Ground turkey 93% lean','Lean ground beef 93/7','Salmon','White rice','Frozen vegetables','Eggs','Plain pumpkin','Plain Greek yogurt','Dog-safe peanut butter','Calcium supplement','Canine multivitamin','Parchment paper','Mini silicone molds','Mason jars'];
+function renderShopping(){const saved=JSON.parse(localStorage.shop||'{}');document.getElementById('shopList').innerHTML=shopping.map((x,i)=>`<label class="check"><input type="checkbox" ${saved[i]?'checked':''} onchange="toggleShop(${i},this.checked)"><span class="${saved[i]?'done':''}">${x}</span></label>`).join('')}
+function toggleShop(i,v){const s=JSON.parse(localStorage.shop||'{}');s[i]=v;localStorage.shop=JSON.stringify(s);renderShopping()}function resetShopping(){localStorage.removeItem('shop');renderShopping()}
+const daily=['Rocket breakfast','Luna breakfast','Fresh water','Rocket dinner','Luna dinner','Potty breaks','Brush coat','Brush teeth','Puzzle toy time','Luna walk-reactivity practice','Rocket cuddle time','Luna belly rubs'];
+function renderDaily(){const saved=JSON.parse(localStorage.daily||'{}');document.getElementById('dailyList').innerHTML=daily.map((x,i)=>`<label class="check"><input type="checkbox" ${saved[i]?'checked':''} onchange="toggleDaily(${i},this.checked)"><span class="${saved[i]?'done':''}">${x}</span></label>`).join('')}
+function toggleDaily(i,v){const s=JSON.parse(localStorage.daily||'{}');s[i]=v;localStorage.daily=JSON.stringify(s);renderDaily()}function resetDaily(){localStorage.removeItem('daily');renderDaily()}
+function saveNotes(){localStorage.rocketNotes=document.getElementById('rocketNotes').value;localStorage.lunaNotes=document.getElementById('lunaNotes').value}function loadNotes(){document.getElementById('rocketNotes').value=localStorage.rocketNotes||'';document.getElementById('lunaNotes').value=localStorage.lunaNotes||''}
+makeButtons();loadNotes();
 </script>
-
 </body>
 </html>
