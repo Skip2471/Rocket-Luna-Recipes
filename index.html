@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.3</title>
+  <title>Rocket & Luna Headquarters v2.5.4</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -419,6 +419,14 @@
       font-size:13px;
     }
 
+    .planner-results{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .shopping-check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-weight:800;color:#344054}
+    .shopping-check:last-child{border-bottom:0}
+    .shopping-check input{width:22px;height:22px;flex:0 0 auto;accent-color:var(--green)}
+    .mini-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .mini-stat{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:13px}
+    .mini-stat b{display:block;font-size:20px;margin-bottom:2px}
+    .mini-stat span{color:var(--muted);font-weight:800;font-size:13px}
     .recipe-actions{
       display:flex;
       gap:10px;
@@ -495,7 +503,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.3 adds the Treat Kitchen section.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.4 adds the Meal Prep Planner.</p>
       </div>
     </header>
 
@@ -503,7 +511,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.3</div>
+          <div class="version">v2.5.4</div>
         </div>
 
         <div class="card wide">
@@ -633,7 +641,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.3 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.4 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -666,7 +674,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.3 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            Version 2.5.4 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
             and frozen enrichment treats.
           </p>
 
@@ -693,6 +701,34 @@
         </div>
       </section>
 
+
+      <section id="plannerPage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+        <div class="card recipe-card">
+          <h2>📅 Meal Prep Planner</h2>
+          <p class="recipe-meta">Version 2.5.4 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <div class="meal-controls">
+            <select id="plannerProtein" onchange="renderPlanner()">
+              <option value="chicken">Chicken</option>
+              <option value="turkey">Ground Turkey</option>
+              <option value="beef">Lean Ground Beef</option>
+              <option value="salmon">Salmon</option>
+            </select>
+            <select id="plannerWeeks" onchange="renderPlanner()">
+              <option value="1">1 week</option>
+              <option value="2">2 weeks</option>
+              <option value="4">1 month</option>
+            </select>
+            <select id="plannerJars" onchange="renderPlanner()">
+              <option value="2">2 jars per day</option>
+              <option value="3">3 jars per day</option>
+              <option value="4">4 jars per day</option>
+            </select>
+          </div>
+          <div id="plannerOutput"></div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -716,7 +752,7 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.3.",
+        text: "Treat Kitchen is now active in Version 2.5.4.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
@@ -1007,6 +1043,7 @@
       button.classList.add("active");
       renderMeal();
     renderTreat();
+    renderPlanner();
     }
 
     function filterMealTabs(){
@@ -1254,19 +1291,87 @@
       });
     }
 
+
+    const plannerProteins = {
+      chicken:{label:"Chicken",water:0.5,rice:1.25,veg:0.75,note:"Good everyday protein. Easy to shred and mix."},
+      turkey:{label:"Ground Turkey",water:0.5,rice:1.25,veg:0.75,note:"Stir halfway through cooking so it does not stay in one block."},
+      beef:{label:"Lean Ground Beef 93/7",water:0.35,rice:1.25,veg:0.75,note:"Drain very well after cooking so meals are not greasy."},
+      salmon:{label:"Salmon",water:0,rice:1.25,veg:0.75,note:"Bake separately and check carefully for bones before mixing."}
+    };
+
+    function renderPlanner(){
+      const p = plannerProteins[document.getElementById("plannerProtein").value];
+      const weeks = parseInt(document.getElementById("plannerWeeks").value,10);
+      const jarsPerDay = parseInt(document.getElementById("plannerJars").value,10);
+      const days = weeks * 7;
+      const jars = days * jarsPerDay;
+      const proteinLb = round(weeks * 3);
+      const riceCups = round(proteinLb * p.rice);
+      const vegCups = round(proteinLb * p.veg);
+      const waterCups = round(proteinLb * p.water);
+
+      const shopping = [
+        proteinLb + " lb " + p.label,
+        riceCups + " cups cooked white rice",
+        vegCups + " cups cooked plain frozen vegetables",
+        waterCups > 0 ? waterCups + " cups water for cooking protein" : "No water needed for baking salmon",
+        "Calcium supplement",
+        "Canine multivitamin",
+        jars + " clean wide-mouth Mason jars",
+        "Freezer labels or masking tape",
+        "Marker for dates"
+      ];
+
+      const prep = [
+        "Cook the protein separately.",
+        "Cook the rice separately.",
+        "Cook the vegetables separately.",
+        "Mix protein, rice, and vegetables in a large bowl.",
+        "Let everything cool until warm or room temperature.",
+        "Add calcium and multivitamin according to the product labels.",
+        "Portion into Mason jars.",
+        "Refrigerate 3–4 days' worth.",
+        "Freeze the rest.",
+        "Label jars with protein and date."
+      ];
+
+      document.getElementById("plannerOutput").innerHTML =
+        '<div class="planner-results">' +
+        '<div class="mini-stat-grid">' +
+        '<div class="mini-stat"><b>'+days+'</b><span>days planned</span></div>' +
+        '<div class="mini-stat"><b>'+jars+'</b><span>estimated jars</span></div>' +
+        '<div class="mini-stat"><b>'+proteinLb+' lb</b><span>'+p.label+'</span></div>' +
+        '<div class="mini-stat"><b>'+riceCups+' cups</b><span>cooked rice</span></div>' +
+        '</div>' +
+        '<div class="blue-tip">💙 Planner Note:<br>This is a starter estimate. We can fine-tune it later based on Rocket and Luna\'s exact daily portions.</div>' +
+        '<div class="step-card"><h3>Shopping List</h3>' +
+        shopping.map(x=>'<label class="shopping-check"><input type="checkbox"><span>'+x+'</span></label>').join("") +
+        '</div>' +
+        '<div class="step-card"><h3>Beginner Prep Order</h3>' + list(prep,true) + '</div>' +
+        '<div class="pink-tip">🩷 Freezer Plan:<br>Keep only 3–4 days of food in the refrigerator. Freeze the rest in labeled Mason jars. Thaw one jar at a time in the refrigerator before using.</div>' +
+        '<div class="blue-tip">💙 Daddy\'s Tip:<br>'+p.note+'</div>' +
+        '</div>';
+    }
+
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
       document.getElementById("mealsPage").classList.remove("active");
       document.getElementById("treatsPage").classList.remove("active");
+      document.getElementById("plannerPage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
         renderMeal();
     renderTreat();
+    renderPlanner();
       } else if(name === "treats"){
         document.getElementById("treatsPage").classList.add("active");
         renderTreat();
+      } else if(name === "planner"){
+        document.getElementById("plannerPage").classList.add("active");
+        renderPlanner();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -1282,6 +1387,7 @@
       document.getElementById("page").classList.remove("active");
       document.getElementById("mealsPage").classList.remove("active");
       document.getElementById("treatsPage").classList.remove("active");
+      document.getElementById("plannerPage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
@@ -1292,6 +1398,7 @@
 
     renderMeal();
     renderTreat();
+    renderPlanner();
   </script>
 
 </body>
