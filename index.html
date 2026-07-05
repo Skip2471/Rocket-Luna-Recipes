@@ -1,64 +1,653 @@
 <!DOCTYPE html>
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rocket & Luna Headquarters v2.5</title>
-<link rel="apple-touch-icon" href="apple-touch-icon.PNG">
-<style>
-body{font-family:-apple-system,sans-serif;background:#f5f7ff;margin:0}
-header{background:linear-gradient(135deg,#4d78ff,#8f70ff,#ff7fc8);color:#fff;padding:20px;text-align:center}
-.hero{display:flex;justify-content:center;align-items:center;gap:12px}
-.hero img{width:72px;height:72px;border-radius:50%;border:4px solid #fff}
-.card{background:#fff;margin:16px;padding:16px;border-radius:18px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
-h2{margin-top:0}
-</style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Rocket & Luna Headquarters v2.5.1</title>
+  <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
+  <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#5d7dfb">
+
+  <style>
+    :root{
+      --blue:#2563eb;
+      --rocket:#0b5cff;
+      --luna:#ff4fa3;
+      --pink:#ff7fc8;
+      --purple:#8b5cf6;
+      --bg:#f3f6ff;
+      --card:#ffffff;
+      --ink:#111827;
+      --muted:#667085;
+      --line:#e5e7f0;
+      --green:#22c55e;
+      --shadow:0 12px 30px rgba(33,45,92,.14);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#eef3ff 0%,#fff7fc 48%,#f7f8ff 100%);
+      color:var(--ink);
+      min-height:100vh;
+      padding-bottom:86px;
+    }
+
+    .app{
+      max-width:960px;
+      margin:0 auto;
+    }
+
+    header{
+      background:linear-gradient(135deg,#2563eb 0%,#8b5cf6 48%,#ff5ca8 100%);
+      color:white;
+      padding:22px 16px 24px;
+      border-radius:0 0 32px 32px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      text-align:center;
+    }
+
+    .pet-pic{
+      width:74px;
+      height:74px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid white;
+      background:white;
+      box-shadow:0 8px 18px rgba(0,0,0,.22);
+      flex:0 0 auto;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(31px,8vw,48px);
+      line-height:1.03;
+      letter-spacing:-.8px;
+      text-shadow:0 2px 8px rgba(0,0,0,.16);
+    }
+
+    .subtitle{
+      margin:8px 0 0;
+      font-size:15px;
+      font-weight:800;
+      opacity:.98;
+    }
+
+    .greeting{
+      margin-top:18px;
+      background:rgba(255,255,255,.90);
+      color:var(--ink);
+      border-radius:24px;
+      padding:16px;
+      box-shadow:0 8px 22px rgba(30,41,90,.12);
+    }
+
+    .greeting h2{
+      margin:0 0 6px;
+      font-size:22px;
+    }
+
+    .greeting p{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.35;
+    }
+
+    main{
+      padding:16px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:10px 2px 12px;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:24px;
+    }
+
+    .version{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:16px;
+      box-shadow:0 8px 24px rgba(31,41,85,.08);
+    }
+
+    .wide{
+      grid-column:1/-1;
+    }
+
+    .daily-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .pet-card{
+      border-radius:22px;
+      padding:14px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#ffffff,#f8fbff);
+    }
+
+    .pet-card.luna{
+      background:linear-gradient(180deg,#ffffff,#fff5fb);
+    }
+
+    .pet-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .mini-pic{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      object-fit:cover;
+      border:3px solid white;
+      box-shadow:0 4px 12px rgba(0,0,0,.12);
+      flex:0 0 auto;
+    }
+
+    .pet-head h3{
+      margin:0;
+      font-size:21px;
+    }
+
+    .pet-head p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .check{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:34px;
+      font-weight:800;
+      color:#344054;
+    }
+
+    .box{
+      width:23px;
+      height:23px;
+      border-radius:8px;
+      border:2px solid #b8c1dc;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:14px;
+      flex:0 0 auto;
+      background:white;
+    }
+
+    .check.done .box{
+      background:var(--green);
+      border-color:var(--green);
+    }
+
+    .check.done .box::after{
+      content:"✓";
+      font-weight:900;
+    }
+
+    .nav-card{
+      min-height:128px;
+      cursor:pointer;
+      transition:.15s transform,.15s box-shadow;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .nav-card:active{
+      transform:scale(.985);
+    }
+
+    .icon-bubble{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      background:#eef3ff;
+      flex:0 0 auto;
+    }
+
+    .nav-card h3{
+      margin:2px 0 6px;
+      font-size:20px;
+    }
+
+    .nav-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.3;
+      font-weight:650;
+    }
+
+    .blue{color:var(--rocket)}
+    .pink{color:var(--luna)}
+
+    .quick{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .quick button{
+      border:0;
+      border-radius:18px;
+      padding:13px 10px;
+      font-weight:900;
+      color:#1f2a44;
+      background:white;
+      border:1px solid var(--line);
+      box-shadow:0 6px 18px rgba(31,41,85,.07);
+      font-size:14px;
+    }
+
+    .note{
+      margin-top:14px;
+      background:#eef6ff;
+      border:1px solid #cfe4ff;
+      border-radius:22px;
+      padding:14px;
+      color:#1e3a8a;
+      font-weight:800;
+      line-height:1.35;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:50;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(12px);
+      border-top:1px solid var(--line);
+      padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    }
+
+    .bottom-nav button{
+      border:0;
+      border-radius:18px;
+      background:#4b5565;
+      color:white;
+      font-weight:900;
+      padding:11px 12px;
+      min-width:72px;
+      font-size:14px;
+    }
+
+    .placeholder{
+      display:none;
+    }
+
+    .placeholder.active{
+      display:block;
+    }
+
+    .home.hidden{
+      display:none;
+    }
+
+    .back{
+      border:0;
+      border-radius:18px;
+      padding:12px 16px;
+      color:white;
+      background:linear-gradient(135deg,var(--blue),var(--pink));
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(77,120,255,.22);
+      margin-bottom:14px;
+    }
+
+    .placeholder h2{
+      margin-top:0;
+    }
+
+    .coming-list li{
+      margin:9px 0;
+      line-height:1.35;
+    }
+
+    @media(max-width:640px){
+      .pet-pic{width:62px;height:62px}
+      header{padding-left:12px;padding-right:12px}
+      main{padding:14px}
+      .grid{grid-template-columns:1fr}
+      .daily-grid{grid-template-columns:1fr}
+      .quick{grid-template-columns:1fr}
+      .nav-card{min-height:110px}
+      .bottom-nav button{font-size:13px;min-width:66px;padding:10px 8px}
+    }
+  </style>
 </head>
+
 <body>
-<header>
-<div class="hero">
-<img src="rocket-header.png">
-<div><h1>Rocket &amp; Luna Headquarters</h1><p>Version 2.5</p></div>
-<img src="luna-header.png">
-</div>
-</header>
+  <div class="app">
+    <header>
+      <div class="hero">
+        <img src="rocket-header.png" class="pet-pic" alt="Rocket">
+        <div>
+          <h1>Rocket &amp;<br>Luna</h1>
+          <p class="subtitle">Meals • Treats • Daily Care • Life Book</p>
+        </div>
+        <img src="luna-header.png" class="pet-pic" alt="Luna">
+      </div>
 
-<div class="card">
-<h2>✅ Version 2.5 Includes</h2>
-<ul>
-<li>Rocket and Luna portrait header</li>
-<li>Beginner-friendly recipes</li>
-<li>Cook protein, rice, and vegetables separately</li>
-<li>Step-by-step cooking instructions</li>
-<li>Treat Kitchen</li>
-<li>Meal Prep Planner</li>
-<li>Shopping List section</li>
-<li>Freezer Inventory</li>
-<li>Health Records</li>
-<li>Life Book / Memories</li>
-<li>Search boxes</li>
-<li>Favorites-ready layout</li>
-<li>Daily Care Dashboard</li>
-</ul>
-</div>
+      <div class="greeting">
+        <h2>Good Morning, Daddy! 💙🩷</h2>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.1 starts the real app layout.</p>
+      </div>
+    </header>
 
-<div class="card">
-<h2>🍽️ Beginner Mode</h2>
-<p>Every recipe should follow this pattern:</p>
-<ol>
-<li>Cook the protein separately.</li>
-<li>Cook the rice separately.</li>
-<li>Cook the vegetables separately.</li>
-<li>Mix everything together.</li>
-<li>Let the food cool.</li>
-<li>Add supplements.</li>
-<li>Portion into Mason jars.</li>
-<li>Refrigerate or freeze.</li>
-</ol>
-</div>
+    <main>
+      <section id="home" class="home">
+        <div class="section-title">
+          <h2>Today’s Care</h2>
+          <div class="version">v2.5.1</div>
+        </div>
 
-<div class="card">
-<h2>🚧 Next Stop: Version 3.0</h2>
-<p>This starter file establishes the Version 2.5 structure. We'll continue building the complete Rocket &amp; Luna Headquarters with weight tracking, memories, vet records, shopping lists, and more.</p>
-</div>
+        <div class="card wide">
+          <div class="daily-grid">
+            <div class="pet-card">
+              <div class="pet-head">
+                <img src="rocket-header.png" class="mini-pic" alt="Rocket">
+                <div>
+                  <h3 class="blue">Rocket</h3>
+                  <p>Good boy checklist</p>
+                </div>
+              </div>
+              <div class="check done"><span class="box"></span>Breakfast</div>
+              <div class="check"><span class="box"></span>Dinner</div>
+              <div class="check"><span class="box"></span>Fresh water</div>
+              <div class="check"><span class="box"></span>Puzzle toy</div>
+              <div class="check"><span class="box"></span>Brush coat</div>
+            </div>
 
-</body></html>
+            <div class="pet-card luna">
+              <div class="pet-head">
+                <img src="luna-header.png" class="mini-pic" alt="Luna">
+                <div>
+                  <h3 class="pink">Luna</h3>
+                  <p>Sweet girl checklist</p>
+                </div>
+              </div>
+              <div class="check done"><span class="box"></span>Breakfast</div>
+              <div class="check"><span class="box"></span>Dinner</div>
+              <div class="check"><span class="box"></span>Fresh water</div>
+              <div class="check"><span class="box"></span>Puzzle toy</div>
+              <div class="check"><span class="box"></span>Walk practice</div>
+            </div>
+          </div>
+
+          <div class="note">
+            💙 Beginner Mode is now the rule for this app: clear steps, no guessing, and cooking directions written for someone who is still learning.
+          </div>
+        </div>
+
+        <div class="section-title">
+          <h2>Rocket &amp; Luna Headquarters</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card nav-card" onclick="showPage('meals')">
+            <div class="icon-bubble">🍽️</div>
+            <div>
+              <h3>Meals</h3>
+              <p>Beginner-friendly recipes with protein, rice, and vegetables cooked separately.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('treats')">
+            <div class="icon-bubble">🍪</div>
+            <div>
+              <h3>Treat Kitchen</h3>
+              <p>Puzzle treats, training treats, and frozen treats for enrichment.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('planner')">
+            <div class="icon-bubble">📅</div>
+            <div>
+              <h3>Meal Prep Planner</h3>
+              <p>Plan one week, two weeks, or one month of meals and jars.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('shopping')">
+            <div class="icon-bubble">🛒</div>
+            <div>
+              <h3>Shopping List</h3>
+              <p>Keep track of what to buy for meals, treats, and supplements.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('freezer')">
+            <div class="icon-bubble">🧊</div>
+            <div>
+              <h3>Freezer Inventory</h3>
+              <p>Know what is already cooked, frozen, and ready for Rocket &amp; Luna.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('health')">
+            <div class="icon-bubble">❤️</div>
+            <div>
+              <h3>Health Records</h3>
+              <p>Weight, vet visits, grooming, medications, and insurance notes.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('life')">
+            <div class="icon-bubble">📖</div>
+            <div>
+              <h3>Life Book</h3>
+              <p>Save memories, milestones, favorite photos, and sweet stories.</p>
+            </div>
+          </div>
+
+          <div class="card nav-card" onclick="showPage('favorites')">
+            <div class="icon-bubble">⭐</div>
+            <div>
+              <h3>Favorites</h3>
+              <p>Quick access to favorite recipes, treats, and care notes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <h2>Quick Actions</h2>
+        </div>
+
+        <div class="card">
+          <div class="quick">
+            <button onclick="showPage('meals')">🍽️ Start Meal</button>
+            <button onclick="showPage('treats')">🍪 Make Treats</button>
+            <button onclick="showPage('life')">📖 Add Memory</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="page" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+        <div class="card">
+          <h2 id="pageTitle">Section</h2>
+          <p id="pageText"></p>
+          <ul class="coming-list" id="pageList"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="bottom-nav">
+    <button onclick="showHome()">Home</button>
+    <button onclick="showPage('meals')">Meals</button>
+    <button onclick="showPage('treats')">Treats</button>
+    <button onclick="showPage('planner')">Planner</button>
+    <button onclick="showPage('life')">Life Book</button>
+  </div>
+
+  <script>
+    const pages = {
+      meals: {
+        title: "🍽️ Meals — Coming in v2.5.2",
+        text: "This next section will contain the full beginner-friendly meal recipes.",
+        items: [
+          "Chicken slow cooker meal",
+          "Ground turkey slow cooker meal",
+          "Lean beef slow cooker meal",
+          "Chicken + scrambled egg meal",
+          "Salmon meal",
+          "Cook protein separately",
+          "Cook rice separately",
+          "Cook vegetables separately",
+          "Cool before adding supplements",
+          "Portion into Mason jars"
+        ]
+      },
+      treats: {
+        title: "🍪 Treat Kitchen — Coming in v2.5.3",
+        text: "This section will contain homemade puzzle treats and training treats.",
+        items: [
+          "Chicken puzzle treats",
+          "Turkey puzzle treats",
+          "Beef jackpot treats",
+          "Salmon treats",
+          "Frozen puzzle cubes",
+          "Storage and freezer directions"
+        ]
+      },
+      planner: {
+        title: "📅 Meal Prep Planner — Coming in v2.5.4",
+        text: "This section will calculate food, jars, and shopping needs.",
+        items: [
+          "1 week, 2 week, and 1 month planning",
+          "Meat amount",
+          "Rice amount",
+          "Vegetable amount",
+          "Mason jar estimate",
+          "Freezer plan"
+        ]
+      },
+      shopping: {
+        title: "🛒 Shopping List",
+        text: "This will become a checklist for meal prep and treats.",
+        items: [
+          "Proteins",
+          "Rice",
+          "Frozen vegetables",
+          "Eggs",
+          "Pumpkin",
+          "Supplements",
+          "Mason jars"
+        ]
+      },
+      freezer: {
+        title: "🧊 Freezer Inventory",
+        text: "This will help track what meals and treats are already frozen.",
+        items: [
+          "Meal type",
+          "Number of jars",
+          "Date frozen",
+          "Use first reminders"
+        ]
+      },
+      health: {
+        title: "❤️ Health Records",
+        text: "This will hold important care notes for Rocket and Luna.",
+        items: [
+          "Weight tracker",
+          "Vet visits",
+          "Grooming",
+          "Medications",
+          "Insurance notes"
+        ]
+      },
+      life: {
+        title: "📖 Life Book",
+        text: "This will become Rocket and Luna's memory book.",
+        items: [
+          "Milestones",
+          "Funny moments",
+          "Favorite memories",
+          "Holiday notes",
+          "Special photos later"
+        ]
+      },
+      favorites: {
+        title: "⭐ Favorites",
+        text: "This will give quick access to the things you use most.",
+        items: [
+          "Favorite meals",
+          "Favorite treats",
+          "Favorite memories",
+          "Favorite care routines"
+        ]
+      }
+    };
+
+    function showPage(name){
+      const data = pages[name];
+      document.getElementById("home").classList.add("hidden");
+      document.getElementById("page").classList.add("active");
+      document.getElementById("pageTitle").textContent = data.title;
+      document.getElementById("pageText").textContent = data.text;
+      document.getElementById("pageList").innerHTML = data.items.map(item => "<li>" + item + "</li>").join("");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    function showHome(){
+      document.getElementById("page").classList.remove("active");
+      document.getElementById("home").classList.remove("hidden");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    document.querySelectorAll(".check").forEach(item=>{
+      item.addEventListener("click",()=>item.classList.toggle("done"));
+    });
+  </script>
+</body>
+</html>
