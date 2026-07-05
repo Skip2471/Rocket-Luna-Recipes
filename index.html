@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.6</title>
+  <title>Rocket & Luna Headquarters v2.5.7</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -560,6 +560,44 @@
       margin-bottom:5px;
     }
 
+
+    .shopping-form{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin:12px 0;
+    }
+    .shopping-form select,
+    .shopping-form input{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      font-size:17px;
+      background:white;
+      color:var(--ink);
+    }
+    .shopping-item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      border-bottom:1px solid var(--line);
+      padding:11px 0;
+      font-weight:800;
+      color:#344054;
+    }
+    .shopping-item:last-child{border-bottom:0}
+    .shopping-item input[type="checkbox"]{
+      width:24px;
+      height:24px;
+      flex:0 0 auto;
+      accent-color:var(--green);
+    }
+    .shopping-item.done span{
+      text-decoration:line-through;
+      color:var(--muted);
+    }
+
 </style>
 </head>
 
@@ -577,7 +615,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.6 adds the Life Book.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.7 fixes Shopping List and makes it usable.</p>
       </div>
     </header>
 
@@ -585,7 +623,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.6</div>
+          <div class="version">v2.5.7</div>
         </div>
 
         <div class="card wide">
@@ -715,7 +753,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.6 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.7 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -748,7 +786,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.6 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            Version 2.5.7 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
             and frozen enrichment treats.
           </p>
 
@@ -780,7 +818,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.5.6 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.5.7 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -810,7 +848,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.5.6 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.5.7 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -862,7 +900,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.5.6 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.5.7 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -904,6 +942,45 @@
         </div>
       </section>
 
+
+      <section id="shoppingPage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>🛒 Shopping List</h2>
+          <p class="recipe-meta">
+            Version 2.5.7 turns Shopping List into a working checklist. Choose a list type,
+            add your own items, and check things off while shopping.
+          </p>
+
+          <div class="shopping-form">
+            <select id="shoppingPreset" onchange="loadShoppingPreset()">
+              <option value="mealPrep">Meal Prep Basics</option>
+              <option value="treatKitchen">Treat Kitchen</option>
+              <option value="healthCare">Health & Care</option>
+            </select>
+
+            <input id="customShoppingItem" type="text" placeholder="Add custom item...">
+            <button type="button" onclick="addShoppingItem()">Add Item</button>
+          </div>
+
+          <div class="step-card">
+            <h3>Checklist</h3>
+            <div id="shoppingList"></div>
+          </div>
+
+          <div class="recipe-actions">
+            <button type="button" onclick="resetShoppingList()">Reset This List</button>
+            <button type="button" class="danger-btn" onclick="clearShoppingList()">Clear Saved List</button>
+          </div>
+
+          <div class="blue-tip">
+            💙 Daddy's Tip:<br>
+            Use this before cooking day. Check items off at the store so you do not have to remember everything.
+          </div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -927,11 +1004,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.6.",
+        text: "Treat Kitchen is now active in Version 2.5.7.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.5.6",
+        title: "📅 Meal Prep Planner — Coming in v2.5.7",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1648,6 +1725,115 @@
       }
     }
 
+
+    const shoppingPresets = {
+      mealPrep: [
+        "Chicken thighs or chicken breast",
+        "Ground turkey",
+        "Lean ground beef 93/7",
+        "Salmon",
+        "White rice",
+        "Plain frozen vegetables",
+        "Eggs",
+        "Calcium supplement",
+        "Canine multivitamin",
+        "Wide-mouth Mason jars",
+        "Freezer labels or masking tape"
+      ],
+      treatKitchen: [
+        "Chicken for puzzle treats",
+        "Ground turkey for puzzle treats",
+        "Lean beef for jackpot treats",
+        "Salmon for high-value treats",
+        "Eggs",
+        "Plain pumpkin",
+        "Plain Greek yogurt if tolerated",
+        "Parchment paper",
+        "Freezer bags",
+        "Mini silicone molds"
+      ],
+      healthCare: [
+        "Toothbrush or dental wipes",
+        "Dog toothpaste",
+        "Brush or comb",
+        "Ear wipes if needed",
+        "Paw wipes",
+        "Flea/tick prevention",
+        "Medication refill if needed",
+        "Treats for training",
+        "Poop bags"
+      ]
+    };
+
+    function getShoppingItems(){
+      try{
+        return JSON.parse(localStorage.getItem("rocketLunaShoppingItems") || "[]");
+      }catch(e){
+        return [];
+      }
+    }
+
+    function setShoppingItems(items){
+      localStorage.setItem("rocketLunaShoppingItems", JSON.stringify(items));
+    }
+
+    function loadShoppingPreset(){
+      const key = document.getElementById("shoppingPreset").value;
+      const items = shoppingPresets[key].map(text => ({text, done:false}));
+      setShoppingItems(items);
+      renderShoppingList();
+    }
+
+    function addShoppingItem(){
+      const input = document.getElementById("customShoppingItem");
+      const text = input.value.trim();
+      if(!text){
+        alert("Type an item first.");
+        return;
+      }
+      const items = getShoppingItems();
+      items.push({text, done:false});
+      setShoppingItems(items);
+      input.value = "";
+      renderShoppingList();
+    }
+
+    function toggleShoppingItem(index){
+      const items = getShoppingItems();
+      items[index].done = !items[index].done;
+      setShoppingItems(items);
+      renderShoppingList();
+    }
+
+    function renderShoppingList(){
+      const list = document.getElementById("shoppingList");
+      if(!list) return;
+
+      let items = getShoppingItems();
+      if(items.length === 0){
+        items = shoppingPresets.mealPrep.map(text => ({text, done:false}));
+        setShoppingItems(items);
+      }
+
+      list.innerHTML = items.map((item,index) =>
+        '<label class="shopping-item '+(item.done ? 'done' : '')+'">' +
+          '<input type="checkbox" '+(item.done ? 'checked' : '')+' onchange="toggleShoppingItem('+index+')">' +
+          '<span>'+item.text+'</span>' +
+        '</label>'
+      ).join("");
+    }
+
+    function resetShoppingList(){
+      loadShoppingPreset();
+    }
+
+    function clearShoppingList(){
+      if(confirm("Clear the saved shopping list from this phone?")){
+        localStorage.removeItem("rocketLunaShoppingItems");
+        renderShoppingList();
+      }
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
@@ -1656,6 +1842,7 @@
       document.getElementById("plannerPage").classList.remove("active");
       document.getElementById("healthPage").classList.remove("active");
       document.getElementById("lifePage").classList.remove("active");
+      document.getElementById("shoppingPage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
@@ -1674,6 +1861,9 @@
       } else if(name === "life"){
         document.getElementById("lifePage").classList.add("active");
         renderMemories();
+      } else if(name === "shopping"){
+        document.getElementById("shoppingPage").classList.add("active");
+        renderShoppingList();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -1692,6 +1882,7 @@
       document.getElementById("plannerPage").classList.remove("active");
       document.getElementById("healthPage").classList.remove("active");
       document.getElementById("lifePage").classList.remove("active");
+      document.getElementById("shoppingPage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
