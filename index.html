@@ -91,25 +91,486 @@
   </div>
 
 <script>
-const recipes={
-chickenMeal:{title:"🐔 Chicken Slow Cooker Meal",meta:"Main meal recipe for Rocket & Luna",cook:["Place the chicken in the slow cooker.","Add about ½ cup water per pound of chicken.","Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.","Chicken should reach 165°F internally.","Let it cool, then shred or chop before mixing with rice and vegetables."],ingredients:w=>[`${w} lb chicken`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups frozen vegetables`,`${round(w*.5)} cup water for cooking`,`Calcium supplement: follow your product label for ${w} lb of meat`,`Canine multivitamin: follow your product label`],make:["Cook the chicken fully first.","Add cooked rice and vegetables.","Mix well and let everything cool.","Add supplements according to the package directions.","Portion into Mason jars."],tip:"💙 Daddy's Tip: Cook one extra pound of chicken and save it for puzzle treats later in the week."},
-turkeyMeal:{title:"🦃 Ground Turkey Slow Cooker Meal",meta:"Lean protein meal",cook:["Add turkey to the slow cooker and break it apart with a spoon.","Add about ½ cup water per pound.","Cook on LOW for 3–4 hours or HIGH for 2 hours, stirring and breaking up halfway.","Turkey should reach 165°F internally.","Drain extra liquid if needed before mixing."],ingredients:w=>[`${w} lb 93% lean ground turkey`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups frozen vegetables`,`${round(w*.5)} cup water`,`Calcium supplement: follow your product label`,`Canine multivitamin: follow your product label`],make:["Cook turkey fully.","Mix with rice and vegetables.","Cool before adding supplements.","Portion into jars and freeze extras."],tip:"💙 Daddy's Tip: Stir turkey once or twice while cooking so it does not stay in one big block."},
-beefMeal:{title:"🥩 Lean Ground Beef Slow Cooker Meal",meta:"93/7 beef rotation meal",cook:["Place beef in the slow cooker and break it apart.","Add about ¼–½ cup water per pound.","Cook on LOW for 3–4 hours or HIGH for about 2 hours.","Ground beef should reach 160°F internally.","Drain very well and let cool before mixing."],ingredients:w=>[`${w} lb 93/7 lean ground beef`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups frozen vegetables`,`${round(w*.25)}–${round(w*.5)} cup water`,`Calcium supplement: follow your product label`,`Canine multivitamin: follow your product label`],make:["Cook beef fully.","Drain extra grease/liquid.","Mix with rice and vegetables.","Cool before adding supplements.","Portion into jars."],tip:"💙 Daddy's Tip: Draining the beef well keeps the meals lighter and easier on their stomachs."},
-eggMeal:{title:"🍳 Chicken + Scrambled Egg Meal",meta:"Chicken meal with egg added",cook:["Cook chicken in the slow cooker with ½ cup water per pound.","Cook on LOW for 3–4 hours or HIGH for 2–2½ hours, until 165°F.","Scramble eggs separately with no butter, oil, salt, or seasoning.","Let chicken and eggs cool before mixing."],ingredients:w=>[`${w} lb chicken`,`${Math.max(1,Math.round(w))} scrambled egg(s)`,`${round(w*1.1)} cups cooked white rice`,`${round(w*.75)} cups frozen vegetables`,`Calcium supplement: follow your product label`,`Canine multivitamin: follow your product label`],make:["Shred chicken.","Fold in scrambled egg.","Add rice and vegetables.","Cool before adding supplements.","Portion into jars."],tip:"💙 Daddy's Tip: Scrambled eggs are a nice add-in, but keep them plain with no seasoning."},
-salmonMeal:{title:"🐟 Salmon Meal",meta:"Fish rotation meal",cook:["Bake salmon at 375°F for 12–18 minutes, depending on thickness.","Salmon should reach 145°F internally and flake easily.","Let it cool completely.","Check very carefully for bones before serving.","Flake into small pieces."],ingredients:w=>[`${w} lb cooked salmon, carefully checked for bones`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups frozen vegetables`,`Calcium supplement: follow your product label`,`Canine multivitamin: follow your product label`],make:["Bake and flake salmon.","Check carefully for bones.","Mix with rice and vegetables.","Cool before adding supplements.","Portion into jars."],tip:"💙 Daddy's Tip: Because of your vision concerns, use boneless salmon portions and still check slowly with your fingers before mixing."},
-chickenTreat:{title:"🐔 Chicken Puzzle Treats",meta:"For Flower Tower, Poker Box, and training",cook:["Slow cook chicken with ½ cup water per pound on LOW for 3–4 hours or HIGH for 2–2½ hours.","Drain liquid and cool.","Pulse in a food processor until finely chopped."],ingredients:w=>[`${w} lb cooked chicken`,`${Math.max(1,Math.round(w))} egg(s)`,`Calcium supplement if these replace part of a meal`,`Optional canine multivitamin if recommended by your vet`],make:["Blend cooked chicken and egg into a thick paste.","Roll pea-sized balls.","Bake at 250°F for 45–60 minutes until firm.","Cool completely before storing."],tip:"💙 Daddy's Tip: Make them pencil-eraser sized so Rocket and Luna can get lots of puzzle rewards without too many calories."},
-turkeyTreat:{title:"🦃 Turkey Puzzle Treats",meta:"Soft baked puzzle bites",cook:["Cook turkey in the slow cooker with a splash of water or brown it in a skillet.","Break it apart while cooking.","Drain well and cool before blending."],ingredients:w=>[`${w} lb cooked 93% lean ground turkey`,`${Math.max(1,Math.round(w))} egg(s)`,`Calcium supplement if using as part of a meal`],make:["Blend turkey and egg.","Roll tiny balls.","Bake at 250°F for 45–60 minutes.","Cool and freeze extras."],tip:"💙 Daddy's Tip: Turkey treats are great for normal puzzle days because they are mild and easy to digest."},
-beefTreat:{title:"🥩 Beef Puzzle Treats",meta:"High-value jackpot treats",cook:["Cook 93/7 beef in a skillet or slow cooker.","Break apart until fully browned/cooked.","Drain very well and cool completely."],ingredients:w=>[`${w} lb cooked 93/7 lean ground beef`,`${Math.max(1,Math.round(w))} egg(s)`,`Calcium supplement if using as part of a meal`],make:["Blend beef and egg into a paste.","Roll very small balls.","Bake at 250°F for about 60 minutes.","Cool before storing."],tip:"💙 Daddy's Tip: Use beef as a jackpot treat for Luna's walk practice or new puzzle toys."},
-salmonTreat:{title:"🐟 Salmon Puzzle Treats",meta:"Smelly, exciting reward",cook:["Bake salmon at 375°F for 12–18 minutes until it flakes.","Cool completely.","Check every piece carefully for bones."],ingredients:w=>[`${w} lb cooked salmon, checked for bones`,`${Math.max(1,Math.round(w))} egg(s)`],make:["Flake salmon and mix with egg.","Form tiny bites.","Bake at 250°F for 45–60 minutes.","Cool completely and freeze extras."],tip:"💙 Daddy's Tip: Salmon has a strong smell, so a little goes a long way in puzzle toys."},
-frozenCubes:{title:"🧊 Frozen Puzzle Cubes",meta:"For hot days and longer enrichment",cook:["Use already-cooked chicken, turkey, beef, or salmon.","Make sure it is plain with no seasoning.","Let it cool before blending."],ingredients:w=>["1 cup cooked protein","¼ cup plain pumpkin","¼ cup plain Greek yogurt if tolerated","Splash of water"],make:["Blend until spoonable.","Pour into mini silicone molds.","Freeze until solid.","Use one small cube in a puzzle, slow feeder, or lick mat."],tip:"💙 Daddy's Tip: These are best supervised because they can get a little messy."}
+const recipes = {
+  chickenMeal: {
+    title:"🐔 Chicken Slow Cooker Meal",
+    meta:"Beginner-friendly main meal recipe for Rocket & Luna",
+    steps:[
+      {title:"Step 1 — Cook the Chicken Separately", items:[
+        "Place the raw chicken in the slow cooker.",
+        "Add ½ cup water for each pound of chicken.",
+        "Put the lid on and cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+        "The chicken is done when it reaches 165°F and is no longer pink inside.",
+        "Let it cool for 10–15 minutes, then shred or chop it into small pieces."
+      ]},
+      {title:"Step 2 — Cook the Rice Separately", items:[
+        "Cook plain white rice in a rice cooker or saucepan according to the package directions.",
+        "Do not add salt, butter, oil, garlic, onion, or seasoning.",
+        "When done, fluff the rice with a fork and let it cool slightly.",
+        "Cooking rice separately keeps it from getting mushy in the slow cooker."
+      ]},
+      {title:"Step 3 — Cook the Vegetables Separately", items:[
+        "Use plain frozen vegetables with no sauce or seasoning.",
+        "Microwave or steam until tender.",
+        "Drain any extra water.",
+        "Let the vegetables cool before mixing."
+      ]},
+      {title:"Step 4 — Mix Everything Together", items:[
+        "Put the cooked chicken, cooked rice, and cooked vegetables into a large bowl.",
+        "Stir slowly until the ingredients are evenly mixed.",
+        "The food should look moist and mixed, not watery."
+      ]},
+      {title:"Step 5 — Cool Before Adding Supplements", items:[
+        "Let the food cool until it is warm or room temperature.",
+        "If it feels hot to your hand, wait longer.",
+        "Add calcium supplement according to your product label.",
+        "Add canine multivitamin according to your product label.",
+        "Mix again so the supplements are spread evenly."
+      ]},
+      {title:"Step 6 — Portion and Store", items:[
+        "Spoon the food into wide-mouth Mason jars.",
+        "Leave a little space at the top if freezing.",
+        "Refrigerate what Rocket and Luna will eat in the next 3–4 days.",
+        "Freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb chicken`,
+      `${round(w*1.25)} cups cooked white rice`,
+      `${round(w*.75)} cups cooked frozen vegetables`,
+      `${round(w*.5)} cup water for cooking chicken`,
+      `Calcium supplement: follow your product label`,
+      `Canine multivitamin: follow your product label`
+    ],
+    tip:"💙 Daddy's Tip: Cook one extra pound of chicken and save it for puzzle treats later in the week."
+  },
+
+  turkeyMeal: {
+    title:"🦃 Ground Turkey Slow Cooker Meal",
+    meta:"Beginner-friendly lean protein meal",
+    steps:[
+      {title:"Step 1 — Cook the Turkey Separately", items:[
+        "Place the raw ground turkey in the slow cooker.",
+        "Add ½ cup water for each pound of turkey.",
+        "Put the lid on and cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+        "About halfway through, carefully open the lid and break the turkey apart with a spoon.",
+        "The turkey is done when it is no longer pink and reaches 165°F.",
+        "Drain extra liquid before mixing."
+      ]},
+      {title:"Step 2 — Cook the Rice Separately", items:[
+        "Cook plain white rice in a rice cooker or saucepan.",
+        "Follow the rice package directions.",
+        "Do not add salt, butter, oil, garlic, onion, or seasoning.",
+        "Let the rice cool slightly before mixing."
+      ]},
+      {title:"Step 3 — Cook the Vegetables Separately", items:[
+        "Microwave or steam the frozen vegetables until tender.",
+        "Do not use vegetables with sauce or seasoning.",
+        "Drain extra water."
+      ]},
+      {title:"Step 4 — Mix Everything Together", items:[
+        "Add the cooked turkey, cooked rice, and cooked vegetables to a large bowl.",
+        "Mix until the turkey is spread evenly through the rice and vegetables."
+      ]},
+      {title:"Step 5 — Cool Before Adding Supplements", items:[
+        "Let the food cool until warm or room temperature.",
+        "Add calcium supplement according to your product label.",
+        "Add canine multivitamin according to your product label.",
+        "Mix very well."
+      ]},
+      {title:"Step 6 — Portion and Store", items:[
+        "Spoon the food into Mason jars.",
+        "Refrigerate the jars for the next 3–4 days.",
+        "Freeze the extra jars for later."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb 93% lean ground turkey`,
+      `${round(w*1.25)} cups cooked white rice`,
+      `${round(w*.75)} cups cooked frozen vegetables`,
+      `${round(w*.5)} cup water for cooking turkey`,
+      `Calcium supplement: follow your product label`,
+      `Canine multivitamin: follow your product label`
+    ],
+    tip:"💙 Daddy's Tip: Stir turkey once or twice while cooking so it does not stay in one big block."
+  },
+
+  beefMeal: {
+    title:"🥩 Lean Ground Beef Slow Cooker Meal",
+    meta:"Beginner-friendly 93/7 beef rotation meal",
+    steps:[
+      {title:"Step 1 — Cook the Beef Separately", items:[
+        "Place the raw 93/7 ground beef in the slow cooker.",
+        "Add ¼–½ cup water for each pound of beef.",
+        "Cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+        "Break the beef apart with a spoon while it cooks.",
+        "The beef is done when it is no longer pink and reaches 160°F.",
+        "Drain the beef very well before mixing."
+      ]},
+      {title:"Step 2 — Cook the Rice Separately", items:[
+        "Cook plain white rice in a rice cooker or saucepan.",
+        "Do not add salt, butter, oil, garlic, onion, or seasoning.",
+        "Let the rice cool slightly."
+      ]},
+      {title:"Step 3 — Cook the Vegetables Separately", items:[
+        "Steam or microwave the frozen vegetables until tender.",
+        "Drain extra water.",
+        "Let them cool slightly."
+      ]},
+      {title:"Step 4 — Mix Everything Together", items:[
+        "Put beef, rice, and vegetables into a large bowl.",
+        "Stir until evenly mixed.",
+        "The mixture should be moist, but not greasy or watery."
+      ]},
+      {title:"Step 5 — Cool Before Adding Supplements", items:[
+        "Let food cool until warm or room temperature.",
+        "Add calcium supplement according to your product label.",
+        "Add canine multivitamin according to your product label.",
+        "Mix again."
+      ]},
+      {title:"Step 6 — Portion and Store", items:[
+        "Put into wide-mouth Mason jars.",
+        "Refrigerate 3–4 days' worth.",
+        "Freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb 93/7 lean ground beef`,
+      `${round(w*1.25)} cups cooked white rice`,
+      `${round(w*.75)} cups cooked frozen vegetables`,
+      `${round(w*.25)}–${round(w*.5)} cup water for cooking beef`,
+      `Calcium supplement: follow your product label`,
+      `Canine multivitamin: follow your product label`
+    ],
+    tip:"💙 Daddy's Tip: Draining the beef well keeps the meals lighter and easier on their stomachs."
+  },
+
+  eggMeal: {
+    title:"🍳 Chicken + Scrambled Egg Meal",
+    meta:"Chicken meal with plain scrambled egg added",
+    steps:[
+      {title:"Step 1 — Cook the Chicken Separately", items:[
+        "Place chicken in the slow cooker.",
+        "Add ½ cup water for each pound of chicken.",
+        "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+        "Chicken should reach 165°F and should not be pink inside.",
+        "Cool, then shred or chop."
+      ]},
+      {title:"Step 2 — Cook the Egg Separately", items:[
+        "Crack the egg into a small pan.",
+        "Cook it plain with no butter, oil, salt, or seasoning.",
+        "Stir until fully cooked.",
+        "Let it cool."
+      ]},
+      {title:"Step 3 — Cook the Rice Separately", items:[
+        "Cook plain white rice according to package directions.",
+        "Let it cool slightly."
+      ]},
+      {title:"Step 4 — Cook the Vegetables Separately", items:[
+        "Microwave or steam plain frozen vegetables until tender.",
+        "Drain any extra water."
+      ]},
+      {title:"Step 5 — Mix Everything Together", items:[
+        "Mix chicken, egg, rice, and vegetables in a large bowl.",
+        "Stir until everything is evenly spread out."
+      ]},
+      {title:"Step 6 — Cool, Add Supplements, and Store", items:[
+        "Let the food cool before adding supplements.",
+        "Add calcium and multivitamin according to the product labels.",
+        "Portion into Mason jars.",
+        "Refrigerate 3–4 days' worth and freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb chicken`,
+      `${Math.max(1,Math.round(w))} plain scrambled egg(s)`,
+      `${round(w*1.1)} cups cooked white rice`,
+      `${round(w*.75)} cups cooked frozen vegetables`,
+      `Calcium supplement: follow your product label`,
+      `Canine multivitamin: follow your product label`
+    ],
+    tip:"💙 Daddy's Tip: Keep the egg plain. No butter, oil, salt, garlic, onion, or seasoning."
+  },
+
+  salmonMeal: {
+    title:"🐟 Salmon Meal",
+    meta:"Beginner-friendly fish rotation meal",
+    steps:[
+      {title:"Step 1 — Cook the Salmon Separately", items:[
+        "Place salmon on a baking tray lined with parchment paper.",
+        "Bake at 375°F for 12–18 minutes, depending on thickness.",
+        "Salmon is done when it reaches 145°F and flakes easily with a fork.",
+        "Let it cool completely.",
+        "Check very carefully for bones before mixing."
+      ]},
+      {title:"Step 2 — Cook the Rice Separately", items:[
+        "Cook plain white rice according to the package directions.",
+        "Let it cool slightly."
+      ]},
+      {title:"Step 3 — Cook the Vegetables Separately", items:[
+        "Steam or microwave plain frozen vegetables until tender.",
+        "Drain extra water."
+      ]},
+      {title:"Step 4 — Mix Everything Together", items:[
+        "Flake the salmon into small pieces.",
+        "Mix salmon, rice, and vegetables in a large bowl.",
+        "Stir gently so the salmon spreads through the food."
+      ]},
+      {title:"Step 5 — Cool Before Adding Supplements", items:[
+        "Make sure the food is warm or room temperature.",
+        "Add calcium and multivitamin according to your product labels.",
+        "Mix again."
+      ]},
+      {title:"Step 6 — Portion and Store", items:[
+        "Put food into Mason jars.",
+        "Refrigerate what will be eaten in 3–4 days.",
+        "Freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb cooked salmon, carefully checked for bones`,
+      `${round(w*1.25)} cups cooked white rice`,
+      `${round(w*.75)} cups cooked frozen vegetables`,
+      `Calcium supplement: follow your product label`,
+      `Canine multivitamin: follow your product label`
+    ],
+    tip:"💙 Daddy's Tip: Because of your vision concerns, use boneless salmon portions and still check slowly with your fingers before mixing."
+  },
+
+  chickenTreat: {
+    title:"🐔 Chicken Puzzle Treats",
+    meta:"For Flower Tower, Poker Box, and training",
+    steps:[
+      {title:"Step 1 — Cook the Chicken First", items:[
+        "Place chicken in the slow cooker.",
+        "Add ½ cup water for each pound.",
+        "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+        "Chicken should reach 165°F and should not be pink.",
+        "Drain liquid and let chicken cool."
+      ]},
+      {title:"Step 2 — Blend the Treat Mixture", items:[
+        "Put cooked chicken and egg into a food processor.",
+        "Blend until it becomes a thick paste.",
+        "If it is too wet, bake a little longer later."
+      ]},
+      {title:"Step 3 — Shape the Treats", items:[
+        "Roll into tiny pea-sized balls.",
+        "Place on a parchment-lined baking tray.",
+        "Keep them small so Rocket and Luna can get several rewards."
+      ]},
+      {title:"Step 4 — Bake and Store", items:[
+        "Bake at 250°F for 45–60 minutes until firm.",
+        "Cool completely.",
+        "Refrigerate 3–4 days or freeze extras."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb cooked chicken`,
+      `${Math.max(1,Math.round(w))} egg(s)`,
+      `Calcium supplement if these replace part of a meal`,
+      `Optional canine multivitamin if recommended by your vet`
+    ],
+    tip:"💙 Daddy's Tip: Make them pencil-eraser sized so Rocket and Luna can get lots of puzzle rewards without too many calories."
+  },
+
+  turkeyTreat: {
+    title:"🦃 Turkey Puzzle Treats",
+    meta:"Soft baked puzzle bites",
+    steps:[
+      {title:"Step 1 — Cook the Turkey First", items:[
+        "Cook ground turkey in the slow cooker with a splash of water or brown it in a skillet.",
+        "Break it apart while cooking.",
+        "Turkey is done when it is no longer pink and reaches 165°F.",
+        "Drain well and cool."
+      ]},
+      {title:"Step 2 — Blend the Treat Mixture", items:[
+        "Put cooked turkey and egg into a food processor.",
+        "Blend until it forms a thick mixture."
+      ]},
+      {title:"Step 3 — Shape and Bake", items:[
+        "Roll into tiny balls.",
+        "Place on parchment paper.",
+        "Bake at 250°F for 45–60 minutes."
+      ]},
+      {title:"Step 4 — Cool and Store", items:[
+        "Cool completely before storing.",
+        "Refrigerate a few days and freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb cooked 93% lean ground turkey`,
+      `${Math.max(1,Math.round(w))} egg(s)`,
+      `Calcium supplement if using as part of a meal`
+    ],
+    tip:"💙 Daddy's Tip: Turkey treats are great for normal puzzle days because they are mild and easy to digest."
+  },
+
+  beefTreat: {
+    title:"🥩 Beef Puzzle Treats",
+    meta:"High-value jackpot treats",
+    steps:[
+      {title:"Step 1 — Cook the Beef First", items:[
+        "Cook 93/7 ground beef in a skillet or slow cooker.",
+        "Break it apart as it cooks.",
+        "Beef is done when it is no longer pink and reaches 160°F.",
+        "Drain very well and cool completely."
+      ]},
+      {title:"Step 2 — Blend the Treat Mixture", items:[
+        "Add cooked beef and egg to a food processor.",
+        "Blend into a thick paste."
+      ]},
+      {title:"Step 3 — Shape and Bake", items:[
+        "Roll into very small balls.",
+        "Bake at 250°F for about 60 minutes.",
+        "They should feel firm when done."
+      ]},
+      {title:"Step 4 — Cool and Store", items:[
+        "Cool completely before storing.",
+        "Use a few for jackpot rewards and freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb cooked 93/7 lean ground beef`,
+      `${Math.max(1,Math.round(w))} egg(s)`,
+      `Calcium supplement if using as part of a meal`
+    ],
+    tip:"💙 Daddy's Tip: Use beef as a jackpot treat for Luna's walk practice or new puzzle toys."
+  },
+
+  salmonTreat: {
+    title:"🐟 Salmon Puzzle Treats",
+    meta:"Smelly, exciting reward",
+    steps:[
+      {title:"Step 1 — Cook the Salmon First", items:[
+        "Bake salmon at 375°F for 12–18 minutes.",
+        "Salmon is done when it reaches 145°F and flakes easily.",
+        "Cool completely.",
+        "Check every piece carefully for bones."
+      ]},
+      {title:"Step 2 — Mix the Treats", items:[
+        "Flake the salmon into tiny pieces.",
+        "Mix with egg until it holds together."
+      ]},
+      {title:"Step 3 — Shape and Bake", items:[
+        "Form tiny bites.",
+        "Bake at 250°F for 45–60 minutes.",
+        "Cool completely."
+      ]},
+      {title:"Step 4 — Store", items:[
+        "Refrigerate a small amount for puzzle time.",
+        "Freeze the rest."
+      ]}
+    ],
+    ingredients:w=>[
+      `${w} lb cooked salmon, checked for bones`,
+      `${Math.max(1,Math.round(w))} egg(s)`
+    ],
+    tip:"💙 Daddy's Tip: Salmon has a strong smell, so a little goes a long way in puzzle toys."
+  },
+
+  frozenCubes: {
+    title:"🧊 Frozen Puzzle Cubes",
+    meta:"For hot days and longer enrichment",
+    steps:[
+      {title:"Step 1 — Start With Cooked Protein", items:[
+        "Use cooked chicken, turkey, beef, or salmon.",
+        "Make sure it is plain with no seasoning.",
+        "Let it cool before blending."
+      ]},
+      {title:"Step 2 — Blend", items:[
+        "Add cooked protein, pumpkin, yogurt if tolerated, and a splash of water.",
+        "Blend until spoonable."
+      ]},
+      {title:"Step 3 — Freeze", items:[
+        "Pour into mini silicone molds.",
+        "Freeze until solid."
+      ]},
+      {title:"Step 4 — Serve", items:[
+        "Use one small cube in a puzzle, slow feeder, or lick mat.",
+        "Supervise Rocket and Luna while they enjoy it."
+      ]}
+    ],
+    ingredients:w=>[
+      "1 cup cooked protein",
+      "¼ cup plain pumpkin",
+      "¼ cup plain Greek yogurt if tolerated",
+      "Splash of water"
+    ],
+    tip:"💙 Daddy's Tip: These are best supervised because they can get a little messy."
+  }
 };
-function round(n){return Math.round(n*100)/100;}
-function recipeHTML(r,weight){return `<div class="card"><h2>${r.title}</h2><div class="small"><b>${r.meta}</b></div><div class="step"><h3>Step 1 — Cook the Main Ingredient</h3><ol>${r.cook.map(x=>`<li>${x}</li>`).join("")}</ol></div><div class="step"><h3>Step 2 — Ingredients</h3><ul>${r.ingredients(weight).map(x=>`<li>${x}</li>`).join("")}</ul></div><div class="step"><h3>Step 3 — Make It</h3><ol>${r.make.map(x=>`<li>${x}</li>`).join("")}</ol></div><div class="note">Storage: Refrigerate 3–4 days or freeze extras. Thaw frozen jars in the refrigerator.</div><div class="tip">${r.tip}</div><p class="small">Reminder: Homemade dog diets should be reviewed by your veterinarian or a veterinary nutritionist, especially when used as the main long-term diet.</p></div>`;}
-let currentMeal="chickenMeal",currentTreat="chickenTreat";
-function showPage(page){["homeGrid","meals","treats","planner","health"].forEach(id=>document.getElementById(id).classList.add("hidden")); if(page==="home")document.getElementById("homeGrid").classList.remove("hidden");else document.getElementById(page).classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"});updateAmounts();}
-function openRecipe(id,el){el.parentElement.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));el.classList.add("active"); if(id.includes("Meal"))currentMeal=id;else currentTreat=id; updateAmounts();}
-function updateAmounts(){let mealW=document.getElementById("mealWeight")?parseFloat(document.getElementById("mealWeight").value):1;let treatW=document.getElementById("treatWeight")?parseFloat(document.getElementById("treatWeight").value):1;document.getElementById("mealRecipeWrap").innerHTML=recipeHTML(recipes[currentMeal],mealW);document.getElementById("treatRecipeWrap").innerHTML=recipeHTML(recipes[currentTreat],treatW);}
-document.querySelectorAll(".check").forEach(item=>item.addEventListener("click",()=>item.classList.toggle("checked")));
+
+function round(n){ return Math.round(n*100)/100; }
+
+function recipeHTML(r, weight){
+  const ingredientList = r.ingredients(weight).map(x=>`<li>${x}</li>`).join("");
+  const stepCards = r.steps.map(s=>`
+    <div class="step">
+      <h3>${s.title}</h3>
+      <ol>${s.items.map(x=>`<li>${x}</li>`).join("")}</ol>
+    </div>
+  `).join("");
+
+  return `
+    <div class="card">
+      <h2>${r.title}</h2>
+      <div class="small"><b>${r.meta}</b></div>
+
+      <div class="step">
+        <h3>What You Need</h3>
+        <ul>${ingredientList}</ul>
+      </div>
+
+      ${stepCards}
+
+      <div class="note">
+        Storage: Refrigerate 3–4 days or freeze extras. Thaw frozen jars in the refrigerator.
+      </div>
+
+      <div class="tip">
+        💙 Why cook separately?<br>
+        Cooking the protein, rice, and vegetables separately gives you better control, keeps rice from getting mushy, and makes it easier to measure each ingredient correctly.
+      </div>
+
+      <div class="tip">${r.tip}</div>
+
+      <p class="small">
+        Safety reminder: Homemade dog diets should be reviewed by your veterinarian or a veterinary nutritionist, especially when used as the main long-term diet.
+      </p>
+    </div>`;
+}
+
+let currentMeal="chickenMeal";
+let currentTreat="chickenTreat";
+
+function showPage(page){
+  ["homeGrid","meals","treats","planner","health"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  if(page==="home") document.getElementById("homeGrid").classList.remove("hidden");
+  else document.getElementById(page).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  updateAmounts();
+}
+
+function openRecipe(id,el){
+  el.parentElement.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  if(id.includes("Meal")) currentMeal=id;
+  else currentTreat=id;
+  updateAmounts();
+}
+
+function updateAmounts(){
+  const mealW=document.getElementById("mealWeight")?parseFloat(document.getElementById("mealWeight").value):1;
+  const treatW=document.getElementById("treatWeight")?parseFloat(document.getElementById("treatWeight").value):1;
+  const mealWrap=document.getElementById("mealRecipeWrap");
+  const treatWrap=document.getElementById("treatRecipeWrap");
+  if(mealWrap) mealWrap.innerHTML=recipeHTML(recipes[currentMeal],mealW);
+  if(treatWrap) treatWrap.innerHTML=recipeHTML(recipes[currentTreat],treatW);
+}
+
+document.querySelectorAll(".check").forEach(item=>{
+  item.addEventListener("click",()=>item.classList.toggle("checked"));
+});
 updateAmounts();
 </script>
 </body>
