@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.7</title>
+  <title>Rocket & Luna Headquarters v2.5.8</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -615,7 +615,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.7 fixes Shopping List and makes it usable.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.8 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -623,7 +623,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.7</div>
+          <div class="version">v2.5.8</div>
         </div>
 
         <div class="card wide">
@@ -753,7 +753,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.7 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.8 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -786,7 +786,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.7 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
+            Version 2.5.8 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
             and frozen enrichment treats.
           </p>
 
@@ -807,6 +807,10 @@
             <button class="tab" data-keywords="beef jackpot training high value" onclick="chooseTreat('beefTreat', this)">Beef Jackpot</button>
             <button class="tab" data-keywords="salmon fish puzzle smelly high value" onclick="chooseTreat('salmonTreat', this)">Salmon</button>
             <button class="tab" data-keywords="frozen cubes pumpkin yogurt summer lick mat" onclick="chooseTreat('frozenCubes', this)">Frozen Cubes</button>
+            <button class="tab" data-keywords="cosori dehydrator chicken jerky" onclick="chooseTreat('chickenJerky', this)">Chicken Jerky</button>
+            <button class="tab" data-keywords="cosori dehydrator turkey training bites" onclick="chooseTreat('turkeyDehydrated', this)">Turkey Bites</button>
+            <button class="tab" data-keywords="cosori dehydrator beef chips jackpot" onclick="chooseTreat('beefChips', this)">Beef Chips</button>
+            <button class="tab" data-keywords="cosori dehydrator sweet potato chews" onclick="chooseTreat('sweetPotatoChews', this)">Sweet Potato</button>
           </div>
 
           <div id="treatOutput"></div>
@@ -818,7 +822,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.5.7 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.5.8 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -848,7 +852,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.5.7 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.5.8 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -900,7 +904,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.5.7 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.5.8 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -949,8 +953,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.5.7 turns Shopping List into a working checklist. Choose a list type,
-            add your own items, and check things off while shopping.
+            Version 2.5.8 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1004,11 +1007,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.7.",
+        text: "Treat Kitchen is now active in Version 2.5.8.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.5.7",
+        title: "📅 Meal Prep Planner — Coming in v2.5.8",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1453,6 +1456,117 @@
         look: "Small frozen cubes, not large ice blocks.",
         use: "Use one small cube on a lick mat, slow feeder, or puzzle toy while supervised.",
         tip: "💙 Daddy's Tip: These can get messy, so use them when you can supervise."
+      },
+      chickenJerky: {
+        title: "🐔 Cosori Chicken Jerky Strips",
+        subtitle: "Simple dehydrated chicken strips for Rocket and Luna.",
+        category: ["Dehydrator", "Cosori", "Jerky"],
+        ingredients: w => [
+          `${w} lb boneless, skinless chicken breast or chicken thighs`,
+          "No salt, no seasoning, no oil"
+        ],
+        tools: ["Cosori dehydrator", "Cutting board", "Sharp knife", "Paper towels", "Food thermometer", "Airtight container or freezer bag"],
+        cookSteps: w => [
+          "Trim off visible fat.",
+          "Slice chicken into thin strips, about ¼ inch thick.",
+          "Pat the strips dry with paper towels.",
+          "Place strips in a single layer on the stainless steel trays.",
+          "Do not overlap the pieces."
+        ],
+        makeSteps: [
+          "Set the Cosori dehydrator to 165°F.",
+          "Dehydrate for 4–6 hours.",
+          "Start checking at 4 hours.",
+          "The strips should be dry and firm, not wet or soft inside.",
+          "Let them cool completely before storing."
+        ],
+        look: "Dry, firm chicken strips that bend slightly but do not feel wet.",
+        use: "Break into tiny pieces for training or puzzle toys. Use small portions because dehydrated meat is concentrated.",
+        tip: "💙 Daddy's Tip: Slice the chicken smaller and thinner for your first batch. Smaller pieces dry faster and are easier for Rocket and Luna."
+      },
+      turkeyDehydrated: {
+        title: "🦃 Cosori Turkey Training Bites",
+        subtitle: "Dehydrated turkey bites like the treats Rocket already loved.",
+        category: ["Dehydrator", "Training", "Turkey"],
+        ingredients: w => [
+          `${w} lb 93% lean ground turkey`,
+          "No salt, no seasoning",
+          "Optional: 1 egg if you want firmer bites"
+        ],
+        tools: ["Cosori dehydrator", "Mixing bowl", "Spoon", "Silicone dehydrator liner or parchment made for dehydrators", "Food thermometer", "Airtight container or freezer bag"],
+        cookSteps: w => [
+          "Cook the ground turkey first until it reaches 165°F and is no longer pink.",
+          "Drain extra liquid.",
+          "Let turkey cool enough to handle.",
+          "Break it into very small crumbles or press into tiny flat dots.",
+          "Use a liner so small pieces do not fall through the trays."
+        ],
+        makeSteps: [
+          "Set the Cosori dehydrator to 160–165°F.",
+          "Dehydrate for 5–7 hours.",
+          "Check halfway and break apart any pieces that are stuck together.",
+          "Bites are done when dry, firm, and not moist inside.",
+          "Cool completely before storing."
+        ],
+        look: "Tiny dry turkey crumbles or flat training dots.",
+        use: "Great for puzzle toys and training. Rocket loved turkey, so this can be his everyday jackpot.",
+        tip: "💙 Daddy's Tip: Keep these very tiny. Turkey crumbles are perfect for puzzle compartments."
+      },
+      beefChips: {
+        title: "🥩 Cosori Lean Beef Chips",
+        subtitle: "Dehydrated 93/7 beef chips for high-value rewards.",
+        category: ["Dehydrator", "Beef", "Jackpot"],
+        ingredients: w => [
+          `${w} lb 93/7 lean ground beef`,
+          "No salt, no seasoning",
+          "Optional: 1 egg if needed to help bind"
+        ],
+        tools: ["Cosori dehydrator", "Mixing bowl", "Spoon", "Silicone dehydrator liner", "Paper towels", "Food thermometer", "Airtight container or freezer bag"],
+        cookSteps: w => [
+          "Cook the beef first until it reaches 160°F and is no longer pink.",
+          "Drain very well.",
+          "Blot with paper towels to remove extra grease.",
+          "Let beef cool enough to handle.",
+          "Press into very small flat dots or thin chips on a liner."
+        ],
+        makeSteps: [
+          "Set the Cosori dehydrator to 160–165°F.",
+          "Dehydrate for 5–7 hours.",
+          "Check halfway and blot any visible grease.",
+          "The chips are done when dry and firm.",
+          "Cool completely before storing."
+        ],
+        look: "Small dry beef chips that do not feel greasy.",
+        use: "Use as high-value jackpot treats. Luna loved both beef and turkey, so these are great for harder training moments.",
+        tip: "💙 Daddy's Tip: Beef is richer, so use fewer pieces than turkey or chicken."
+      },
+      sweetPotatoChews: {
+        title: "🍠 Cosori Sweet Potato Chews",
+        subtitle: "Simple non-meat chews for variety.",
+        category: ["Dehydrator", "Chew", "Vegetable"],
+        ingredients: w => [
+          "1–2 sweet potatoes",
+          "No sugar, no salt, no oil, no seasoning"
+        ],
+        tools: ["Cosori dehydrator", "Cutting board", "Knife", "Vegetable brush", "Airtight container or freezer bag"],
+        cookSteps: w => [
+          "Wash sweet potatoes well.",
+          "Slice into ¼ inch thick coins or strips.",
+          "For softer chews, steam slices for 3–5 minutes first.",
+          "Pat dry before placing on trays.",
+          "Arrange in a single layer with no overlap."
+        ],
+        makeSteps: [
+          "Set the Cosori dehydrator to 135°F.",
+          "Dehydrate for 6–10 hours.",
+          "Check at 6 hours.",
+          "For chewy treats, remove when flexible but dry.",
+          "For crunchy chips, dry longer.",
+          "Cool completely before storing."
+        ],
+        look: "Flexible dry chews or crunchy chips, depending on how long you dry them.",
+        use: "Use as an occasional chew or variety treat. Start with small pieces to make sure they tolerate it well.",
+        tip: "💙 Daddy's Tip: Cut small pieces for Rocket and Luna since they are little dogs."
       }
     };
 
