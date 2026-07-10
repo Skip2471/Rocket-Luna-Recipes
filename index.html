@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.5.8</title>
+  <title>Rocket & Luna Headquarters v2.5.9</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -598,6 +598,38 @@
       color:var(--muted);
     }
 
+
+    .collection-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin:12px 0 16px;
+    }
+    .collection-button{
+      border:1px solid var(--line);
+      background:white;
+      color:#344054;
+      border-radius:20px;
+      padding:14px 10px;
+      font-weight:900;
+      min-height:92px;
+      box-shadow:0 6px 18px rgba(31,41,85,.07);
+    }
+    .collection-button span{
+      display:block;
+      font-size:28px;
+      margin-bottom:6px;
+    }
+    .collection-button.active{
+      color:white;
+      background:linear-gradient(135deg,var(--blue),var(--pink));
+      border-color:transparent;
+    }
+    @media(max-width:640px){
+      .collection-grid{grid-template-columns:1fr}
+      .collection-button{min-height:72px}
+    }
+
 </style>
 </head>
 
@@ -615,7 +647,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.8 adds Cosori dehydrator recipes.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.5.9 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -623,7 +655,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.5.8</div>
+          <div class="version">v2.5.9</div>
         </div>
 
         <div class="card wide">
@@ -753,7 +785,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.5.8 adds the real Meals section with Beginner Mode directions.
+            Version 2.5.9 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -786,8 +818,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.5.8 adds Rocket &amp; Luna's Treat Kitchen with puzzle treats, training bites,
-            and frozen enrichment treats.
+            Version 2.5.9 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
           </p>
 
           <div class="meal-controls">
@@ -801,16 +832,36 @@
             </select>
           </div>
 
+          <div class="collection-grid">
+            <button class="collection-button active" data-collection="dehydrator" onclick="showTreatCollection('dehydrator',this)">
+              <span>🥩</span>Cosori Dehydrator
+            </button>
+            <button class="collection-button" data-collection="frozen" onclick="showTreatCollection('frozen',this)">
+              <span>❄️</span>Frozen Treats
+            </button>
+            <button class="collection-button" data-collection="baked" onclick="showTreatCollection('baked',this)">
+              <span>🔥</span>Baked Treats
+            </button>
+          </div>
+
           <div class="tabs" id="treatTabs">
-            <button class="tab active" data-keywords="chicken puzzle baked training" onclick="chooseTreat('chickenTreat', this)">Chicken Puzzle</button>
-            <button class="tab" data-keywords="turkey puzzle baked training" onclick="chooseTreat('turkeyTreat', this)">Turkey Puzzle</button>
-            <button class="tab" data-keywords="beef jackpot training high value" onclick="chooseTreat('beefTreat', this)">Beef Jackpot</button>
-            <button class="tab" data-keywords="salmon fish puzzle smelly high value" onclick="chooseTreat('salmonTreat', this)">Salmon</button>
-            <button class="tab" data-keywords="frozen cubes pumpkin yogurt summer lick mat" onclick="chooseTreat('frozenCubes', this)">Frozen Cubes</button>
-            <button class="tab" data-keywords="cosori dehydrator chicken jerky" onclick="chooseTreat('chickenJerky', this)">Chicken Jerky</button>
-            <button class="tab" data-keywords="cosori dehydrator turkey training bites" onclick="chooseTreat('turkeyDehydrated', this)">Turkey Bites</button>
-            <button class="tab" data-keywords="cosori dehydrator beef chips jackpot" onclick="chooseTreat('beefChips', this)">Beef Chips</button>
-            <button class="tab" data-keywords="cosori dehydrator sweet potato chews" onclick="chooseTreat('sweetPotatoChews', this)">Sweet Potato</button>
+            <button class="tab active" data-collection="dehydrator" data-keywords="cosori dehydrator chicken jerky" onclick="chooseTreat('chickenJerky', this)">Chicken Jerky</button>
+            <button class="tab" data-collection="dehydrator" data-keywords="cosori dehydrator turkey training bites" onclick="chooseTreat('turkeyDehydrated', this)">Turkey Bites</button>
+            <button class="tab" data-collection="dehydrator" data-keywords="cosori dehydrator beef chips jackpot" onclick="chooseTreat('beefChips', this)">Beef Chips</button>
+            <button class="tab" data-collection="dehydrator" data-keywords="cosori dehydrator sweet potato chews" onclick="chooseTreat('sweetPotatoChews', this)">Sweet Potato</button>
+
+            <button class="tab" data-collection="frozen" data-keywords="frozen pumpkin yogurt pops" onclick="chooseTreat('pumpkinYogurt', this)">Pumpkin Yogurt</button>
+            <button class="tab" data-collection="frozen" data-keywords="frozen blueberry yogurt bites" onclick="chooseTreat('blueberryYogurt', this)">Blueberry Yogurt</button>
+            <button class="tab" data-collection="frozen" data-keywords="frozen strawberry yogurt hearts" onclick="chooseTreat('strawberryYogurt', this)">Strawberry Hearts</button>
+            <button class="tab" data-collection="frozen" data-keywords="frozen banana peanut butter pops" onclick="chooseTreat('bananaPB', this)">Banana PB</button>
+            <button class="tab" data-collection="frozen" data-keywords="frozen watermelon cubes" onclick="chooseTreat('watermelonCubes', this)">Watermelon</button>
+
+            <button class="tab" data-collection="baked" data-keywords="baked chicken puzzle treats" onclick="chooseTreat('chickenTreat', this)">Chicken Bites</button>
+            <button class="tab" data-collection="baked" data-keywords="baked turkey puzzle treats" onclick="chooseTreat('turkeyTreat', this)">Turkey Bites</button>
+            <button class="tab" data-collection="baked" data-keywords="baked beef jackpot treats" onclick="chooseTreat('beefTreat', this)">Beef Bites</button>
+            <button class="tab" data-collection="baked" data-keywords="baked pumpkin oat cookies" onclick="chooseTreat('pumpkinCookies', this)">Pumpkin Cookies</button>
+            <button class="tab" data-collection="baked" data-keywords="baked apple oat cookies" onclick="chooseTreat('appleOatCookies', this)">Apple Oat</button>
+            <button class="tab" data-collection="baked" data-keywords="baked banana oat cookies" onclick="chooseTreat('bananaOatCookies', this)">Banana Oat</button>
           </div>
 
           <div id="treatOutput"></div>
@@ -822,7 +873,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.5.8 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.5.9 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -852,7 +903,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.5.8 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.5.9 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -904,7 +955,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.5.8 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.5.9 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -953,7 +1004,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.5.8 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
+            Version 2.5.9 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1007,11 +1058,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.5.8.",
+        text: "Treat Kitchen is now active in Version 2.5.9.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.5.8",
+        title: "📅 Meal Prep Planner — Coming in v2.5.9",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1297,6 +1348,9 @@
       document.querySelectorAll("#mealTabs .tab").forEach(tab => tab.classList.remove("active"));
       button.classList.add("active");
       renderMeal();
+    document.querySelectorAll("#treatTabs .tab").forEach(tab=>{
+      tab.style.display = tab.dataset.collection === currentTreatCollection ? "" : "none";
+    });
     renderTreat();
     renderPlanner();
     }
@@ -1567,10 +1621,107 @@
         look: "Flexible dry chews or crunchy chips, depending on how long you dry them.",
         use: "Use as an occasional chew or variety treat. Start with small pieces to make sure they tolerate it well.",
         tip: "💙 Daddy's Tip: Cut small pieces for Rocket and Luna since they are little dogs."
+      },
+      pumpkinYogurt: {
+        title: "🎃 Pumpkin Yogurt Pops",
+        subtitle: "Easy frozen treats with no meat.",
+        category: ["Frozen", "Yogurt", "Easy"],
+        ingredients: w => ["1 cup plain unsweetened Greek yogurt", "½ cup 100% plain canned pumpkin"],
+        tools: ["Mixing bowl", "Spoon", "Mini silicone molds", "Freezer bag"],
+        cookSteps: w => ["Check that the yogurt is plain, unsweetened, and contains no xylitol.", "Use plain pumpkin, not pumpkin pie filling."],
+        makeSteps: ["Mix yogurt and pumpkin until smooth.", "Spoon into small silicone molds.", "Freeze 4–6 hours.", "Move frozen treats to a labeled freezer bag."],
+        look: "Small firm frozen bites.",
+        use: "Start with one small bite each to make sure yogurt agrees with their stomachs.",
+        tip: "💙 Daddy's Tip: Small paw-print molds are a good size for Rocket and Luna."
+      },
+      blueberryYogurt: {
+        title: "🫐 Blueberry Yogurt Bites",
+        subtitle: "Cool yogurt treats with dog-safe blueberries.",
+        category: ["Frozen", "Fruit", "Yogurt"],
+        ingredients: w => ["1 cup plain unsweetened Greek yogurt", "¼ cup washed blueberries"],
+        tools: ["Blender or fork", "Spoon", "Mini silicone molds", "Freezer bag"],
+        cookSteps: w => ["Wash the blueberries.", "Check the yogurt label for no added sweetener and no xylitol."],
+        makeSteps: ["Blend yogurt and blueberries, or mash berries with a fork.", "Spoon into mini molds.", "Freeze 4–6 hours.", "Store frozen."],
+        look: "Small purple-blue frozen bites.",
+        use: "One small bite at a time as an occasional treat.",
+        tip: "💙 Daddy's Tip: You can place one whole blueberry in each mold before freezing."
+      },
+      strawberryYogurt: {
+        title: "🍓 Strawberry Yogurt Hearts",
+        subtitle: "Simple frozen strawberry treats.",
+        category: ["Frozen", "Fruit", "Yogurt"],
+        ingredients: w => ["1 cup plain unsweetened Greek yogurt", "2–3 washed strawberries with stems removed"],
+        tools: ["Blender", "Spoon", "Mini silicone molds", "Freezer bag"],
+        cookSteps: w => ["Wash strawberries and remove the green tops.", "Use only plain unsweetened yogurt."],
+        makeSteps: ["Blend strawberries and yogurt until smooth.", "Spoon into small molds.", "Freeze 4–6 hours.", "Store in freezer."],
+        look: "Small pale-pink frozen hearts or bites.",
+        use: "Use occasionally because fruit contains natural sugar.",
+        tip: "💙 Daddy's Tip: Heart molds would be perfect for Luna."
+      },
+      bananaPB: {
+        title: "🍌 Banana Peanut Butter Pops",
+        subtitle: "A special frozen treat.",
+        category: ["Frozen", "Banana", "Special"],
+        ingredients: w => ["1 ripe banana", "½ cup plain unsweetened Greek yogurt", "1 teaspoon xylitol-free peanut butter"],
+        tools: ["Bowl", "Fork or blender", "Mini silicone molds", "Freezer bag"],
+        cookSteps: w => ["Read the peanut butter label carefully and confirm it contains no xylitol.", "Peel the banana."],
+        makeSteps: ["Mash or blend banana, yogurt, and peanut butter.", "Spoon into small molds.", "Freeze 4–6 hours.", "Store frozen."],
+        look: "Small creamy frozen bites.",
+        use: "Use as a special treat rather than an everyday treat.",
+        tip: "💙 Daddy's Tip: Only a teaspoon of peanut butter is needed for the whole batch."
+      },
+      watermelonCubes: {
+        title: "🍉 Watermelon Cubes",
+        subtitle: "Very simple cooling fruit treats.",
+        category: ["Frozen", "Fruit", "Summer"],
+        ingredients: w => ["Seedless watermelon with rind removed"],
+        tools: ["Knife", "Blender", "Mini silicone molds", "Freezer bag"],
+        cookSteps: w => ["Remove all rind.", "Check carefully for seeds."],
+        makeSteps: ["Blend watermelon until smooth.", "Pour into small molds.", "Freeze until solid.", "Store in freezer."],
+        look: "Small red-pink ice cubes.",
+        use: "Use one small cube at a time on hot days.",
+        tip: "💙 Daddy's Tip: These melt quickly, so serve where cleanup is easy."
+      },
+      pumpkinCookies: {
+        title: "🎃 Baked Pumpkin Oat Cookies",
+        subtitle: "Easy crunchy baked treats.",
+        category: ["Baked", "Pumpkin", "Cookie"],
+        ingredients: w => ["1 cup 100% plain pumpkin", "2 cups oat flour", "1 egg"],
+        tools: ["Mixing bowl", "Spoon", "Baking tray", "Parchment paper", "Rolling pin optional"],
+        cookSteps: w => ["Preheat oven to 325°F.", "Line a baking tray with parchment paper."],
+        makeSteps: ["Mix pumpkin, oat flour, and egg.", "Stir until a soft dough forms.", "Roll or press dough about ¼ inch thick.", "Cut into tiny pieces.", "Bake 25–35 minutes.", "Cool completely."],
+        look: "Small dry cookies that are firm at the edges.",
+        use: "Break into tiny pieces for puzzle toys or occasional snacks.",
+        tip: "💙 Daddy's Tip: Make the pieces very small before baking."
+      },
+      appleOatCookies: {
+        title: "🍎 Baked Apple Oat Cookies",
+        subtitle: "Small apple-flavored baked treats.",
+        category: ["Baked", "Apple", "Cookie"],
+        ingredients: w => ["1 cup unsweetened applesauce", "2 cups oat flour", "1 egg"],
+        tools: ["Mixing bowl", "Spoon", "Baking tray", "Parchment paper"],
+        cookSteps: w => ["Preheat oven to 325°F.", "Use unsweetened applesauce with no xylitol or added spices."],
+        makeSteps: ["Mix applesauce, oat flour, and egg.", "Stir into a soft dough.", "Press flat and cut into tiny squares.", "Bake 25–35 minutes.", "Cool completely."],
+        look: "Small golden cookies that feel dry and firm.",
+        use: "Use in moderation because apples contain natural sugar.",
+        tip: "💙 Daddy's Tip: Tiny squares are easier than using cookie cutters."
+      },
+      bananaOatCookies: {
+        title: "🍌 Baked Banana Oat Cookies",
+        subtitle: "Three-ingredient beginner baked treats.",
+        category: ["Baked", "Banana", "Easy"],
+        ingredients: w => ["1 ripe banana", "1½ cups oat flour", "1 egg"],
+        tools: ["Mixing bowl", "Fork", "Spoon", "Baking tray", "Parchment paper"],
+        cookSteps: w => ["Preheat oven to 325°F.", "Peel and mash banana until smooth."],
+        makeSteps: ["Mix mashed banana, oat flour, and egg.", "Form tiny flat dots on parchment paper.", "Bake 20–30 minutes.", "Cool completely."],
+        look: "Small firm cookies, lightly golden underneath.",
+        use: "Use as an occasional baked treat.",
+        tip: "💙 Daddy's Tip: Flatten each dot so the center cooks through."
       }
     };
 
-    let currentTreat = "chickenTreat";
+    let currentTreat = "chickenJerky";
+    let currentTreatCollection = "dehydrator";
 
     function renderTreat(){
       const weight = parseFloat(document.getElementById("treatWeight").value);
@@ -1587,7 +1738,7 @@
       document.getElementById("treatOutput").innerHTML = `
         <div class="recipe-card">
           <h2>${treat.title}</h2>
-          <div class="recipe-meta">${treat.subtitle}<br><b>Selected amount:</b> ${weight} lb protein</div>
+          <div class="recipe-meta">${treat.subtitle}${["chickenJerky","turkeyDehydrated","beefChips","chickenTreat","turkeyTreat","beefTreat","salmonTreat"].includes(currentTreat) ? `<br><b>Selected amount:</b> ${weight} lb protein` : ""}</div>
 
           <div>
             ${treat.category.map(c => `<span class="treat-category">${c}</span>`).join("")}
@@ -1650,10 +1801,33 @@
       renderTreat();
     }
 
+    function showTreatCollection(collection, button){
+      currentTreatCollection = collection;
+      document.querySelectorAll(".collection-button").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+
+      const visibleTabs = [...document.querySelectorAll("#treatTabs .tab")].filter(tab => tab.dataset.collection === collection);
+      document.querySelectorAll("#treatTabs .tab").forEach(tab => {
+        tab.style.display = tab.dataset.collection === collection ? "" : "none";
+        tab.classList.remove("active");
+      });
+
+      if(visibleTabs.length){
+        visibleTabs[0].classList.add("active");
+        const onclick = visibleTabs[0].getAttribute("onclick");
+        const match = onclick.match(/chooseTreat\('([^']+)'/);
+        if(match) currentTreat = match[1];
+      }
+      document.getElementById("treatSearch").value = "";
+      renderTreat();
+    }
+
     function filterTreatTabs(){
       const q = document.getElementById("treatSearch").value.toLowerCase();
       document.querySelectorAll("#treatTabs .tab").forEach(tab=>{
-        tab.style.display = tab.dataset.keywords.includes(q) ? "" : "none";
+        const inCollection = tab.dataset.collection === currentTreatCollection;
+        const matches = tab.dataset.keywords.includes(q);
+        tab.style.display = inCollection && matches ? "" : "none";
       });
     }
 
