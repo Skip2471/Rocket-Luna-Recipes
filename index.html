@@ -631,9 +631,22 @@
     }
 
 
-    .pressure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
-    .pressure-card{border:1px solid var(--line);background:white;border-radius:20px;padding:14px;box-shadow:0 6px 18px rgba(31,41,85,.07);cursor:pointer}
-    .pressure-card h3{margin:4px 0 6px}.pressure-card p{margin:0;color:var(--muted);font-weight:700;line-height:1.3}
+    .pressure-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin:12px 0;
+    }
+    .pressure-card{
+      border:1px solid var(--line);
+      background:white;
+      border-radius:20px;
+      padding:14px;
+      box-shadow:0 6px 18px rgba(31,41,85,.07);
+      cursor:pointer;
+    }
+    .pressure-card h3{margin:4px 0 6px}
+    .pressure-card p{margin:0;color:var(--muted);font-weight:700;line-height:1.3}
     @media(max-width:640px){.pressure-grid{grid-template-columns:1fr}}
 
 </style>
@@ -718,7 +731,10 @@
 
           <div class="card nav-card" onclick="showPage('pressure')">
             <div class="icon-bubble">♨️</div>
-            <div><h3>Pressure Cooker Meals</h3><p>Cosori recipes for chicken, turkey, beef, and chicken with egg.</p></div>
+            <div>
+              <h3>Pressure Cooker Meals</h3>
+              <p>Beginner-friendly Cosori pressure cooker recipes for chicken, turkey, beef, and chicken with egg.</p>
+            </div>
           </div>
 
           <div class="card nav-card" onclick="showPage('treats')">
@@ -1052,14 +1068,35 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>♨️ Cosori Pressure Cooker Meals</h2>
-          <p class="recipe-meta">Beginner-friendly recipes. The protein is pressure cooked first; rice and vegetables are cooked separately.</p>
-          <div class="meal-controls"><select id="pressureWeight" onchange="renderPressureRecipe()"><option value="1">1 lb protein</option><option value="1.5">1.5 lb protein</option><option value="2">2 lb protein</option><option value="2.5">2.5 lb protein</option><option value="3">3 lb protein</option></select></div>
-          <div class="pressure-grid">
-            <div class="pressure-card" onclick="choosePressureRecipe('pcChicken')"><h3>🐔 Chicken</h3><p>Boneless chicken, then shred.</p></div>
-            <div class="pressure-card" onclick="choosePressureRecipe('pcTurkey')"><h3>🦃 Turkey</h3><p>93% lean ground turkey.</p></div>
-            <div class="pressure-card" onclick="choosePressureRecipe('pcBeef')"><h3>🥩 Beef</h3><p>93/7 lean ground beef.</p></div>
-            <div class="pressure-card" onclick="choosePressureRecipe('pcChickenEgg')"><h3>🍳 Chicken + Egg</h3><p>Chicken plus plain egg cooked separately.</p></div>
+          <p class="recipe-meta">
+            Beginner Mode keeps the protein, rice, and vegetables separate so every step is easier to follow.
+          </p>
+
+          <div class="meal-controls">
+            <select id="pressureWeight" onchange="renderPressureRecipe()">
+              <option value="1">1 lb protein</option>
+              <option value="1.5">1.5 lb protein</option>
+              <option value="2">2 lb protein</option>
+              <option value="2.5">2.5 lb protein</option>
+              <option value="3">3 lb protein</option>
+            </select>
           </div>
+
+          <div class="pressure-grid">
+            <div class="pressure-card" onclick="choosePressureRecipe('pcChicken')">
+              <h3>🐔 Chicken</h3><p>Boneless chicken, then shred or chop.</p>
+            </div>
+            <div class="pressure-card" onclick="choosePressureRecipe('pcTurkey')">
+              <h3>🦃 Ground Turkey</h3><p>Cook, crumble, and drain.</p>
+            </div>
+            <div class="pressure-card" onclick="choosePressureRecipe('pcBeef')">
+              <h3>🥩 Lean Beef</h3><p>93/7 beef with extra draining.</p>
+            </div>
+            <div class="pressure-card" onclick="choosePressureRecipe('pcChickenEgg')">
+              <h3>🍳 Chicken + Egg</h3><p>Chicken under pressure, egg cooked separately.</p>
+            </div>
+          </div>
+
           <div id="pressureOutput"></div>
         </div>
       </section>
@@ -2099,7 +2136,6 @@
       const items = shoppingPresets[key].map(text => ({text, done:false}));
       setShoppingItems(items);
       renderShoppingList();
-    renderPressureRecipe();
     }
 
     function addShoppingItem(){
@@ -2114,7 +2150,6 @@
       setShoppingItems(items);
       input.value = "";
       renderShoppingList();
-    renderPressureRecipe();
     }
 
     function toggleShoppingItem(index){
@@ -2122,7 +2157,6 @@
       items[index].done = !items[index].done;
       setShoppingItems(items);
       renderShoppingList();
-    renderPressureRecipe();
     }
 
     function renderShoppingList(){
@@ -2151,11 +2185,171 @@
       if(confirm("Clear the saved shopping list from this phone?")){
         localStorage.removeItem("rocketLunaShoppingItems");
         renderShoppingList();
-    renderPressureRecipe();
       }
     }
 
-\n    const pressureRecipes={\n      pcChicken:{title:"🐔 Pressure Cooker Chicken Meal",temp:"165°F",ingredients:w=>[`${w} lb boneless skinless chicken`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups cooked plain vegetables`,"1 cup water","Calcium supplement per label","Canine multivitamin per label"],steps:["Put the metal inner pot into the cooker.","Pour in 1 cup water.","Add the chicken.","Lock the lid and set the steam valve to Sealed.","Choose High Pressure: 10 minutes for breast or 12 minutes for thighs.","When cooking ends, wait 10 minutes for natural release.","Carefully release remaining steam, keeping hands and face away.","Open only after the float valve drops.","Check for 165°F, cool 10–15 minutes, then shred."],tip:"Use 1 cup water unless your Cosori manual requires more."},\n      pcTurkey:{title:"🦃 Pressure Cooker Turkey Meal",temp:"165°F",ingredients:w=>[`${w} lb 93% lean ground turkey`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups cooked plain vegetables`,"1 cup water","Calcium supplement per label","Canine multivitamin per label"],steps:["Put the inner pot in place and add 1 cup water.","Add turkey and break it into 3–4 large chunks.","Lock lid and set valve to Sealed.","Cook on High Pressure for 7 minutes.","Wait 10 minutes for natural release, then release remaining steam.","Open after the float valve drops.","Break turkey into small crumbles.","Check for 165°F and no pink.","Drain extra liquid."],tip:"Ground turkey may cook in a block, so crumble it well afterward."},\n      pcBeef:{title:"🥩 Pressure Cooker Lean Beef Meal",temp:"160°F",ingredients:w=>[`${w} lb 93/7 lean ground beef`,`${round(w*1.25)} cups cooked white rice`,`${round(w*.75)} cups cooked plain vegetables`,"1 cup water","Calcium supplement per label","Canine multivitamin per label"],steps:["Put the inner pot in place and add 1 cup water.","Add beef and break it into 3–4 large chunks.","Lock lid and set valve to Sealed.","Cook on High Pressure for 7 minutes.","Wait 10 minutes for natural release, then release remaining steam.","Open after the float valve drops.","Break beef into small crumbles.","Check for 160°F and no pink.","Drain very well and blot excess grease if needed."],tip:"Drain beef especially well before mixing."},\n      pcChickenEgg:{title:"🍳 Pressure Cooker Chicken + Egg Meal",temp:"165°F",ingredients:w=>[`${w} lb boneless skinless chicken`,`${Math.max(1,Math.round(w))} plain scrambled egg(s)`,`${round(w*1.1)} cups cooked white rice`,`${round(w*.75)} cups cooked plain vegetables`,"1 cup water","Calcium supplement per label","Canine multivitamin per label"],steps:["Put the inner pot in place and add 1 cup water.","Add chicken, lock lid, and set valve to Sealed.","Cook on High Pressure for 10 minutes for breast or 12 minutes for thighs.","Wait 10 minutes for natural release, then release remaining steam.","Open after the float valve drops.","Check chicken for 165°F, cool, then shred.","Cook egg separately in a pan with no butter, oil, salt, garlic, onion, or seasoning."],tip:"Keep the egg separate so it is easy to control and does not overcook."}\n    };\n    let currentPressureRecipe="pcChicken";\n    function choosePressureRecipe(k){currentPressureRecipe=k;renderPressureRecipe();document.getElementById("pressureOutput").scrollIntoView({behavior:"smooth",block:"start"});}\n    function renderPressureRecipe(){\n      const r=pressureRecipes[currentPressureRecipe],w=parseFloat(document.getElementById("pressureWeight").value);\n      const rice=["Cook plain white rice separately according to its package directions.","Do not add salt, butter, oil, garlic, onion, or seasoning.","Let it cool slightly."];\n      const veg=["Steam or microwave plain frozen vegetables separately.","Use no sauce or seasoning.","Drain extra water and let cool slightly."];\n      const finish=["Mix cooked protein, cooked rice, and cooked vegetables in a large bowl.","Let food cool until warm or room temperature.","Add calcium and multivitamin according to their labels.","Mix well.","Portion into wide-mouth Mason jars.","Refrigerate 3–4 days' worth and freeze the rest."];\n      document.getElementById("pressureOutput").innerHTML=`<div class="recipe-card"><h2>${r.title}</h2><div class="recipe-meta"><b>Selected amount:</b> ${w} lb protein</div><div class="step-card"><h3>What You Need</h3>${list(r.ingredients(w))}</div><div class="step-card"><h3>Step 1 — Pressure Cook the Protein</h3>${list(r.steps,true)}</div><div class="step-card"><h3>Step 2 — Cook Rice Separately</h3>${list(rice,true)}</div><div class="step-card"><h3>Step 3 — Cook Vegetables Separately</h3>${list(veg,true)}</div><div class="step-card"><h3>Step 4 — Mix, Cool, Add Supplements, and Store</h3>${list(finish,true)}</div><div class="pink-tip">🩷 Safety: Never force the lid open. Wait until pressure is released and the float valve drops. Keep hands and face away from steam.</div><div class="blue-tip">💙 Daddy's Tip: ${r.tip}</div><p class="recipe-meta">Check your exact Cosori manual before first use because button names and minimum-liquid requirements can vary by model.</p></div>`;\n    }\n
+
+    const pressureRecipes = {
+      pcChicken: {
+        title: "🐔 Pressure Cooker Chicken Meal",
+        ingredients: w => [
+          `${w} lb boneless, skinless chicken`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "1 cup water in the pressure cooker",
+          "Calcium supplement: follow product label",
+          "Canine multivitamin: follow product label"
+        ],
+        pressureSteps: [
+          "Place the metal inner pot into the Cosori pressure cooker.",
+          "Pour 1 cup water into the inner pot.",
+          "Place the boneless chicken into the water.",
+          "Close and lock the lid.",
+          "Set the steam-release valve to Sealing.",
+          "Choose Pressure Cook or Manual on HIGH pressure.",
+          "Set 10 minutes for chicken breast or 12 minutes for chicken thighs.",
+          "When cooking ends, wait 10 minutes for natural release.",
+          "Carefully release the remaining pressure.",
+          "Wait for the float valve to drop before opening.",
+          "Check that chicken reaches 165°F.",
+          "Cool 10–15 minutes, then shred or chop."
+        ],
+        tip: "Use 1 cup water unless your exact Cosori manual requires a different minimum."
+      },
+      pcTurkey: {
+        title: "🦃 Pressure Cooker Ground Turkey Meal",
+        ingredients: w => [
+          `${w} lb 93% lean ground turkey`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "1 cup water in the pressure cooker",
+          "Calcium supplement: follow product label",
+          "Canine multivitamin: follow product label"
+        ],
+        pressureSteps: [
+          "Place the metal inner pot into the cooker.",
+          "Pour in 1 cup water.",
+          "Add the raw ground turkey and break it into 3–4 large chunks.",
+          "Close and lock the lid.",
+          "Set the valve to Sealing.",
+          "Cook on HIGH pressure for 7 minutes.",
+          "Wait 10 minutes for natural release.",
+          "Carefully release remaining pressure.",
+          "Open only after the float valve drops.",
+          "Break turkey into small crumbles.",
+          "Check that it reaches 165°F and is no longer pink.",
+          "Drain extra liquid."
+        ],
+        tip: "Ground turkey may cook in large pieces, so crumble it well after cooking."
+      },
+      pcBeef: {
+        title: "🥩 Pressure Cooker Lean Beef Meal",
+        ingredients: w => [
+          `${w} lb 93/7 lean ground beef`,
+          `${round(w * 1.25)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "1 cup water in the pressure cooker",
+          "Calcium supplement: follow product label",
+          "Canine multivitamin: follow product label"
+        ],
+        pressureSteps: [
+          "Place the metal inner pot into the cooker.",
+          "Pour in 1 cup water.",
+          "Add raw ground beef and break it into 3–4 large chunks.",
+          "Close and lock the lid.",
+          "Set the valve to Sealing.",
+          "Cook on HIGH pressure for 7 minutes.",
+          "Wait 10 minutes for natural release.",
+          "Carefully release remaining pressure.",
+          "Open only after the float valve drops.",
+          "Break beef into small pieces.",
+          "Check that it reaches 160°F and is no longer pink.",
+          "Drain very well and blot extra grease if needed."
+        ],
+        tip: "Drain beef especially well before mixing it with rice and vegetables."
+      },
+      pcChickenEgg: {
+        title: "🍳 Pressure Cooker Chicken + Egg Meal",
+        ingredients: w => [
+          `${w} lb boneless, skinless chicken`,
+          `${Math.max(1, Math.round(w))} plain scrambled egg(s)`,
+          `${round(w * 1.1)} cups cooked white rice`,
+          `${round(w * 0.75)} cups cooked plain frozen vegetables`,
+          "1 cup water in the pressure cooker",
+          "Calcium supplement: follow product label",
+          "Canine multivitamin: follow product label"
+        ],
+        pressureSteps: [
+          "Place the metal inner pot into the cooker.",
+          "Pour in 1 cup water.",
+          "Add the boneless chicken.",
+          "Close and lock the lid.",
+          "Set the valve to Sealing.",
+          "Cook on HIGH pressure for 10 minutes for breast or 12 minutes for thighs.",
+          "Wait 10 minutes for natural release.",
+          "Carefully release remaining pressure.",
+          "Open only after the float valve drops.",
+          "Check that chicken reaches 165°F.",
+          "Cool, then shred or chop.",
+          "Cook the egg separately in a pan with no butter, oil, salt, garlic, onion, or seasoning."
+        ],
+        tip: "Keep the egg separate so it does not overcook."
+      }
+    };
+
+    let currentPressureRecipe = "pcChicken";
+
+    function choosePressureRecipe(key){
+      currentPressureRecipe = key;
+      renderPressureRecipe();
+    }
+
+    function renderPressureRecipe(){
+      const output = document.getElementById("pressureOutput");
+      const weightBox = document.getElementById("pressureWeight");
+      if(!output || !weightBox) return;
+
+      const recipe = pressureRecipes[currentPressureRecipe];
+      const weight = parseFloat(weightBox.value);
+
+      const riceSteps = [
+        "Cook plain white rice separately according to the package directions.",
+        "Do not add salt, butter, oil, garlic, onion, or seasoning.",
+        "Let the rice cool slightly."
+      ];
+
+      const vegSteps = [
+        "Steam or microwave plain frozen vegetables separately until tender.",
+        "Use no sauce or seasoning.",
+        "Drain extra water and let them cool."
+      ];
+
+      const finishSteps = [
+        "Place cooked protein, cooked rice, and cooked vegetables in a large bowl.",
+        "Stir until evenly mixed.",
+        "Let the food cool until warm or room temperature.",
+        "Add calcium and multivitamin according to the product labels.",
+        "Mix again.",
+        "Portion into wide-mouth Mason jars.",
+        "Refrigerate 3–4 days' worth and freeze the rest."
+      ];
+
+      output.innerHTML = `
+        <div class="recipe-card">
+          <h2>${recipe.title}</h2>
+          <div class="recipe-meta"><b>Selected amount:</b> ${weight} lb protein</div>
+          <div class="step-card"><h3>What You Need</h3>${list(recipe.ingredients(weight))}</div>
+          <div class="step-card"><h3>Step 1 — Pressure Cook the Protein</h3>${list(recipe.pressureSteps, true)}</div>
+          <div class="step-card"><h3>Step 2 — Cook the Rice Separately</h3>${list(riceSteps, true)}</div>
+          <div class="step-card"><h3>Step 3 — Cook the Vegetables Separately</h3>${list(vegSteps, true)}</div>
+          <div class="step-card"><h3>Step 4 — Mix, Cool, Add Supplements, and Store</h3>${list(finishSteps, true)}</div>
+          <div class="pink-tip">🩷 Pressure Cooker Safety:<br>Never force the lid open. Wait until pressure is fully released and the float valve drops. Keep hands and face away from steam.</div>
+          <div class="blue-tip">💙 Daddy's Tip:<br>${recipe.tip}</div>
+          <p class="recipe-meta">Check your exact Cosori manual before first use because button names and minimum liquid requirements may differ by model.</p>
+        </div>
+      `;
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
@@ -2187,7 +2381,6 @@
       } else if(name === "shopping"){
         document.getElementById("shoppingPage").classList.add("active");
         renderShoppingList();
-    renderPressureRecipe();
       } else if(name === "pressure"){
         document.getElementById("pressurePage").classList.add("active");
         renderPressureRecipe();
