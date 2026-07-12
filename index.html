@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.6.0</title>
+  <title>Rocket & Luna Headquarters v2.6.1</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -666,7 +666,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.6.0 adds Cosori dehydrator recipes.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.6.1 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -674,7 +674,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.6.0</div>
+          <div class="version">v2.6.1</div>
         </div>
 
         <div class="card wide">
@@ -813,7 +813,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.6.0 adds the real Meals section with Beginner Mode directions.
+            Version 2.6.1 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -846,7 +846,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.6.0 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
+            Version 2.6.1 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
           </p>
 
           <div class="meal-controls">
@@ -901,7 +901,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.6.0 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.6.1 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -931,7 +931,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.6.0 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.6.1 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -983,7 +983,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.6.0 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.6.1 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -1032,7 +1032,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.6.0 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
+            Version 2.6.1 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1124,11 +1124,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.6.0.",
+        text: "Treat Kitchen is now active in Version 2.6.1.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.6.0",
+        title: "📅 Meal Prep Planner — Coming in v2.6.1",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -1794,10 +1794,11 @@
       const treat = treats[currentTreat];
 
       const storageSteps = [
-        "Let treats cool completely before storing.",
-        "Keep a small amount in the refrigerator for 3–4 days.",
-        "Freeze the rest for later.",
-        "Thaw frozen treats in the refrigerator before using.",
+        "Let the treats cool completely before storing.",
+        "Place 3–7 days' worth in an airtight container in the refrigerator.",
+        "Freeze the remaining treats for longer storage.",
+        "Thaw frozen treats overnight in the refrigerator before using.",
+        "Throw treats away if they smell unusual, show mold, or become soft or sticky.",
         "Use treats as part of Rocket and Luna's daily calories, not in addition to unlimited snacks."
       ];
 
