@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.6.1</title>
+  <title>Rocket & Luna Headquarters v2.6.2</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -649,6 +649,50 @@
     .pressure-card p{margin:0;color:var(--muted);font-weight:700;line-height:1.3}
     @media(max-width:640px){.pressure-grid{grid-template-columns:1fr}}
 
+
+    .taste-form{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin:12px 0;
+    }
+    .taste-form select,
+    .taste-form input,
+    .taste-form textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      font-size:17px;
+      background:white;
+      color:var(--ink);
+    }
+    .taste-entry{
+      border-bottom:1px solid var(--line);
+      padding:13px 0;
+      line-height:1.4;
+    }
+    .taste-entry:last-child{border-bottom:0}
+    .taste-entry b{font-size:17px}
+    .taste-entry span{
+      display:block;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      margin-top:3px;
+    }
+    .approval-badge{
+      display:inline-block;
+      margin:5px 6px 0 0;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      background:#fff7d6;
+      border:1px solid #f2d675;
+      color:#705600;
+    }
+
 </style>
 </head>
 
@@ -666,7 +710,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.6.1 adds Cosori dehydrator recipes.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.6.2 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -674,7 +718,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.6.1</div>
+          <div class="version">v2.6.2</div>
         </div>
 
         <div class="card wide">
@@ -785,6 +829,15 @@
             </div>
           </div>
 
+
+          <div class="card nav-card" onclick="showPage('taste')">
+            <div class="icon-bubble">🏆</div>
+            <div>
+              <h3>Taste Test Results</h3>
+              <p>Track what Rocket loves, what Luna loves, and what to make again.</p>
+            </div>
+          </div>
+
           <div class="card nav-card" onclick="showPage('favorites')">
             <div class="icon-bubble">⭐</div>
             <div>
@@ -813,7 +866,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.6.1 adds the real Meals section with Beginner Mode directions.
+            Version 2.6.2 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -846,7 +899,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.6.1 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
+            Version 2.6.2 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
           </p>
 
           <div class="meal-controls">
@@ -901,7 +954,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.6.1 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.6.2 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -931,7 +984,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.6.1 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.6.2 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -983,7 +1036,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.6.1 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.6.2 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -1032,7 +1085,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.6.1 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
+            Version 2.6.2 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1101,6 +1154,52 @@
         </div>
       </section>
 
+
+      <section id="tastePage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+
+        <div class="card recipe-card">
+          <h2>🏆 Taste Test Results</h2>
+          <p class="recipe-meta">
+            Version 2.6.2 adds Rocket and Luna's real taste-test history.
+            Use this page to record what they loved, liked, ignored, or disliked.
+          </p>
+
+          <div class="taste-form">
+            <input id="tasteTreat" type="text" placeholder="Treat name">
+            <select id="tasteRocket">
+              <option value="Loved it">Rocket — Loved it</option>
+              <option value="Liked it">Rocket — Liked it</option>
+              <option value="Not interested">Rocket — Not interested</option>
+              <option value="Disliked it">Rocket — Disliked it</option>
+            </select>
+            <select id="tasteLuna">
+              <option value="Loved it">Luna — Loved it</option>
+              <option value="Liked it">Luna — Liked it</option>
+              <option value="Not interested">Luna — Not interested</option>
+              <option value="Disliked it">Luna — Disliked it</option>
+            </select>
+            <input id="tasteDate" type="date">
+            <textarea id="tasteNotes" rows="3" placeholder="Optional notes..."></textarea>
+            <button type="button" onclick="saveTasteTest()">Save Taste Test</button>
+          </div>
+
+          <div class="blue-tip">
+            💙 Both-approved favorites get a gold “Rocket & Luna Approved” badge.
+          </div>
+
+          <div class="step-card">
+            <h3>Saved Results</h3>
+            <div id="tasteList"></div>
+          </div>
+
+          <div class="recipe-actions">
+            <button type="button" onclick="loadStarterTasteTests()">Restore Starter Results</button>
+            <button type="button" class="danger-btn" onclick="clearTasteTests()">Clear Taste Tests</button>
+          </div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -1124,11 +1223,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.6.1.",
+        text: "Treat Kitchen is now active in Version 2.6.2.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.6.1",
+        title: "📅 Meal Prep Planner — Coming in v2.6.2",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -2351,6 +2450,83 @@
       `;
     }
 
+
+    const starterTasteTests = [
+      {treat:"Dehydrated Turkey Treats", rocket:"Loved it", luna:"Loved it", date:"2026-07-12", notes:"Rocket loved the turkey treats. Luna loved them too."},
+      {treat:"Lean Beef Treats", rocket:"Liked it", luna:"Loved it", date:"2026-07-12", notes:"Luna loved the beef treats. Rocket liked them."},
+      {treat:"Chicken Jerky", rocket:"Loved it", luna:"Loved it", date:"2026-07-12", notes:"7 hours at 165°F. Bent like leather. Good first batch."},
+      {treat:"Sweet Potato Chews", rocket:"Loved it", luna:"Loved it", date:"2026-07-12", notes:"Both loved the dehydrated sweet potato."},
+      {treat:"Dehydrated Banana", rocket:"Not interested", luna:"Not interested", date:"2026-07-12", notes:"Neither showed interest."},
+      {treat:"Dehydrated Strawberry", rocket:"Not interested", luna:"Not interested", date:"2026-07-12", notes:"Neither showed interest."},
+      {treat:"Dehydrated Apple", rocket:"Not interested", luna:"Not interested", date:"2026-07-12", notes:"Neither showed interest."},
+      {treat:"Frozen Strawberry Yogurt", rocket:"Not interested", luna:"Loved it", date:"2026-07-12", notes:"Luna loved them. Rocket was not interested."},
+      {treat:"Frozen Pumpkin Yogurt", rocket:"Not interested", luna:"Not interested", date:"2026-07-12", notes:"Neither Rocket nor Luna was interested."}
+    ];
+
+    function getTasteTests(){
+      try{
+        const saved = JSON.parse(localStorage.getItem("rocketLunaTasteTests") || "null");
+        return Array.isArray(saved) ? saved : starterTasteTests;
+      }catch(e){
+        return starterTasteTests;
+      }
+    }
+
+    function setTasteTests(items){
+      localStorage.setItem("rocketLunaTasteTests", JSON.stringify(items));
+    }
+
+    function saveTasteTest(){
+      const treat = document.getElementById("tasteTreat").value.trim();
+      const rocket = document.getElementById("tasteRocket").value;
+      const luna = document.getElementById("tasteLuna").value;
+      const date = document.getElementById("tasteDate").value || new Date().toISOString().slice(0,10);
+      const notes = document.getElementById("tasteNotes").value.trim();
+
+      if(!treat){
+        alert("Enter the treat name first.");
+        return;
+      }
+
+      const items = getTasteTests();
+      items.unshift({treat,rocket,luna,date,notes});
+      setTasteTests(items);
+
+      document.getElementById("tasteTreat").value = "";
+      document.getElementById("tasteNotes").value = "";
+      renderTasteTests();
+    }
+
+    function renderTasteTests(){
+      const list = document.getElementById("tasteList");
+      if(!list) return;
+
+      const items = getTasteTests();
+      list.innerHTML = items.map(item => {
+        const approved = item.rocket === "Loved it" && item.luna === "Loved it";
+        return '<div class="taste-entry">' +
+          '<b>' + item.treat + '</b>' +
+          (approved ? '<div class="approval-badge">🏅 Rocket & Luna Approved</div>' : '') +
+          '<span>' + item.date + '</span>' +
+          '<div>💙 Rocket: ' + item.rocket + '</div>' +
+          '<div>🩷 Luna: ' + item.luna + '</div>' +
+          (item.notes ? '<div style="margin-top:5px;">' + item.notes + '</div>' : '') +
+        '</div>';
+      }).join("");
+    }
+
+    function loadStarterTasteTests(){
+      setTasteTests(starterTasteTests);
+      renderTasteTests();
+    }
+
+    function clearTasteTests(){
+      if(confirm("Clear all taste-test results from this phone?")){
+        localStorage.removeItem("rocketLunaTasteTests");
+        renderTasteTests();
+      }
+    }
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
@@ -2361,6 +2537,7 @@
       document.getElementById("lifePage").classList.remove("active");
       document.getElementById("shoppingPage").classList.remove("active");
       document.getElementById("pressurePage").classList.remove("active");
+      document.getElementById("tastePage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
@@ -2385,6 +2562,9 @@
       } else if(name === "pressure"){
         document.getElementById("pressurePage").classList.add("active");
         renderPressureRecipe();
+      } else if(name === "taste"){
+        document.getElementById("tastePage").classList.add("active");
+        renderTasteTests();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -2405,6 +2585,7 @@
       document.getElementById("lifePage").classList.remove("active");
       document.getElementById("shoppingPage").classList.remove("active");
       document.getElementById("pressurePage").classList.remove("active");
+      document.getElementById("tastePage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
