@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.6.2</title>
+  <title>Rocket & Luna Headquarters v2.7.0</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -693,6 +693,20 @@
       color:#705600;
     }
 
+
+    .rotation-day{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+    .rotation-day:last-child{border-bottom:0}
+    .day-badge{background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff;border-radius:16px;padding:10px 7px;text-align:center;font-weight:900;font-size:13px}
+    .rotation-day h4{margin:0 0 4px;font-size:18px}
+    .rotation-day p{margin:2px 0;color:var(--muted);font-weight:700;line-height:1.35}
+    .rotation-check{display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:800}
+    .rotation-check input{width:23px;height:23px;accent-color:var(--green)}
+    .puzzle-note-form{display:grid;gap:12px;margin-top:12px}
+    .puzzle-note-form select,.puzzle-note-form input,.puzzle-note-form textarea{width:100%;border:1px solid var(--line);border-radius:18px;padding:14px;font-size:17px;background:#fff;color:var(--ink)}
+    .puzzle-log-entry{border-bottom:1px solid var(--line);padding:12px 0;line-height:1.4}
+    .puzzle-log-entry:last-child{border-bottom:0}
+    .puzzle-log-entry span{display:block;color:var(--muted);font-size:13px;font-weight:800;margin:2px 0 5px}
+
 </style>
 </head>
 
@@ -710,7 +724,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.6.2 adds Cosori dehydrator recipes.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.7.0 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -718,7 +732,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.6.2</div>
+          <div class="version">v2.7.0</div>
         </div>
 
         <div class="card wide">
@@ -830,6 +844,12 @@
           </div>
 
 
+
+          <div class="card nav-card" onclick="showPage('puzzles')">
+            <div class="icon-bubble">🧩</div>
+            <div><h3>Puzzle Center</h3><p>Weekly rotation, treat suggestions, and progress notes.</p></div>
+          </div>
+
           <div class="card nav-card" onclick="showPage('taste')">
             <div class="icon-bubble">🏆</div>
             <div>
@@ -866,7 +886,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.6.2 adds the real Meals section with Beginner Mode directions.
+            Version 2.7.0 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -899,7 +919,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.6.2 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
+            Version 2.7.0 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
           </p>
 
           <div class="meal-controls">
@@ -954,7 +974,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.6.2 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.7.0 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -984,7 +1004,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.6.2 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.7.0 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -1036,7 +1056,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.6.2 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.7.0 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -1085,7 +1105,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.6.2 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
+            Version 2.7.0 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1161,7 +1181,7 @@
         <div class="card recipe-card">
           <h2>🏆 Taste Test Results</h2>
           <p class="recipe-meta">
-            Version 2.6.2 adds Rocket and Luna's real taste-test history.
+            Version 2.7.0 adds Rocket and Luna's real taste-test history.
             Use this page to record what they loved, liked, ignored, or disliked.
           </p>
 
@@ -1200,6 +1220,34 @@
         </div>
       </section>
 
+
+      <section id="puzzlePage" class="placeholder">
+        <button class="back" onclick="showHome()">← Back Home</button>
+        <div class="card recipe-card">
+          <h2>🧩 Puzzle Center</h2>
+          <p class="recipe-meta">Version 2.7.0 adds a weekly puzzle rotation using the puzzles you bought for Rocket and Luna.</p>
+          <div class="step-card"><h3>Weekly Rotation</h3><div id="rotationList"></div></div>
+          <div class="blue-tip">💙 Use one puzzle per day and put the others away so each puzzle feels fresh again next week.</div>
+          <div class="step-card">
+            <h3>Add Puzzle Notes</h3>
+            <div class="puzzle-note-form">
+              <select id="puzzleDog"><option>Both</option><option>Rocket</option><option>Luna</option></select>
+              <select id="puzzleName"><option>Activity Solitaire</option><option>Flip Board</option><option>Gambling Tower</option><option>Flower Tower</option><option>Poker Box 2</option><option>Activity Chess</option><option>Poker Box Large</option></select>
+              <input id="puzzleDate" type="date">
+              <input id="puzzleTime" type="number" min="0" step="1" placeholder="Minutes to finish">
+              <select id="puzzleHelp"><option>Solved alone</option><option>Needed a little help</option><option>Needed a lot of help</option><option>Not interested</option></select>
+              <textarea id="puzzleNotes" rows="3" placeholder="Example: Luna used her paw. Rocket solved it with his nose."></textarea>
+              <button type="button" onclick="savePuzzleLog()">Save Puzzle Note</button>
+            </div>
+          </div>
+          <div class="step-card"><h3>Progress Notes</h3><div id="puzzleLogList"></div></div>
+          <div class="recipe-actions">
+            <button type="button" onclick="resetPuzzleWeek()">Reset Weekly Checkmarks</button>
+            <button type="button" class="danger-btn" onclick="clearPuzzleLogs()">Clear Puzzle Notes</button>
+          </div>
+        </div>
+      </section>
+
       <section id="page" class="placeholder">
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card">
@@ -1223,11 +1271,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.6.2.",
+        text: "Treat Kitchen is now active in Version 2.7.0.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.6.2",
+        title: "📅 Meal Prep Planner — Coming in v2.7.0",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
@@ -2527,6 +2575,40 @@
       }
     }
 
+
+    const puzzleRotation = [
+      {day:"Monday",puzzle:"Activity Solitaire",level:"Level 1",treat:"Turkey bites",note:"Easy confidence-building day."},
+      {day:"Tuesday",puzzle:"Flip Board",level:"Level 2",treat:"Chicken jerky",note:"Practice different lids, slides, and movements."},
+      {day:"Wednesday",puzzle:"Gambling Tower",level:"Level 2",treat:"Sweet potato",note:"Pulling and dropping treats."},
+      {day:"Thursday",puzzle:"Flower Tower",level:"Level 3",treat:"Lean beef",note:"Spinning, lifting, and problem-solving."},
+      {day:"Friday",puzzle:"Poker Box 2",level:"Level 3",treat:"Turkey bites",note:"Several challenge types in one puzzle."},
+      {day:"Saturday",puzzle:"Activity Chess",level:"Level 3",treat:"Chicken jerky",note:"Advanced sliding and lifting."},
+      {day:"Sunday",puzzle:"Poker Box Large",level:"Level 3",treat:"Mixed surprise",note:"Puzzle Sunday with favorite treats."}
+    ];
+
+    function getPuzzleChecks(){try{return JSON.parse(localStorage.getItem("rocketLunaPuzzleChecks")||"{}")}catch(e){return {}}}
+    function setPuzzleChecks(v){localStorage.setItem("rocketLunaPuzzleChecks",JSON.stringify(v))}
+    function togglePuzzleDay(i,c){const v=getPuzzleChecks();v[i]=c;setPuzzleChecks(v);renderPuzzleRotation()}
+    function renderPuzzleRotation(){
+      const list=document.getElementById("rotationList"); if(!list)return;
+      const checks=getPuzzleChecks();
+      list.innerHTML=puzzleRotation.map((x,i)=>`<div class="rotation-day"><div class="day-badge">${x.day}</div><div><h4>${x.puzzle}</h4><p><b>${x.level}</b> • Best treat: ${x.treat}</p><p>${x.note}</p><label class="rotation-check"><input type="checkbox" ${checks[i]?"checked":""} onchange="togglePuzzleDay(${i},this.checked)">Completed this week</label></div></div>`).join("");
+    }
+    function resetPuzzleWeek(){localStorage.removeItem("rocketLunaPuzzleChecks");renderPuzzleRotation()}
+    function getPuzzleLogs(){try{return JSON.parse(localStorage.getItem("rocketLunaPuzzleLogs")||"[]")}catch(e){return []}}
+    function setPuzzleLogs(v){localStorage.setItem("rocketLunaPuzzleLogs",JSON.stringify(v))}
+    function savePuzzleLog(){
+      const items=getPuzzleLogs();
+      items.unshift({dog:puzzleDog.value,puzzle:puzzleName.value,date:puzzleDate.value||new Date().toISOString().slice(0,10),minutes:puzzleTime.value,help:puzzleHelp.value,notes:puzzleNotes.value.trim()});
+      setPuzzleLogs(items); puzzleTime.value=""; puzzleNotes.value=""; renderPuzzleLogs();
+    }
+    function renderPuzzleLogs(){
+      const list=document.getElementById("puzzleLogList"); if(!list)return;
+      const items=getPuzzleLogs();
+      list.innerHTML=items.length?items.map(x=>`<div class="puzzle-log-entry"><b>${x.dog} — ${x.puzzle}</b><span>${x.date}${x.minutes?" • "+x.minutes+" minutes":""} • ${x.help}</span>${x.notes?`<div>${x.notes}</div>`:""}</div>`).join(""):"<p class='recipe-meta'>No puzzle notes saved yet.</p>";
+    }
+    function clearPuzzleLogs(){if(confirm("Clear all saved puzzle notes from this phone?")){localStorage.removeItem("rocketLunaPuzzleLogs");renderPuzzleLogs()}}
+
     function showPage(name){
       document.getElementById("home").classList.add("hidden");
       document.getElementById("page").classList.remove("active");
@@ -2538,6 +2620,7 @@
       document.getElementById("shoppingPage").classList.remove("active");
       document.getElementById("pressurePage").classList.remove("active");
       document.getElementById("tastePage").classList.remove("active");
+      document.getElementById("puzzlePage").classList.remove("active");
 
       if(name === "meals"){
         document.getElementById("mealsPage").classList.add("active");
@@ -2565,6 +2648,10 @@
       } else if(name === "taste"){
         document.getElementById("tastePage").classList.add("active");
         renderTasteTests();
+      } else if(name === "puzzles"){
+        document.getElementById("puzzlePage").classList.add("active");
+        renderPuzzleRotation();
+        renderPuzzleLogs();
       } else {
         const data = pages[name];
         document.getElementById("page").classList.add("active");
@@ -2586,6 +2673,7 @@
       document.getElementById("shoppingPage").classList.remove("active");
       document.getElementById("pressurePage").classList.remove("active");
       document.getElementById("tastePage").classList.remove("active");
+      document.getElementById("puzzlePage").classList.remove("active");
       document.getElementById("home").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"smooth"});
     }
