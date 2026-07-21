@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rocket & Luna Headquarters v2.7.0</title>
+  <title>Rocket & Luna Headquarters v2.7.1</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.PNG">
   <meta name="apple-mobile-web-app-title" content="Rocket & Luna">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -724,7 +724,7 @@
 
       <div class="greeting">
         <h2>Good Morning, Daddy! 💙🩷</h2>
-        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.7.0 adds Cosori dehydrator recipes.</p>
+        <p>Here is your Rocket &amp; Luna home dashboard. Version 2.7.1 adds Cosori dehydrator recipes.</p>
       </div>
     </header>
 
@@ -732,7 +732,7 @@
       <section id="home" class="home">
         <div class="section-title">
           <h2>Today’s Care</h2>
-          <div class="version">v2.7.0</div>
+          <div class="version">v2.7.1</div>
         </div>
 
         <div class="card wide">
@@ -886,7 +886,7 @@
         <div class="card recipe-card">
           <h2>🍽️ Meals</h2>
           <p class="recipe-meta">
-            Version 2.7.0 adds the real Meals section with Beginner Mode directions.
+            Version 2.7.1 adds the real Meals section with Beginner Mode directions.
             Protein, rice, and vegetables are cooked separately so there is less guessing.
           </p>
 
@@ -919,7 +919,7 @@
         <div class="card recipe-card">
           <h2>🍪 Treat Kitchen</h2>
           <p class="recipe-meta">
-            Version 2.7.0 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
+            Version 2.7.1 organizes Treat Kitchen into three complete collections: Cosori Dehydrator, Frozen Treats, and Baked Treats.
           </p>
 
           <div class="meal-controls">
@@ -974,7 +974,7 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>📅 Meal Prep Planner</h2>
-          <p class="recipe-meta">Version 2.7.0 adds the real planner. Pick the protein, prep length, and jars per day.</p>
+          <p class="recipe-meta">Version 2.7.1 adds the real planner. Pick the protein, prep length, and jars per day.</p>
           <div class="meal-controls">
             <select id="plannerProtein" onchange="renderPlanner()">
               <option value="chicken">Chicken</option>
@@ -1004,7 +1004,7 @@
         <div class="card recipe-card">
           <h2>❤️ Health Center</h2>
           <p class="recipe-meta">
-            Version 2.7.0 adds a working Health Center for weight, vet visits, grooming,
+            Version 2.7.1 adds a working Health Center for weight, vet visits, grooming,
             medications, insurance notes, food reactions, and general care notes.
           </p>
 
@@ -1056,7 +1056,7 @@
         <div class="card recipe-card">
           <h2>📖 Life Book</h2>
           <p class="recipe-meta">
-            Version 2.7.0 adds Rocket &amp; Luna's Life Book for memories, milestones,
+            Version 2.7.1 adds Rocket &amp; Luna's Life Book for memories, milestones,
             funny moments, and sweet little stories.
           </p>
 
@@ -1105,7 +1105,7 @@
         <div class="card recipe-card">
           <h2>🛒 Shopping List</h2>
           <p class="recipe-meta">
-            Version 2.7.0 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
+            Version 2.7.1 adds Cosori dehydrator recipes for chicken jerky, turkey bites, beef chips, and sweet potato chews.
           </p>
 
           <div class="shopping-form">
@@ -1181,7 +1181,7 @@
         <div class="card recipe-card">
           <h2>🏆 Taste Test Results</h2>
           <p class="recipe-meta">
-            Version 2.7.0 adds Rocket and Luna's real taste-test history.
+            Version 2.7.1 adds Rocket and Luna's real taste-test history.
             Use this page to record what they loved, liked, ignored, or disliked.
           </p>
 
@@ -1225,9 +1225,30 @@
         <button class="back" onclick="showHome()">← Back Home</button>
         <div class="card recipe-card">
           <h2>🧩 Puzzle Center</h2>
-          <p class="recipe-meta">Version 2.7.0 adds a weekly puzzle rotation using the puzzles you bought for Rocket and Luna.</p>
+          <p class="recipe-meta">Version 2.7.1 adds cleaning and care instructions to the weekly Puzzle Center.</p>
           <div class="step-card"><h3>Weekly Rotation</h3><div id="rotationList"></div></div>
           <div class="blue-tip">💙 Use one puzzle per day and put the others away so each puzzle feels fresh again next week.</div>
+
+          <div class="step-card">
+            <h3>🧼 Cleaning & Care</h3>
+            <ol>
+              <li>Remove all leftover treats and crumbs after each use.</li>
+              <li>Wash by hand with warm water, mild dish soap, and a soft sponge or brush.</li>
+              <li>For dishwasher cleaning, use the top rack only.</li>
+              <li>Use a normal or gentle cycle.</li>
+              <li>Avoid heated drying when possible.</li>
+              <li>Air dry every piece completely before storing or adding treats.</li>
+              <li>Check sliders, lids, cones, drawers, and towers to make sure they move freely.</li>
+              <li>Do not use a puzzle if any piece is cracked, warped, loose, or damaged.</li>
+            </ol>
+          </div>
+
+          <div class="blue-tip">
+            💙 Weekly Cleaning Tip:<br>
+            Give the puzzle a quick rinse after use, then do a more thorough wash at the end of the week.
+            Make sure no water is trapped inside moving pieces before putting it away.
+          </div>
+
           <div class="step-card">
             <h3>Add Puzzle Notes</h3>
             <div class="puzzle-note-form">
@@ -1271,11 +1292,11 @@
     const pages = {
       treats: {
         title: "🍪 Treat Kitchen",
-        text: "Treat Kitchen is now active in Version 2.7.0.",
+        text: "Treat Kitchen is now active in Version 2.7.1.",
         items: ["Chicken puzzle treats","Turkey puzzle treats","Beef jackpot treats","Salmon treats","Frozen puzzle cubes","Storage and freezer directions"]
       },
       planner: {
-        title: "📅 Meal Prep Planner — Coming in v2.7.0",
+        title: "📅 Meal Prep Planner — Coming in v2.7.1",
         text: "This section will calculate food, jars, and shopping needs.",
         items: ["1 week, 2 week, and 1 month planning","Meat amount","Rice amount","Vegetable amount","Mason jar estimate","Freezer plan"]
       },
