@@ -30,7 +30,7 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 <div class="app">
 <header>
 <div class="hero"><img src="rocket-header.png" class="pet-pic" alt="Rocket"><div><h1>Rocket &amp;<br>Luna</h1><p class="subtitle">Meals • Treats • Medicine • Daily Care</p></div><img src="luna-header.png" class="pet-pic" alt="Luna"></div>
-<div class="greeting"><h2>Good Morning, Daddy! 💙🩷</h2><p>Version 2.7.2 adds homemade pill pockets, a Medication Center, one-tap medication logging, and adjustable protein amounts.</p></div>
+<div class="greeting"><h2>Good Morning, Daddy! 💙🩷</h2><p>Version 2.7.2 adds homemade pill pockets, medication tracking, adjustable protein amounts, and complete beginner cooking instructions.</p></div>
 </header>
 <main>
 <section id="home" class="home">
@@ -43,6 +43,7 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 <div class="section-title"><h2>Headquarters</h2></div>
 <div class="grid">
 <div class="card nav-card" onclick="showPage('meals')"><div class="icon">🍽️</div><div><h3>Meals</h3><p>Chicken, turkey, beef, chicken-and-egg, and salmon meal guides.</p></div></div>
+<div class="card nav-card" onclick="showPage('pressure')"><div class="icon">♨️</div><div><h3>Pressure Cooker</h3><p>Exact buttons, cooking times, pressure release, temperature checks, and mixing steps.</p></div></div>
 <div class="card nav-card" onclick="showPage('treats')"><div class="icon">🍪</div><div><h3>Treat Kitchen</h3><p>Dehydrator, frozen, baked, and pill-pocket recipes.</p></div></div>
 <div class="card nav-card" onclick="showPage('meds')"><div class="icon">💊</div><div><h3>Medication Center</h3><p>Save medicines, dosage, schedule, instructions, and log each dose.</p></div></div>
 <div class="card nav-card" onclick="showPage('health')"><div class="icon">❤️</div><div><h3>Health Records</h3><p>Weight, vet, grooming, insurance, and general health notes.</p></div></div>
@@ -65,6 +66,36 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 </select>
 </div>
 <div class="tabs" id="mealTabs"></div><div id="mealOut"></div></div></section>
+
+
+<section id="pressurePage" class="page">
+<button class="back" onclick="home()">← Back Home</button>
+<div class="card">
+<h2>♨️ Pressure Cooker Meals</h2>
+<p class="meta">Choose the protein and amount. The app will show every step, including the pressure-cooking time, release time, safe temperature, and what to do next.</p>
+
+<div class="form">
+<label for="pressureProtein"><b>What are you cooking?</b></label>
+<select id="pressureProtein" onchange="renderPressure()">
+<option value="thighs">Boneless skinless chicken thighs</option>
+<option value="breast">Boneless skinless chicken breast</option>
+<option value="turkey">Ground turkey</option>
+<option value="beef">93/7 lean ground beef</option>
+</select>
+
+<label for="pressureWeight"><b>How much protein are you making?</b></label>
+<select id="pressureWeight" onchange="renderPressure()">
+<option value="1">1 lb protein</option>
+<option value="1.5">1.5 lb protein</option>
+<option value="2">2 lb protein</option>
+<option value="2.5">2.5 lb protein</option>
+<option value="3">3 lb protein</option>
+</select>
+</div>
+
+<div id="pressureOut"></div>
+</div>
+</section>
 
 <section id="treatsPage" class="page"><button class="back" onclick="home()">← Back Home</button><div class="card"><h2>🍪 Treat Kitchen</h2><p class="meta">Version 2.7.2 adds a complete Pill Pockets collection.</p>
 <div class="tabs"><button class="tab active" onclick="filterTreats('pill',this)">💊 Pill Pockets</button><button class="tab" onclick="filterTreats('dehydrator',this)">🥩 Dehydrator</button><button class="tab" onclick="filterTreats('frozen',this)">❄️ Frozen</button><button class="tab" onclick="filterTreats('baked',this)">🔥 Baked</button></div>
@@ -98,11 +129,11 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 <section id="tastePage" class="page"><button class="back" onclick="home()">← Back Home</button><div class="card"><h2>🏆 Taste Test Results</h2><div class="form"><input id="tasteName" placeholder="Treat name"><select id="tasteRocket"><option>Loved it</option><option>Liked it</option><option>Not interested</option><option>Disliked it</option></select><select id="tasteLuna"><option>Loved it</option><option>Liked it</option><option>Not interested</option><option>Disliked it</option></select><input id="tasteDate" type="date"><textarea id="tasteNotes" rows="3" placeholder="Notes"></textarea><button class="primary" onclick="saveTaste()">Save Taste Test</button></div><div class="step"><h3>Saved Results</h3><div id="tasteList"></div></div></div></section>
 </main>
 </div>
-<div class="bottom"><button onclick="home()">Home</button><button onclick="showPage('meals')">Meals</button><button onclick="showPage('treats')">Treats</button><button onclick="showPage('meds')">Medicine</button><button onclick="showPage('life')">Life Book</button></div>
+<div class="bottom"><button onclick="home()">Home</button><button onclick="showPage('meals')">Meals</button><button onclick="showPage('pressure')">Pressure</button><button onclick="showPage('treats')">Treats</button><button onclick="showPage('meds')">Medicine</button><button onclick="showPage('life')">Life Book</button></div>
 
 <script>
 const $=id=>document.getElementById(id), today=()=>new Date().toISOString().slice(0,10), safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function showPage(n){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('home').classList.add('hidden');$(n+'Page').classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(n==='meds')renderMeds();if(n==='health')renderSimple('health');if(n==='life')renderSimple('life');if(n==='shopping')renderShop();if(n==='taste')renderTaste()}
+function showPage(n){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('home').classList.add('hidden');$(n+'Page').classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(n==='pressure')renderPressure();if(n==='meds')renderMeds();if(n==='health')renderSimple('health');if(n==='life')renderSimple('life');if(n==='shopping')renderShop();if(n==='taste')renderTaste()}
 function home(){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('home').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
 const mealData={
 Chicken:{title:"Chicken Meal",protein:"boneless skinless chicken",rice:1.25,veg:.75,water:.5,temp:"165°F"},
@@ -133,24 +164,209 @@ function renderMeal(){
   ingredients.push("Calcium supplement according to its label");
   ingredients.push("Canine multivitamin according to its label");
 
+  let proteinSteps=[];
+  if(currentMeal==='Chicken' || currentMeal==='Chicken + Egg'){
+    proteinSteps=[
+      "Place the raw chicken in the slow cooker. Spread the pieces out instead of leaving them in one tight lump.",
+      `Pour ${qty(waterAmount)} cup${waterAmount===1?'':'s'} of water around the chicken.`,
+      "Put the lid on the slow cooker.",
+      "Cook on LOW for 3–4 hours or HIGH for 2–2½ hours.",
+      "At the earliest time, check the thickest piece with a food thermometer.",
+      "The chicken is ready when the center reaches 165°F and there is no pink meat.",
+      "Move the chicken to a clean plate and let it cool for 10–15 minutes.",
+      "Shred it with two forks or chop it into small pieces."
+    ];
+  }else if(currentMeal==='Turkey'){
+    proteinSteps=[
+      "Place the raw ground turkey in the slow cooker.",
+      `Pour ${qty(waterAmount)} cup${waterAmount===1?'':'s'} of water around it.`,
+      "Put the lid on.",
+      "Cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+      "After about 1 hour on HIGH, or halfway through on LOW, open the lid carefully and break the turkey apart with a spoon.",
+      "Continue cooking until the turkey reaches 165°F and no pink remains.",
+      "Drain the extra liquid.",
+      "Break the turkey into small crumbles."
+    ];
+  }else if(currentMeal==='Beef'){
+    proteinSteps=[
+      "Place the raw 93/7 ground beef in the slow cooker.",
+      `Add about ${qty(waterAmount)} cup${waterAmount===1?'':'s'} of water.`,
+      "Put the lid on.",
+      "Cook on LOW for 3–4 hours or HIGH for about 2 hours.",
+      "Break the beef apart once or twice while it cooks.",
+      "Cook until the center reaches 160°F and no pink remains.",
+      "Drain the beef very well.",
+      "Blot extra grease with paper towels if needed."
+    ];
+  }else{
+    proteinSteps=[
+      "Heat the oven to 375°F.",
+      "Line a baking tray with parchment paper.",
+      "Place the boneless salmon on the tray.",
+      "Bake for 12–18 minutes, depending on thickness.",
+      "Check the thickest part. It is ready at 145°F and should flake easily.",
+      "Let it cool completely.",
+      "Check slowly and carefully for bones, then flake into small pieces."
+    ];
+  }
+
   $('mealOut').innerHTML=`
     <h2>${m.title}</h2>
     <p class="meta"><b>Selected amount:</b> ${qty(weight)} lb protein</p>
     <div class="step"><h3>What You Need</h3><ul>${ingredients.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div class="step"><h3>Beginner Steps</h3><ol>
-      <li>Cook the protein separately until it reaches ${m.temp}.</li>
-      <li>${fish?'Check the salmon carefully for bones and flake it.':'Chop, shred, or crumble the cooked protein into small pieces.'}</li>
-      <li>Cook ${qty(weight*m.rice)} cups of plain white rice separately. Add no seasoning, butter, garlic, or onion.</li>
-      <li>Steam or microwave ${qty(weight*m.veg)} cups of plain vegetables separately, then drain.</li>
-      ${currentMeal==='Chicken + Egg'?`<li>Cook ${eggs} egg${eggs===1?'':'s'} separately with no butter, oil, salt, garlic, onion, or seasoning.</li>`:''}
-      <li>Combine the cooked protein, rice, vegetables${currentMeal==='Chicken + Egg'?', and egg':''} in a large bowl.</li>
-      <li>Cool until warm or room temperature.</li>
-      <li>Add calcium and canine multivitamin according to their labels.</li>
-      <li>Refrigerate 3–4 days of food and freeze the rest.</li>
+    <div class="step"><h3>Step 1 — Cook the Protein</h3><ol>${proteinSteps.map(x=>`<li>${x}</li>`).join('')}</ol></div>
+    <div class="step"><h3>Step 2 — Cook the Rice Separately</h3><ol>
+      <li>Measure enough dry rice to make about ${qty(weight*m.rice)} cups of cooked rice.</li>
+      <li>Cook it according to the rice package or rice-cooker directions.</li>
+      <li>Do not add salt, butter, oil, garlic, onion, or seasoning.</li>
+      <li>Fluff with a fork and let it cool slightly.</li>
     </ol></div>
-    <div class="tip">💙 The ingredient amounts automatically change when you choose 1, 1.5, 2, 2.5, or 3 pounds of protein.</div>
+    <div class="step"><h3>Step 3 — Cook the Vegetables Separately</h3><ol>
+      <li>Measure ${qty(weight*m.veg)} cups of plain frozen vegetables.</li>
+      <li>Microwave or steam until soft and tender.</li>
+      <li>Do not add sauce or seasoning.</li>
+      <li>Drain extra water and let the vegetables cool slightly.</li>
+    </ol></div>
+    ${currentMeal==='Chicken + Egg'?`<div class="step"><h3>Step 4 — Cook the Egg Separately</h3><ol>
+      <li>Crack ${eggs} egg${eggs===1?'':'s'} into a bowl and beat with a fork.</li>
+      <li>Pour into a nonstick pan over medium-low heat.</li>
+      <li>Stir until completely cooked.</li>
+      <li>Use no butter, oil, salt, garlic, onion, or seasoning.</li>
+      <li>Let the egg cool.</li>
+    </ol></div>`:''}
+    <div class="step"><h3>Step ${currentMeal==='Chicken + Egg'?'5':'4'} — Mix Everything</h3><ol>
+      <li>Put the cooked protein, rice, and vegetables${currentMeal==='Chicken + Egg'?', plus the cooked egg':''} into a large bowl.</li>
+      <li>Stir slowly until the ingredients are evenly mixed.</li>
+      <li>The finished food should be moist but not soupy or greasy.</li>
+    </ol></div>
+    <div class="step"><h3>Step ${currentMeal==='Chicken + Egg'?'6':'5'} — Cool and Add Supplements</h3><ol>
+      <li>Wait until the food is warm or room temperature.</li>
+      <li>Add the calcium supplement according to its label.</li>
+      <li>Add the canine multivitamin according to its label.</li>
+      <li>Mix again very thoroughly.</li>
+    </ol></div>
+    <div class="step"><h3>Step ${currentMeal==='Chicken + Egg'?'7':'6'} — Portion and Store</h3><ol>
+      <li>Spoon the food into clean wide-mouth Mason jars or freezer containers.</li>
+      <li>Leave space at the top when freezing.</li>
+      <li>Refrigerate only 3–4 days of food.</li>
+      <li>Freeze the rest.</li>
+      <li>Thaw one container at a time in the refrigerator.</li>
+    </ol></div>
+    <div class="tip">💙 The ingredients automatically change when you select 1, 1.5, 2, 2.5, or 3 pounds of protein.</div>
     <div class="tip pinktip">Long-term homemade diets should be reviewed by Rocket and Luna’s veterinarian or a veterinary nutritionist.</div>`;
 }
+
+const pressureData={
+  thighs:{
+    title:"Boneless Skinless Chicken Thighs",
+    time:"12 minutes",
+    release:"10-minute natural release",
+    temp:"165°F",
+    note:"For 1–3 pounds, the pressure time normally stays at 12 minutes because the cooker time is based more on thickness than total weight. Keep the pieces separated and do not cook them as one frozen block."
+  },
+  breast:{
+    title:"Boneless Skinless Chicken Breast",
+    time:"10 minutes",
+    release:"10-minute natural release",
+    temp:"165°F",
+    note:"For unusually thick breasts, add 1–2 minutes. Smaller pieces may finish sooner."
+  },
+  turkey:{
+    title:"Ground Turkey",
+    time:"7 minutes",
+    release:"10-minute natural release",
+    temp:"165°F",
+    note:"Break the turkey into several large chunks before cooking, then crumble it fully afterward."
+  },
+  beef:{
+    title:"93/7 Lean Ground Beef",
+    time:"7 minutes",
+    release:"10-minute natural release",
+    temp:"160°F",
+    note:"Drain very well after cooking so the finished meal is not greasy."
+  }
+};
+
+function renderPressure(){
+  const key=$('pressureProtein').value;
+  const weight=parseFloat($('pressureWeight').value);
+  const p=pressureData[key];
+  const rice=key==='thighs'||key==='breast'||key==='turkey'||key==='beef'?weight*1.25:weight*1.25;
+  const veg=weight*.75;
+  const isGround=key==='turkey'||key==='beef';
+  const proteinLabel=p.title.toLowerCase();
+
+  $('pressureOut').innerHTML=`
+    <h2>${p.title}</h2>
+    <p class="meta"><b>Selected amount:</b> ${qty(weight)} lb<br><b>Pressure time:</b> ${p.time} on HIGH<br><b>Release:</b> ${p.release}</p>
+
+    <div class="tip">
+      💙 Example for 2.5 pounds of chicken thighs:<br>
+      Set HIGH pressure for <b>12 minutes</b>, then let the cooker sit untouched for <b>10 minutes</b> before releasing the remaining pressure.
+    </div>
+
+    <div class="step"><h3>What You Need</h3><ul>
+      <li>${qty(weight)} lb ${proteinLabel}</li>
+      <li>1 cup water</li>
+      <li>${qty(rice)} cups cooked plain white rice</li>
+      <li>${qty(veg)} cups cooked plain vegetables</li>
+      <li>Food thermometer</li>
+      <li>Calcium and canine multivitamin according to their labels</li>
+    </ul></div>
+
+    <div class="step"><h3>Step 1 — Get the Pressure Cooker Ready</h3><ol>
+      <li>Place the metal inner pot inside the pressure cooker base.</li>
+      <li>Pour exactly 1 cup of water into the inner pot.</li>
+      <li>${isGround?'Place the raw ground meat into the water and break it into 3–4 large chunks.':'Place the chicken pieces into the pot. Separate the pieces so they are not stuck together in one solid lump.'}</li>
+      <li>Do not add rice, vegetables, supplements, salt, butter, oil, garlic, onion, or seasoning.</li>
+    </ol></div>
+
+    <div class="step"><h3>Step 2 — Close and Program the Cooker</h3><ol>
+      <li>Put the lid on and turn it until it locks.</li>
+      <li>Move the steam-release valve to <b>Sealing</b>.</li>
+      <li>Press <b>Pressure Cook</b> or <b>Manual</b>.</li>
+      <li>Select <b>HIGH pressure</b>.</li>
+      <li>Set the cooking time to <b>${p.time}</b>.</li>
+      <li>Press Start if your model requires it.</li>
+      <li>The cooker will first heat and build pressure. The countdown starts only after pressure is reached.</li>
+    </ol></div>
+
+    <div class="step"><h3>Step 3 — Release the Pressure Safely</h3><ol>
+      <li>When cooking finishes, do not touch the valve immediately.</li>
+      <li>Let the cooker sit for <b>10 minutes</b>. This is the natural release.</li>
+      <li>After 10 minutes, carefully move the valve to Venting to release any pressure still inside.</li>
+      <li>Keep your face and hands away from the steam.</li>
+      <li>Wait until the float valve drops completely.</li>
+      <li>Open the lid away from your face.</li>
+    </ol></div>
+
+    <div class="step"><h3>Step 4 — Check That the Meat Is Done</h3><ol>
+      <li>Insert a food thermometer into the thickest piece or the center of the meat.</li>
+      <li>The safe temperature is <b>${p.temp}</b>.</li>
+      <li>If it is below ${p.temp}, return the lid and pressure cook for 1–2 more minutes, then release pressure again.</li>
+      <li>${isGround?'Break the meat into small crumbles and drain the liquid.':'Move the chicken to a clean plate, cool for 10–15 minutes, then shred or chop it.'}</li>
+    </ol></div>
+
+    <div class="step"><h3>Step 5 — Cook Rice and Vegetables Separately</h3><ol>
+      <li>Cook enough plain white rice to make ${qty(rice)} cups cooked.</li>
+      <li>Microwave or steam ${qty(veg)} cups of plain vegetables until tender.</li>
+      <li>Do not add seasoning, salt, butter, garlic, onion, or sauce.</li>
+      <li>Drain the vegetables and let both cool slightly.</li>
+    </ol></div>
+
+    <div class="step"><h3>Step 6 — Mix, Cool, Supplement, and Store</h3><ol>
+      <li>Mix the cooked ${proteinLabel}, rice, and vegetables in a large bowl.</li>
+      <li>Let the mixture cool until warm or room temperature.</li>
+      <li>Add calcium and canine multivitamin according to their labels.</li>
+      <li>Mix thoroughly.</li>
+      <li>Refrigerate 3–4 days of food and freeze the rest.</li>
+    </ol></div>
+
+    <div class="tip">${p.note}</div>
+    <div class="tip pinktip">Never force the lid open. Check your exact Cosori manual because button names and minimum-liquid requirements can vary by model.</div>
+  `;
+}
+
 const treatData={
 pill:{
 "Pumpkin Peanut Butter":{i:["½ cup 100% pure pumpkin","2 tablespoons xylitol-free peanut butter","¼–½ cup oat flour"],s:["Mix pumpkin and peanut butter.","Add oat flour a little at a time until the dough is soft but not sticky.","Roll into marble-sized balls.","Press a small hole into each ball.","Refrigerate before use. Insert the pill and pinch closed."],store:"Refrigerate up to 5 days or freeze up to 2 months."},
