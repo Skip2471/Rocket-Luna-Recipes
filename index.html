@@ -30,7 +30,7 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 <div class="app">
 <header>
 <div class="hero"><img src="rocket-header.png" class="pet-pic" alt="Rocket"><div><h1>Rocket &amp;<br>Luna</h1><p class="subtitle">Meals • Treats • Medicine • Daily Care</p></div><img src="luna-header.png" class="pet-pic" alt="Luna"></div>
-<div class="greeting"><h2>Good Morning, Daddy! 💙🩷</h2><p>Version 2.7.2 adds homemade pill pockets, a Medication Center, and a one-tap medication log.</p></div>
+<div class="greeting"><h2>Good Morning, Daddy! 💙🩷</h2><p>Version 2.7.2 adds homemade pill pockets, a Medication Center, one-tap medication logging, and adjustable protein amounts.</p></div>
 </header>
 <main>
 <section id="home" class="home">
@@ -54,6 +54,16 @@ main{padding:16px}.section-title{display:flex;justify-content:space-between;alig
 </section>
 
 <section id="mealsPage" class="page"><button class="back" onclick="home()">← Back Home</button><div class="card"><h2>🍽️ Meals</h2><p class="meta">Use the same beginner method for every recipe: cook protein, rice, and vegetables separately; cool; add supplements according to the product labels; portion; refrigerate 3–4 days and freeze the rest.</p>
+<div class="form">
+<label for="mealWeight"><b>How much protein are you making?</b></label>
+<select id="mealWeight" onchange="renderMeal()">
+<option value="1">1 lb protein</option>
+<option value="1.5">1.5 lb protein</option>
+<option value="2">2 lb protein</option>
+<option value="2.5">2.5 lb protein</option>
+<option value="3">3 lb protein</option>
+</select>
+</div>
 <div class="tabs" id="mealTabs"></div><div id="mealOut"></div></div></section>
 
 <section id="treatsPage" class="page"><button class="back" onclick="home()">← Back Home</button><div class="card"><h2>🍪 Treat Kitchen</h2><p class="meta">Version 2.7.2 adds a complete Pill Pockets collection.</p>
@@ -95,15 +105,52 @@ const $=id=>document.getElementById(id), today=()=>new Date().toISOString().slic
 function showPage(n){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('home').classList.add('hidden');$(n+'Page').classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(n==='meds')renderMeds();if(n==='health')renderSimple('health');if(n==='life')renderSimple('life');if(n==='shopping')renderShop();if(n==='taste')renderTaste()}
 function home(){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('home').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
 const mealData={
-Chicken:["1 lb boneless skinless chicken","1¼ cups cooked white rice","¾ cup cooked plain vegetables","½ cup water","Calcium and canine multivitamin according to labels"],
-Turkey:["1 lb 93% lean ground turkey","1¼ cups cooked white rice","¾ cup cooked plain vegetables","½ cup water","Calcium and canine multivitamin according to labels"],
-Beef:["1 lb 93/7 lean ground beef","1¼ cups cooked white rice","¾ cup cooked plain vegetables","¼–½ cup water","Calcium and canine multivitamin according to labels"],
-"Chicken + Egg":["1 lb chicken","1 plain scrambled egg","1.1 cups cooked white rice","¾ cup cooked plain vegetables","Supplements according to labels"],
-Salmon:["1 lb boneless salmon","1¼ cups cooked white rice","¾ cup cooked plain vegetables","Supplements according to labels"]
+Chicken:{title:"Chicken Meal",protein:"boneless skinless chicken",rice:1.25,veg:.75,water:.5,temp:"165°F"},
+Turkey:{title:"Ground Turkey Meal",protein:"93% lean ground turkey",rice:1.25,veg:.75,water:.5,temp:"165°F"},
+Beef:{title:"Lean Beef Meal",protein:"93/7 lean ground beef",rice:1.25,veg:.75,water:.375,temp:"160°F"},
+"Chicken + Egg":{title:"Chicken + Egg Meal",protein:"boneless skinless chicken",rice:1.1,veg:.75,water:.5,temp:"165°F"},
+Salmon:{title:"Salmon Meal",protein:"boneless salmon",rice:1.25,veg:.75,water:0,temp:"145°F"}
 };
+function qty(n){
+  const rounded=Math.round(n*100)/100;
+  return Number.isInteger(rounded)?String(rounded):String(rounded).replace(/\.0+$/,"");
+}
 let currentMeal="Chicken";
 function renderMealTabs(){$('mealTabs').innerHTML=Object.keys(mealData).map((x,i)=>`<button class="tab ${i?'':'active'}" onclick="currentMeal='${x}';document.querySelectorAll('#mealTabs .tab').forEach(b=>b.classList.remove('active'));this.classList.add('active');renderMeal()">${x}</button>`).join('');renderMeal()}
-function renderMeal(){let fish=currentMeal==='Salmon';$('mealOut').innerHTML=`<h2>${currentMeal} Meal</h2><div class="step"><h3>What You Need</h3><ul>${mealData[currentMeal].map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="step"><h3>Beginner Steps</h3><ol><li>Cook the protein separately until fully done: chicken/turkey 165°F, beef 160°F, salmon 145°F.</li><li>${fish?'Check the salmon carefully for bones and flake it.':'Chop, shred, or crumble the protein into small pieces.'}</li><li>Cook plain white rice separately. Add no seasoning, butter, garlic, or onion.</li><li>Steam or microwave plain vegetables separately and drain.</li><li>Combine everything in a large bowl.</li><li>Cool until warm or room temperature.</li><li>Add calcium and canine multivitamin according to their labels.</li><li>Refrigerate 3–4 days of food and freeze the rest.</li></ol></div><div class="tip">Long-term homemade diets should be reviewed by Rocket and Luna’s veterinarian or a veterinary nutritionist.</div>`}
+function renderMeal(){
+  const m=mealData[currentMeal];
+  const weight=parseFloat($('mealWeight').value);
+  const fish=currentMeal==='Salmon';
+  const eggs=Math.max(1,Math.round(weight));
+  const waterAmount=weight*m.water;
+  const ingredients=[
+    `${qty(weight)} lb ${m.protein}`,
+    `${qty(weight*m.rice)} cups cooked white rice`,
+    `${qty(weight*m.veg)} cups cooked plain vegetables`
+  ];
+  if(m.water>0) ingredients.push(`${qty(waterAmount)} cup${waterAmount===1?'':'s'} water for cooking the protein`);
+  if(currentMeal==='Chicken + Egg') ingredients.push(`${eggs} plain scrambled egg${eggs===1?'':'s'}`);
+  ingredients.push("Calcium supplement according to its label");
+  ingredients.push("Canine multivitamin according to its label");
+
+  $('mealOut').innerHTML=`
+    <h2>${m.title}</h2>
+    <p class="meta"><b>Selected amount:</b> ${qty(weight)} lb protein</p>
+    <div class="step"><h3>What You Need</h3><ul>${ingredients.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="step"><h3>Beginner Steps</h3><ol>
+      <li>Cook the protein separately until it reaches ${m.temp}.</li>
+      <li>${fish?'Check the salmon carefully for bones and flake it.':'Chop, shred, or crumble the cooked protein into small pieces.'}</li>
+      <li>Cook ${qty(weight*m.rice)} cups of plain white rice separately. Add no seasoning, butter, garlic, or onion.</li>
+      <li>Steam or microwave ${qty(weight*m.veg)} cups of plain vegetables separately, then drain.</li>
+      ${currentMeal==='Chicken + Egg'?`<li>Cook ${eggs} egg${eggs===1?'':'s'} separately with no butter, oil, salt, garlic, onion, or seasoning.</li>`:''}
+      <li>Combine the cooked protein, rice, vegetables${currentMeal==='Chicken + Egg'?', and egg':''} in a large bowl.</li>
+      <li>Cool until warm or room temperature.</li>
+      <li>Add calcium and canine multivitamin according to their labels.</li>
+      <li>Refrigerate 3–4 days of food and freeze the rest.</li>
+    </ol></div>
+    <div class="tip">💙 The ingredient amounts automatically change when you choose 1, 1.5, 2, 2.5, or 3 pounds of protein.</div>
+    <div class="tip pinktip">Long-term homemade diets should be reviewed by Rocket and Luna’s veterinarian or a veterinary nutritionist.</div>`;
+}
 const treatData={
 pill:{
 "Pumpkin Peanut Butter":{i:["½ cup 100% pure pumpkin","2 tablespoons xylitol-free peanut butter","¼–½ cup oat flour"],s:["Mix pumpkin and peanut butter.","Add oat flour a little at a time until the dough is soft but not sticky.","Roll into marble-sized balls.","Press a small hole into each ball.","Refrigerate before use. Insert the pill and pinch closed."],store:"Refrigerate up to 5 days or freeze up to 2 months."},
